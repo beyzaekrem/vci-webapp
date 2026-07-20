@@ -1,0 +1,13 @@
+charonload==0.2.0
+natsort
+kornia
+git+https://github.com/cheind/pytorch-debayer
+opencv-python-headless
+OpenExr
+tqdm
+torchvision
+colour-science
+matplotlib
+pyquaternion
+pillow>=12.1.0
+pydantic

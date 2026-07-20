@@ -1,0 +1,16 @@
+# pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+# pip install -e external/vci-websocket
+opencv-contrib-python
+numpy
+multical
+requests
+customtkinter
+natsort
+pillow
+matplotlib
+pexpect
+inputimeout
+imageio
+imageio[ffmpeg]
+pydantic
+jsonargparse

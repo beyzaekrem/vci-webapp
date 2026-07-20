@@ -1,0 +1,4 @@
+*.pth filter=lfs diff=lfs merge=lfs -text
+*.pt filter=lfs diff=lfs merge=lfs -text
+src/sparrow/processing/rtmatting/weights/pytorch_mobilenetv2.pth filter=lfs diff=lfs merge=lfs -text
+src/sparrow/weights/matting/BackgroundMattingV2.rgb.float16.pt filter=lfs diff=lfs merge=lfs -text

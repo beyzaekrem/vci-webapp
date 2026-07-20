@@ -1,0 +1,24 @@
+.script-event-attention {
+    transform-origin: center;
+}
+
+.script-event-attention.is-active {
+    animation: script-event-pulse 700ms ease-in-out infinite;
+}
+
+@keyframes script-event-pulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.04);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .script-event-attention.is-active {
+        animation: none;
+    }
+}

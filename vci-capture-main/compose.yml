@@ -1,0 +1,49 @@
+services:
+  vci_capture_development:
+    build:
+      context: .
+      target: development
+    image: vci_capture:development
+    container_name: vci_capture_development
+    privileged: true
+    volumes:
+      - .:/srv/vci-capture
+      - /opt/XIMEA:/opt/XIMEA
+      - /opt/OrbbecSDK:/opt/OrbbecSDK
+      - /lib/modules:/lib/modules
+      - /media:/media
+      - type: bind
+        source: /usr/lib/libm3api.so.2.0.0
+        target: /usr/lib/libm3api.so.2.0.0
+        read_only: true
+      - type: bind
+        source: /usr/lib/libm3api.so.2
+        target: /usr/lib/libm3api.so.2
+        read_only: true
+      - type: bind
+        source: /usr/lib/libm3api.so
+        target: /usr/lib/libm3api.so
+        read_only: true
+      - vci_capture_development_vscode:/root/.vscode-server
+      - vci_capture_persistent:/srv/vci-capture-persistent
+    entrypoint: >
+      sh -c "pip install -e . && exec bash"
+    ports:
+      - 2443:2443
+      - 9000:9000
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    shm_size: 1gb
+    stdin_open: true
+    tty: true
+volumes:
+  vci_capture_development_vscode:
+    name: vci_capture_development_vscode
+  vci_capture_persistent:
+    name: vci_capture_persistent

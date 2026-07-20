@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "compileCommands": [
+                "${workspaceFolder}/build/gibbs/compile_commands.json"
+            ],
+            "intelliSenseMode": "gcc-x64",
+            "cppStandard": "c++20",
+            "includePath": [
+                "/opt/XIMEA/include",
+                "/opt/OrbbecSDK/include"
+            ]
+        }
+    ],
+    "version": 4
+}

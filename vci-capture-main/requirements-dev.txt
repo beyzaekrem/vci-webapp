@@ -1,0 +1,8 @@
+black
+clang-format
+docformatter
+isort
+ruff
+pytest
+pytest-mock
+

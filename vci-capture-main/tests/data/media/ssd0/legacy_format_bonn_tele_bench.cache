@@ -1,0 +1,17 @@
+{
+  "camera_ids": [
+    "C7777",
+    "C9999",
+    "M8888"
+  ],
+  "dump_files": [
+    "tests/data/media/ssd0/recording_0010.0.dump",
+    "tests/data/media/ssd1/recording_0011.0.dump",
+    "tests/data/media/ssd2/recording_0012.0.dump"
+  ],
+  "dump_mapping": [
+    [[2,0],[2,393216],[2,786432]],
+    [[1,0],[1,393216],[1,786432]],
+    [[0,0],[0,393216],[0,786432]]
+  ]
+}

@@ -1,0 +1,46 @@
+{
+    // Python snippets for creating path_handler functions (API-endpoints) in a python interceptor.MessageHandler class.
+    // Each snippet is defined under a snippet name and has a scope, prefix, body and 
+    // description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+    // is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+    // used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+    // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+    // Placeholders with the same ids are connected.
+    "interceptor.path_handler": {
+        "scope": "python",
+        "prefix": "interceptor_path_handler",
+        "body": [
+            "@interceptor.path_handler(\"${1:API_ENDPOINT}\")",
+            "def _path_${1/(.*)/${1:/downcase}/}(self, message: interceptor.MessageIn) -> None:",
+            "    ${0:pass}"
+        ],
+        "description": "create method for interceptor.path_handler"
+    },
+    "interceptor.path_handler_doc": {
+        "scope": "python",
+        "prefix": "interceptor_doc",
+        "body": [
+            "\"\"\"",
+            "${1:__desc__}",
+            "",
+            "Args:",
+            "   payload (list):",
+            "        A list containing:",
+            "        - 0 (json): {",
+            "            \"key\" (int): Some identifier.",
+            "            \"other_key\" (str, optional, default='something'): Some string value.",
+            "            \"<some_id>\" (int): Dynamic ID key.",
+            "        }",
+            "",
+            "Returns:",
+            "    payload (list):",
+            "        A list containing:",
+            "        - 0 (json): A JSON object with the following structure: {...}",
+            "        - 1-4 (bytes): images.",
+            "Raises:",
+            "    SomeError: something went wrong",
+            "\"\"\"",
+        ],
+        "description": "create example doc string strucutre for interceptor.path_handler"
+    }
+}

@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitAny": false
+  },
+  "include": [
+    "src/vite-env.d.ts",
+    "src/network/*",
+    "src/Utility/*",
+    "src/Components/*",
+    "src/pages/*",
+    "src/router.tsx"
+  ]
+}

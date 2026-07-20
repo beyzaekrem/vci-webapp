@@ -1,0 +1,7 @@
+BasedOnStyle: Google
+IndentWidth: 2
+ColumnLimit: 120
+SortIncludes: true
+IncludeBlocks: Preserve
+BreakBeforeBraces: Attach
+AllowShortFunctionsOnASingleLine: Inline

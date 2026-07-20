@@ -1,0 +1,51 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "set_rotation",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "src/calibration_set_rotation.py",
+            "console": "internalConsole",
+            "cwd": "${workspaceFolder}",
+            "args": [
+                "-s",
+                "2"
+            ]
+        },
+        {
+            "name": "test",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "src/test/test.py",
+            "console": "internalConsole",
+            "cwd": "${workspaceFolder}",
+            "args": [
+                "TestRingBuffer",
+            ]
+        },
+        {
+            "name": "cause_error",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "scripts/capture/modify_recording.py",
+            "cwd": "${workspaceFolder}",
+            "args": [
+                "rename",
+                "fake_haha_powejf0wpjfwojef",
+                "doesnt_matter"
+            ]
+        },
+        {
+            "name": "connection_test",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "scripts/connection_test.py",
+            "cwd": "${workspaceFolder}",
+        }
+    ]
+    //"program": "${file}",
+}

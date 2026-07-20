@@ -1,0 +1,1 @@
+from .matting_inference import MattingInference as Matting

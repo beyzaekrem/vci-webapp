@@ -1,0 +1,30 @@
+{
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#1e7907",
+        "titleBar.inactiveBackground": "#134418"
+    },
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    "editor.rulers": [
+        120
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "[toml]": {
+        "editor.defaultFormatter": "tamasfe.even-better-toml"
+    },
+    "files.exclude": {
+        "build/": true,
+        "**/*.egg-info": true,
+        "**/__pycache__": true,
+    },
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+}

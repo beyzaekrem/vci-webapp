@@ -1,0 +1,101 @@
+[project]
+name = "interceptor"
+version = "0.0.1"
+authors = [{ name = "Markus Plack", email = "markus.plack@gmail.com" }]
+description = "A fast websocket transmission library"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = ["torch", "numpy", "charonload"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: C++",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+
+[project.urls]
+Homepage = "https://..."
+Repository = "https://..."
+Documentation = "https://..."
+Changelog = "https://..."
+
+
+[project.optional-dependencies]
+dev = [
+    # Packaging
+    "build",
+
+    # Formatting
+    "black~=24.0",
+    "isort",
+    "docformatter",
+    "clang-format~=14.0",
+
+    # Linting
+    "ruff>=0.2",
+    "mypy",
+    "codespell",
+    "check-manifest",
+
+    # Tests
+    "pytest>=7",
+    "pytest-benchmark",
+    "pytest-datadir",
+
+    # Other
+    "nox",
+]
+
+
+[build-system]
+requires = ["setuptools>=64.0"]
+build-backend = "setuptools.build_meta"
+
+
+[tool.black]
+line-length = 120
+
+
+[tool.ruff]
+src = ["src"]
+line-length = 120
+output-format = "full"
+ignore = ["D100", "D104"]
+
+
+[tool.ruff.lint]
+preview = false
+select = ["ALL"]
+ignore = [
+    # General rules
+    "C90", # mccabe
+    "D",   # pydocstyle (Still disabled despite partial configuration)
+    "TD",  # flake8-todos
+    "FIX", # flake8-fixme
+    # Specific rules
+    "PLR0912", # too-many-branches
+    "PLR0913", # too-many-args
+    "INP001",  #	implicit-namespace-package
+]
+
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+
+[tool.mypy]
+plugins = ["numpy.typing.mypy_plugin"]
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+warn_return_any = true
+warn_unused_configs = true
+pretty = true
+#ignore_missing_imports = true                                                # This could be made local for the tests
+
+
+[tool.check-manifest]
+ignore = [".vscode/**/*", "docs/**/*", "tests/**/*", "CHANGELOG.md"]

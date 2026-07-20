@@ -1,0 +1,50 @@
+{
+    "cameras": [
+        {
+            "serialnumber": "C0010",
+            "resolution": [
+                5328,
+                4608
+            ],
+            "type": "Color",
+            "pixel_layout": "BGGR"
+        },
+        {
+            "serialnumber": "C0016",
+            "resolution": [
+                5328,
+                4608
+            ],
+            "type": "Color",
+            "pixel_layout": "BGGR"
+        },
+        {
+            "serialnumber": "C0025",
+            "resolution": [
+                5328,
+                4608
+            ],
+            "type": "Color",
+            "pixel_layout": "BGGR",
+            "info": "located on the floor"
+        },
+        {
+            "serialnumber": "M0008",
+            "resolution": [
+                5328,
+                4608
+            ],
+            "type": "Mono",
+            "pixel_layout": "Mono"
+        },
+        {
+            "serialnumber": "M0009",
+            "resolution": [
+                5328,
+                4608
+            ],
+            "type": "Mono",
+            "pixel_layout": "Mono"
+        }
+    ]
+}

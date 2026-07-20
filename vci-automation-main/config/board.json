@@ -1,0 +1,11 @@
+{
+    "aruco_dict": "4X4_1000",
+    "size": [
+        29,
+        19
+    ],
+    "square_length": 0.040,
+    "marker_length": 0.031,
+    "min_rows": 10,
+    "min_points": 30
+}

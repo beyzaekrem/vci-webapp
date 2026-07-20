@@ -1,0 +1,46 @@
+[project]
+name = "teague"
+version = "0.0.1"
+authors = [
+  { name = "Markus Plack", email = "markus.plack@gmail.com" },
+]
+description = "Basic VCI utils"
+readme = "README.md"
+requires-python = ">=3.9"
+
+# -------------------------------------------------------------------
+# Runtime dependencies for teague
+# -------------------------------------------------------------------
+dependencies = [
+  "numpy",
+  "torch",
+  "torchvision",
+  "pillow",
+]
+
+[project.optional-dependencies]
+looking_glass = [
+  "viser",
+]
+
+[project.scripts]
+looking_glass = "teague.looking_glass:main"
+
+# -------------------------------------------------------------------
+# Build system
+# -------------------------------------------------------------------
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# -------------------------------------------------------------------
+# Tooling configuration
+# -------------------------------------------------------------------
+[tool.ruff]
+src = ["src"]

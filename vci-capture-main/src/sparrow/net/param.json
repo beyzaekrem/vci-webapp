@@ -1,0 +1,3270 @@
+{    
+  "rel_zoom_factor": {
+    "Name": "rel_zoom_factor",
+    "Description": "Relative factor to zoom into the image. 1 for zoom in, -1 for zoom out",
+    "parameter_type": {
+        "typename": "int"
+    },
+    "is_synthetic": true
+  },
+  "rel_zoom_center_x": {
+    "Name": "rel_zoom_center_x",
+    "Description": "Relative horizontal position of the center of the zoom. 1 for moving right. -1 for moving left",
+    "parameter_type": {
+        "typename": "Integer"
+    },
+    "is_synthetic": true
+  },
+  "rel_zoom_center_y": {
+    "Name": "rel_zoom_center_y",
+    "Description": "Relative vertical position of the center of the zoom. 1 for moving up. -1 for moving down",
+    "parameter_type": {
+        "typename": "Integer"
+    },
+    "is_synthetic": true
+  },
+  "zoom_factor": {
+    "Name": "zoom_factor",
+    "Description": "Float factor to zoom into the image.",
+    "parameter_type": {
+        "typename": "Float"
+    },
+    "is_synthetic": true
+  },
+  "zoom_center_x": {
+    "Name": "zoom_center_x",
+    "Description": "Horizontal position of the center of the zoom.",
+    "parameter_type": {
+        "typename": "Integer"
+    },
+    "is_synthetic": true
+  },
+  "zoom_center_y": {
+    "Name": "zoom_center_y",
+    "Description": "Vertical position of the center of the zoom.",
+    "parameter_type": {
+        "typename": "Integer"
+    },
+    "is_synthetic": true
+  },
+    "display_width": {
+      "Name": "display_width",
+      "Description": "Width of the html display",
+      "parameter_type": {
+          "typename": "Integer"
+      },
+      "is_synthetic": true
+    },
+    "display_height": {
+      "Name": "display_height",
+      "Description": "Height of the html display",
+      "parameter_type": {
+          "typename": "Integer"
+      },
+      "is_synthetic": true
+    },
+    "stream_running": {
+      "Name": "stream_running",
+      "Description": "1 if Stream is running, 0 otherwise",
+      "parameter_type": {
+          "typename": "Integer"
+      },
+      "is_synthetic": true
+    },
+    "exposure": {
+        "Name": "exposure",
+        "Description": "Current exposure time in microseconds. When parameter is set by xiSetParam the API checks the range. If it is within the range, it tries to find the closest settable value and set it. The actual value can be read by xiGetParam. E.g. Application set exposure time to 1000us, however closest possible value is 1029us (it is typically based on sensor line read-out period). This value is accessible over xiGetParam.",
+        "identifiers": "SENSOR",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "1000"
+        },
+        "is_synthetic": false
+    },
+    "exposure_time_selector": {
+        "Name": "exposure_time_selector",
+        "Description": "Selector for Exposure parameter",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_EXPOSURE_TIME_SELECTOR_COMMON": "Selects the common Exposure Time",
+                "XI_EXPOSURE_TIME_SELECTOR_GROUP1": "Selects the common Exposure Time for pixel group 1 (for InterlineExposureMode)",
+                "XI_EXPOSURE_TIME_SELECTOR_GROUP2": "Selects the common Exposure Time for pixel group 2 (for InterlineExposureMode)",
+                "XI_EXPOSURE_TIME_SELECTOR_DUAL_TRG_EXP_ZONE_1": "Selects the Exposure Time for Zone 1 (for Dual Trigger Exposure feature)",
+                "XI_EXPOSURE_TIME_SELECTOR_DUAL_TRG_EXP_ZONE_2": "Selects the Exposure Time for Zone 2 (for Dual Trigger Exposure feature)"
+            },
+            "enum_ints": {
+                "XI_EXPOSURE_TIME_SELECTOR_COMMON": 0,
+                "XI_EXPOSURE_TIME_SELECTOR_GROUP1": 1,
+                "XI_EXPOSURE_TIME_SELECTOR_GROUP2": 2,
+                "XI_EXPOSURE_TIME_SELECTOR_DUAL_TRG_EXP_ZONE_1": 3,
+                "XI_EXPOSURE_TIME_SELECTOR_DUAL_TRG_EXP_ZONE_2": 4
+            },
+            "default_value": "XI_EXPOSURE_TIME_SELECTOR_COMMON"
+        },
+        "is_synthetic": false
+    },
+    "exposure_burst_count": {
+        "Name": "exposure_burst_count",
+        "Description": "Sets the number of times of exposure in one frame. To finish exposure burst change this parameter to 1 and exposure will be finished by next trigger. See more details in article Multiple exposures in one frame.",
+        "Note": "This setting is valid only if the trigger selector is set to ExposureActive or ExposureStart.",
+        "Supported cameras": "MC031xG-SY, MC050xG-SY, MC089xG-SY, MC124xG-SY, MX031xG-SY, MX050xG-SY, MX089xG-SY, MX124xG-SY, MT031xG-SY, MT050xG-SY",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "gain_selector": {
+        "Name": "gain_selector",
+        "Description": "Selects type of gain for XI_PRM_GAIN. On some cameras there is possibility to select analog or digital gain separately.Selector XI_GAIN_SELECTOR_ALL is mapped on most cameras to analog gain.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_GAIN_SELECTOR_ALL": "Gain selector selects all channels. Implementation of gain type depends on camera.",
+                "XI_GAIN_SELECTOR_ANALOG_ALL": "Gain selector selects all analog channels. This is available only on some cameras.",
+                "XI_GAIN_SELECTOR_DIGITAL_ALL": "Gain selector selects all digital channels. This is available only on some cameras.",
+                "XI_GAIN_SELECTOR_ANALOG_TAP1": "Gain selector selects tap 1. This is available only on some cameras.",
+                "XI_GAIN_SELECTOR_ANALOG_TAP2": "Gain selector selects tap 2. This is available only on some cameras.",
+                "XI_GAIN_SELECTOR_ANALOG_TAP3": "Gain selector selects tap 3. This is available only on some cameras.",
+                "XI_GAIN_SELECTOR_ANALOG_TAP4": "Gain selector selects tap 4. This is available only on some cameras.",
+                "XI_GAIN_SELECTOR_ANALOG_N": "First of two channels of programmable gain control (PGC) function - Gain setting of R, B pixels (North column analog gain). This is available only on some cameras.",
+                "XI_GAIN_SELECTOR_ANALOG_S": "Second of two channels of programmable gain control (PGC) function - Gain setting of Gr, Gb pixels (South column analog gain). This is available only on some cameras."
+            },
+            "enum_ints": {
+                "XI_GAIN_SELECTOR_ALL": 0,
+                "XI_GAIN_SELECTOR_ANALOG_ALL": 1,
+                "XI_GAIN_SELECTOR_DIGITAL_ALL": 2,
+                "XI_GAIN_SELECTOR_ANALOG_TAP1": 3,
+                "XI_GAIN_SELECTOR_ANALOG_TAP2": 4,
+                "XI_GAIN_SELECTOR_ANALOG_TAP3": 5,
+                "XI_GAIN_SELECTOR_ANALOG_TAP4": 6,
+                "XI_GAIN_SELECTOR_ANALOG_N": 7,
+                "XI_GAIN_SELECTOR_ANALOG_S": 8
+            },
+            "default_value": "XI_GAIN_SELECTOR_ANALOG_ALL"
+        },
+        "is_synthetic": false
+    },
+    "gain": {
+        "Name": "gain",
+        "Description": "Current gain in dB. When parameter is set by xiSetParam the API checks the range. If it is within the range, it tries to find the closest settable value and set it. The actual value can be read by xiGetParam. E.g. Application set gain to 1.3dB, however closest possible value is 1.35dB (analog gain is typically based on sensor PGA registers capabilities). This value is accessible over xiGetParam.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "downsampling": {
+        "Name": "downsampling",
+        "Description": "Changes image resolution by binning or skipping. Parameter downsampling_type controls the mapping of sensor pixels to output data.",
+        "Note1": "Downsampling can be changed only before an acquisition is started.",
+        "Note2": "Changing this parameter will flush all images from the buffer queue.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_DWN_1x1": "1 sensor pixel = 1 image pixel",
+                "XI_DWN_2x2": "2x2 sensor pixels = 1 image pixel",
+                "XI_DWN_3x3": "Downsampling 3x3.",
+                "XI_DWN_4x4": "4x4 sensor pixels = 1 image pixel",
+                "XI_DWN_5x5": "Downsampling 5x5.",
+                "XI_DWN_6x6": "Downsampling 6x6.",
+                "XI_DWN_7x7": "Downsampling 7x7.",
+                "XI_DWN_8x8": "Downsampling 8x8.",
+                "XI_DWN_9x9": "Downsampling 9x9.",
+                "XI_DWN_10x10": "Downsampling 10x10.",
+                "XI_DWN_16x16": "Downsampling 16x16."
+            },
+            "enum_ints": {
+                "XI_DWN_1x1": 1,
+                "XI_DWN_2x2": 2,
+                "XI_DWN_3x3": 3,
+                "XI_DWN_4x4": 4,
+                "XI_DWN_5x5": 5,
+                "XI_DWN_6x6": 6,
+                "XI_DWN_7x7": 7,
+                "XI_DWN_8x8": 8,
+                "XI_DWN_9x9": 9,
+                "XI_DWN_10x10": 10,
+                "XI_DWN_16x16": 16
+            },
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "downsampling_type": {
+        "Name": "downsampling_type",
+        "Description": "Changes image downsampling type (binning or skipping).",
+        "Note1": "Changing this parameter will remove all images from the buffer queue.",
+        "Note2": "Changing this parameter will remove all images from the buffer queue.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_BINNING": "pixels are interpolated - better image",
+                "XI_SKIPPING": "pixels are skipped - higher frame rate"
+            },
+            "enum_ints": {
+                "XI_BINNING": 0,
+                "XI_SKIPPING": 1
+            },
+            "default_value": "XI_BINNING"
+        },
+        "is_synthetic": false
+    },
+    "test_pattern_generator_selector": {
+        "Name": "test_pattern_generator_selector",
+        "Description": "Selects Test Pattern Generator Engine.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_TESTPAT_GEN_SENSOR": "Sensor test pattern generator",
+                "XI_TESTPAT_GEN_FPGA": "FPGA Test Pattern Generator"
+            },
+            "enum_ints": {
+                "XI_TESTPAT_GEN_SENSOR": 0,
+                "XI_TESTPAT_GEN_FPGA": 1
+            },
+            "default_value": "XI_TESTPAT_GEN_SENSOR"
+        },
+        "is_synthetic": false
+    },
+    "test_pattern": {
+        "Name": "test_pattern",
+        "Description": "Selects Test Pattern Type to be generated by the selected Generator Engine.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_TESTPAT_OFF": "Testpattern turned off.",
+                "XI_TESTPAT_BLACK": "Image is filled with darkest possible image.",
+                "XI_TESTPAT_WHITE": "Image is filled with brightest possible image.",
+                "XI_TESTPAT_GREY_HORIZ_RAMP": "Image is filled horizontally with an image that goes from the darkest possible value to the brightest.",
+                "XI_TESTPAT_GREY_VERT_RAMP": "Image is filled vertically with an image that goes from the darkest possible value to the brightest.",
+                "XI_TESTPAT_GREY_HORIZ_RAMP_MOVING": "Image is filled horizontally with an image that goes from the darkest possible value to the brightest and moves from left to right.",
+                "XI_TESTPAT_GREY_VERT_RAMP_MOVING": "Image is filled vertically with an image that goes from the darkest possible value to the brightest and moves from left to right.",
+                "XI_TESTPAT_HORIZ_LINE_MOVING": "A moving horizontal line is superimposed on the live image.",
+                "XI_TESTPAT_VERT_LINE_MOVING": "A moving vertical line is superimposed on the live image.",
+                "XI_TESTPAT_COLOR_BAR": "Image is filled with stripes of color including White, Black, Red, Green, Blue, Cyan, Magenta and Yellow.",
+                "XI_TESTPAT_FRAME_COUNTER": "A frame counter is superimposed on the live image.",
+                "XI_TESTPAT_DEVICE_SPEC_COUNTER": "128bit counter."
+            },
+            "enum_ints": {
+                "XI_TESTPAT_OFF": 0,
+                "XI_TESTPAT_BLACK": 1,
+                "XI_TESTPAT_WHITE": 2,
+                "XI_TESTPAT_GREY_HORIZ_RAMP": 3,
+                "XI_TESTPAT_GREY_VERT_RAMP": 4,
+                "XI_TESTPAT_GREY_HORIZ_RAMP_MOVING": 5,
+                "XI_TESTPAT_GREY_VERT_RAMP_MOVING": 6,
+                "XI_TESTPAT_HORIZ_LINE_MOVING": 7,
+                "XI_TESTPAT_VERT_LINE_MOVING": 8,
+                "XI_TESTPAT_COLOR_BAR": 9,
+                "XI_TESTPAT_FRAME_COUNTER": 10,
+                "XI_TESTPAT_DEVICE_SPEC_COUNTER": 11
+            },
+            "default_value": "XI_TESTPAT_OFF"
+        },
+        "is_synthetic": false
+    },
+    "imgdataformat": {
+        "Name": "imgdataformat",
+        "Description": "Format of image data returned by function xiGetImage. In order to simplify the control of the camera from application - the xiAPI automatically changes selected camera parameters and Image Processing after setting of XI_PRM_IMAGE_DATA_FORMATIn enumerators table second value in comment bar stands for one pixel data in memory [one_byte].",
+        "Note": "Following parameters and Image Processing are controlled automatically by setting of XI_PRM_IMAGE_DATA_FORMAT:",
+        "Format ": "XI_MONO8 XI_PRM_SENSOR_DATA_BIT_DEPTH= 8 (see Note1)",
+        "\nImage Processing": "enabled",
+        "\nFormat ": "XI_RGB32, XI_RGB24, XI_RGB_PLANAR XI_PRM_SENSOR_DATA_BIT_DEPTH= maximum",
+        "Note1": "Only if camera implementation allows this mode.",
+        "Note2": "For XI_RAW16, XI_MONO16 the parameter XI_PRM_IMAGE_DATA_BIT_DEPTHwill be equal toXI_PRM_OUTPUT_DATA_BIT_DEPTH. For other formats theXI_PRM_IMAGE_DATA_BIT_DEPTHwill be 8.",
+        "Note3": "Bits alignment: Values are aligned to LSB. XiAPI Image Data Flowis skipped and therefore the Transport format is the most effective data format in terms of CPU and RAM usage.",
+        "is_synthetic": false,
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_MONO8": "8 bits per pixel. [Intensity] (see Note5,Note6)",
+                "XI_MONO16": "16 bits per pixel. [Intensity LSB] [Intensity MSB] (see Note5,Note6)",
+                "XI_RGB24": "RGB data format. [Blue][Green][Red] (see Note5)",
+                "XI_RGB32": "RGBA data format. [Blue][Green][Red][0] (see Note5)",
+                "XI_RGB_PLANAR": "RGB planar data format. [Red][Red]...[Green][Green]...[Blue][Blue]... (see Note5)",
+                "XI_RAW8": "8 bits per pixel raw data from sensor. [pixel byte] raw data from transport (camera output)",
+                "XI_RAW16": "16 bits per pixel raw data from sensor. [pixel byte low] [pixel byte high] 16 bits (depacked) raw data",
+                "XI_FRM_TRANSPORT_DATA": "Data from transport layer (e.g. packed). Depends on data on the transport layer (see Note7)",
+                "XI_RGB48": "RGB data format. [Blue low byte][Blue high byte][Green low][Green high][Red low][Red high] (see Note5)",
+                "XI_RGB64": "RGBA data format. [Blue low byte][Blue high byte][Green low][Green high][Red low][Red high][0][0] (Note5)",
+                "XI_RGB16_PLANAR": "RGB16 planar data format",
+                "XI_RAW8X2": "8 bits per pixel raw data from sensor(2 components in a row). [ch1 pixel byte] [ch2 pixel byte] 8 bits raw data from 2 channels (e.g. high gain and low gain channels of sCMOS cameras)",
+                "XI_RAW8X4": "8 bits per pixel raw data from sensor(4 components in a row). [ch1 pixel byte] [ch2 pixel byte] [ch3 pixel byte] [ch4 pixel byte] 8 bits raw data from 4 channels (e.g. sCMOS cameras)",
+                "XI_RAW16X2": "16 bits per pixel raw data from sensor(2 components in a row). [ch1 pixel byte low] [ch1 pixel byte high] [ch2 pixel byte low] [ch2 pixel byte high] 16 bits (depacked) raw data from 2 channels (e.g. high gain and low gain channels of sCMOS cameras)",
+                "XI_RAW16X4": "16 bits per pixel raw data from sensor(4 components in a row). [ch1 pixel byte low] [ch1 pixel byte high] [ch2 pixel byte low] [ch2 pixel byte high] [ch3 pixel byte low] [ch3 pixel byte high] [ch4 pixel byte low] [ch4 pixel byte high] 16 bits (depacked) raw data from 4 channels (e.g. sCMOS cameras)",
+                "XI_RAW32": "32 bits per pixel raw data from sensor in integer format (LSB first). 4 bytes (LSB first) pixel (depacked) raw data",
+                "XI_RAW32FLOAT": "32 bits per pixel raw data from sensor in single-precision floating point format. 4 bytes per pixel (depacked) raw data"
+            },
+            "enum_ints": {
+                "XI_MONO8": 0,
+                "XI_MONO16": 1,
+                "XI_RGB24": 2,
+                "XI_RGB32": 3,
+                "XI_RGB_PLANAR": 4,
+                "XI_RAW8": 5,
+                "XI_RAW16": 6,
+                "XI_FRM_TRANSPORT_DATA": 7,
+                "XI_RGB48": 8,
+                "XI_RGB64": 9,
+                "XI_RGB16_PLANAR": 10,
+                "XI_RAW8X2": 11,
+                "XI_RAW8X4": 12,
+                "XI_RAW16X2": 13,
+                "XI_RAW16X4": 14,
+                "XI_RAW32": 15,
+                "XI_RAW32FLOAT": 16
+            }
+        }
+    },
+    "shutter_type": {
+        "Name": "shutter_type",
+        "Description": " Type of sensor shutter.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_SHUTTER_GLOBAL": "Sensor Global Shutter(CMOS sensor)",
+                "XI_SHUTTER_ROLLING": "Sensor Electronic Rolling Shutter(CMOS sensor)",
+                "XI_SHUTTER_GLOBAL_RESET_RELEASE": "Sensor Global Reset Release Shutter(CMOS sensor)"
+            },
+            "enum_ints": {
+                "XI_SHUTTER_GLOBAL": 0,
+                "XI_SHUTTER_ROLLING": 1,
+                "XI_SHUTTER_GLOBAL_RESET_RELEASE": 2
+            },
+            "default_value": "XI_SHUTTER_GLOBAL"
+        },
+        "is_synthetic": false
+    },
+    "sensor_taps": {
+        "Name": "sensor_taps",
+        "Description": "Set/get the number of taps used on sensor.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_TAP_CNT_1": "1 sensor tap selected.",
+                "XI_TAP_CNT_2": "2 sensor taps selected.",
+                "XI_TAP_CNT_4": "4 sensor taps selected."
+            },
+            "enum_ints": {
+                "XI_TAP_CNT_1": 1,
+                "XI_TAP_CNT_2": 2,
+                "XI_TAP_CNT_4": 4
+            },
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "aeag": {
+        "Name": "aeag",
+        "Description": "Automatic exposure/gain.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "aeag_roi_offset_x": {
+        "Name": "aeag_roi_offset_x",
+        "Description": "X offset of the area used for AEAG calculation. The sum of XI_PRM_AEAG_ROI_OFFSET_XandXI_PRM_AEAG_ROI_WIDTHmust be equal or lower than the image resolution(width).",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "aeag_roi_offset_y": {
+        "Name": "aeag_roi_offset_y",
+        "Description": "Y offset of the area used for AEAG calculation. The sum of XI_PRM_AEAG_ROI_OFFSET_YandXI_PRM_AEAG_ROI_HEIGHTmust be equal or lower than the image resolution(height).",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "aeag_roi_width": {
+        "Name": "aeag_roi_width",
+        "Description": "width of the area used for AEAG calculation. The sum of XI_PRM_AEAG_ROI_OFFSET_XandXI_PRM_AEAG_ROI_WIDTHmust be equal or lower than the image resolution(width).",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "Depends"
+        },
+        "is_synthetic": false
+    },
+    "aeag_roi_height": {
+        "Name": "aeag_roi_height",
+        "Description": "height of the area used for AEAG calculation. The sum of XI_PRM_AEAG_ROI_OFFSET_YandXI_PRM_AEAG_ROI_HEIGHTmust be equal or lower than the image resolution(height).",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "Depends"
+        },
+        "is_synthetic": false
+    },
+    "bpc_list_selector": {
+        "Name": "bpc_list_selector",
+        "Description": "Selector for current sensor defects list used by Sensor Defect Correction. For more information see Sensor Defect Correctionsupport page.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_SENS_DEFFECTS_CORR_LIST_SEL_FACTORY": "Factory defect correction list",
+                "XI_SENS_DEFFECTS_CORR_LIST_SEL_USER0": "User defect correction list",
+                "XI_SENS_DEFFECTS_CORR_LIST_SEL_IN_CAMERA": "Device specific defect correction list"
+            },
+            "enum_ints": {
+                "XI_SENS_DEFFECTS_CORR_LIST_SEL_FACTORY": 0,
+                "XI_SENS_DEFFECTS_CORR_LIST_SEL_USER0": 1,
+                "XI_SENS_DEFFECTS_CORR_LIST_SEL_IN_CAMERA": 2
+            },
+            "default_value": "XI_SENS_DEFFECTS_CORR_LIST_SEL_FACTORY"
+        },
+        "is_synthetic": false
+    },
+    "sens_defects_corr_list_content": {
+        "Name": "sens_defects_corr_list_content",
+        "Description": "Set/Get current sensor defects list used by Sensor Defect Correction(in specific text format).",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "bpc": {
+        "Name": "bpc",
+        "Description": "Correction of sensor defects. For more information see Sensor Defect Correctionsupport page.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "auto_wb": {
+        "Name": "auto_wb",
+        "Description": "Automatic white balance.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "manual_wb": {
+        "Name": "manual_wb",
+        "Description": "Manual white balance. Takes white balance from square in image center of next image received by xiGetImage. Square have 1/8th of width and height of image. The function expects white sheet of paper exposed to 50% of values (RGB values should be around 128). As result of setting of manual_wb three parameters are changed: \"wb_kb\", \"wb_kg\" and \"wb_kr\". User application can store them and recall when needed to set the white balance back.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "wb_roi_offset_x": {
+        "Name": "wb_roi_offset_x",
+        "Description": "X offset of the area used for manual WB calculation. The sum of XI_PRM_WB_ROI_OFFSET_XandXI_PRM_WB_ROI_WIDTHmust be equal or lower than the image resolution(width).",
+        "Supported cameras": "MC,CB,MX",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "wb_roi_offset_y": {
+        "Name": "wb_roi_offset_y",
+        "Description": "Y offset of the area used for manual WB calculation. The sum of XI_PRM_WB_ROI_OFFSET_YandXI_PRM_WB_ROI_HEIGHTmust be equal or lower than the image resolution(height).",
+        "Supported cameras": "MC,CB,MX",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "wb_roi_width": {
+        "Name": "wb_roi_width",
+        "Description": "Width of the area used for manual WB calculation. The sum of XI_PRM_WB_ROI_OFFSET_XandXI_PRM_WB_ROI_WIDTHmust be equal or lower than the image resolution(width).",
+        "Supported cameras": "MC,CB,MX",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "wb_roi_height": {
+        "Name": "wb_roi_height",
+        "Description": "Height of the area used for manual WB calculation. The sum of XI_PRM_WB_ROI_OFFSET_YandXI_PRM_WB_ROI_HEIGHTmust be equal or lower than the image resolution(height).",
+        "Supported cameras": "MC,CB,MX",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "wb_kr": {
+        "Name": "wb_kr",
+        "Description": "White balance red coefficient.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "wb_kg": {
+        "Name": "wb_kg",
+        "Description": "White balance green coefficient.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "wb_kb": {
+        "Name": "wb_kb",
+        "Description": "White balance blue coefficient.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "width": {
+        "Name": "width",
+        "Description": "If camera runs in single region mode this parameter represents width of the image provided by the device (in pixels). The sum of XI_PRM_OFFSET_XandXI_PRM_WIDTHmust be equal or lower than the image resolution(width). Number must be divisible by the minimum increment which can be read out using the api parameter modifierXI_PRM_INFO_INCREMENT. If camera runs in multiple region mode (XI_PRM_REGION_SELECTOR) this parameter is width of region currently selected (in pixels).",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "Full"
+        },
+        "is_synthetic": false
+    },
+    "height": {
+        "Name": "height",
+        "Description": "If camera runs in single region mode this parameter represents the height of the image provided by the device (in pixels). The sum of XI_PRM_OFFSET_YandXI_PRM_HEIGHTmust be equal or lower than the image resolution(height). Number must be divisible by the minimum increment which can be read out using the api parameter modifierXI_PRM_INFO_INCREMENT. If camera runs in multiple region mode () this parameter is height of region currently selected.",
+        "Note1": "Changing of this parameter will remove all images from buffer queue.",
+        "Note2": "In case of using small ROI in combination with Fresco FL1100 controller, please read this article.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "Full"
+        },
+        "is_synthetic": false
+    },
+    "offsetX": {
+        "Name": "offsetX",
+        "Description": "Horizontal offset from the origin to the area of interest (in pixels). The sum of XI_PRM_OFFSET_XandXI_PRM_WIDTHmust be equal or lower than the image resolution(width). Number must be divisible by the minimum increment which can be read out using the api parameter modifierXI_PRM_INFO_INCREMENT.",
+        "Note": "Changing of this parameter will remove all images from buffer queue.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "offsetY": {
+        "Name": "offsetY",
+        "Description": "Vertical offset from the origin to the area of interest (in pixels).The sum of XI_PRM_OFFSET_YandXI_PRM_HEIGHTmust be equal or lower than the image resolution(height). Number must be divisible by the minimum increment which can be read out using the api parameter modifierXI_PRM_INFO_INCREMENT.",
+        "Note": "Changing of this parameter will remove all images from buffer queue.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "region_selector": {
+        "Name": "region_selector",
+        "Description": "Selects Region in Multiple ROI. Parameters:XI_PRM_WIDTH,XI_PRM_HEIGHT,XI_PRM_OFFSET_X,XI_PRM_OFFSET_Y,XI_PRM_REGION_MODEare related to the particular region.",
+        "Note1": "Width and offset_x could be changed only for Region 0.",
+        "Note2": "Regions has to be in order from top to bottom. Region N has to start after Region N-1 ends.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "region_mode": {
+        "Name": "region_mode",
+        "Description": "Activates/deactivates Region selected by Region Selector in Multiple ROI",
+        "Note": "Region 0 is always activated, it is not possible to deactivate it.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "horizontal_flip": {
+        "Name": "horizontal_flip",
+        "Description": "Activates horizontal flip if available in camera.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "vertical_flip": {
+        "Name": "vertical_flip",
+        "Description": "Activates vertical flip if available in camera.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "interline_exposure_mode": {
+        "Name": "interline_exposure_mode",
+        "Description": "Selector for Exposure parameter",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_INTERLINE_EXPOSURE_MODE_OFF": "Disabled",
+                "XI_INTERLINE_EXPOSURE_MODE_ON": "Enabled"
+            },
+            "enum_ints": {
+                "XI_INTERLINE_EXPOSURE_MODE_OFF": 0,
+                "XI_INTERLINE_EXPOSURE_MODE_ON": 1
+            },
+            "default_value": "XI_INTERLINE_EXPOSURE_MODE_OFF"
+        },
+        "is_synthetic": false
+    },
+    "ffc": {
+        "Name": "ffc",
+        "Description": "Image flat field correction.( XI_PRM_NEW_PROCESS_CHAIN_ENABLEmust be XI_ON). For more information seeFlat Field Correctionsupport page.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "ffc_flat_field_file_name": {
+        "Name": "ffc_flat_field_file_name",
+        "Description": "Set name of file of image flat field to be applied for FFC processor(in tiff format). ( XI_PRM_NEW_PROCESS_CHAIN_ENABLEmust be XI_ON). For more information seeFlat Field Correctionsupport page.",
+        "Note": "Use the same image file for this parameter as for XI_PRM_FFC_DARK_FIELD_FILE_NAME for dark-field correction only. Processing will subtract the dark image only while using the unity (1.00) gain for correction.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "ffc_dark_field_file_name": {
+        "Name": "ffc_dark_field_file_name",
+        "Description": "Selects which binning engine is controlled by the BinningHorizontal and BinningVertical features.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_BIN_SELECT_SENSOR": "parameters for image sensor binning are selected",
+                "XI_BIN_SELECT_DEVICE_FPGA": "parameters for device (camera) FPGA decimation are selected",
+                "XI_BIN_SELECT_HOST_CPU": "parameters for Host CPU binning are selected"
+            },
+            "enum_ints": {
+                "XI_BIN_SELECT_SENSOR": 0,
+                "XI_BIN_SELECT_DEVICE_FPGA": 1,
+                "XI_BIN_SELECT_HOST_CPU": 2
+            },
+            "default_value": "XI_BIN_SELECT_SENSOR"
+        },
+        "Note": "xiAPI allows to set different combinations of binning and decimation parameters.",
+        "is_synthetic": false
+    },
+    "binning_selector": {
+        "Name": "binning_selector",
+        "Description": "Selects which binning engine is controlled by the BinningHorizontal and BinningVertical features.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_BIN_SELECT_SENSOR": "parameters for image sensor binning are selected",
+                "XI_BIN_SELECT_DEVICE_FPGA": "parameters for device (camera) FPGA decimation are selected",
+                "XI_BIN_SELECT_HOST_CPU": "parameters for Host CPU binning are selected"
+            },
+            "enum_ints": {
+                "XI_BIN_SELECT_SENSOR": 0,
+                "XI_BIN_SELECT_DEVICE_FPGA": 1,
+                "XI_BIN_SELECT_HOST_CPU": 2
+            },
+            "default_value": "XI_BIN_SELECT_SENSOR"
+        },
+        "is_synthetic": false
+    },
+    "binning_vertical_mode": {
+        "Name": "binning_vertical_mode",
+        "Description": "Sets the mode used to combine horizontal photo-sensitive cells together when BinningVertical is used.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_BIN_MODE_SUM": "The response from the combined pixels will be added, resulting in increased sensitivity.",
+                "XI_BIN_MODE_AVERAGE": "The response from the combined pixels will be averaged, resulting in increased signal/noise ratio."
+            },
+            "enum_ints": {
+                "XI_BIN_MODE_SUM": 0,
+                "XI_BIN_MODE_AVERAGE": 1
+            },
+            "default_value": "XI_BIN_MODE_SUM"
+        },
+        "is_synthetic": false
+    },
+    "binning_vertical": {
+        "Name": "binning_vertical",
+        "Description": "Number of vertical photo-sensitive cells to combine together. This reduces the vertical resolution (height) of the image.",
+        "Note": "Setting this parameter may automatically change other Binning/Decimation parameters in order to achieve a valid combination.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "binning_horizontal_mode": {
+        "Name": "binning_horizontal_mode",
+        "Description": "Sets the mode to use to combine horizontal photo-sensitive cells together when BinningHorizontal is used.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_BIN_MODE_SUM": "The response from the combined pixels will be added, resulting in increased sensitivity.",
+                "XI_BIN_MODE_AVERAGE": "The response from the combined pixels will be averaged, resulting in increased signal/noise ratio."
+            },
+            "enum_ints": {
+                "XI_BIN_MODE_SUM": 0,
+                "XI_BIN_MODE_AVERAGE": 1
+            },
+            "default_value": "XI_BIN_MODE_SUM"
+        },
+        "is_synthetic": false
+    },
+    "binning_horizontal": {
+        "Name": "binning_horizontal",
+        "Description": "Number of horizontal photo-sensitive cells to combine together. This reduces the horizontal resolution (width) of the image.",
+        "Note": "Setting this parameter may automatically change other Binning/Decimation parameters in order to achieve a valid combination.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "binning_horizontal_pattern": {
+        "Name": "binning_horizontal_pattern",
+        "Description": "Defines number of horizontal photo-sensitive cells to combine.",
+        "Note": "Setting this parameter may automatically change other Binning/Decimation parameters in order to achieve a valid combination.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_BIN_MONO": "adjacent pixels are combined",
+                "XI_BIN_BAYER": "Bayer pattern is preserved during pixel combining"
+            },
+            "enum_ints": {
+                "XI_BIN_MONO": 1,
+                "XI_BIN_BAYER": 2
+            },
+            "default_value": "XI_BIN_MONO"
+        },
+        "is_synthetic": false
+    },
+    "binning_vertical_pattern": {
+        "Name": "binning_vertical_pattern",
+        "Description": "Defines binning vertical pattern.",
+        "Note": "Setting this parameter may automatically change other Binning/Decimation parameters in order to achieve a valid combination.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_BIN_MONO": "adjacent pixels are combined",
+                "XI_BIN_BAYER": "Bayer pattern is preserved during pixel combining"
+            },
+            "enum_ints": {
+                "XI_BIN_MONO": 1,
+                "XI_BIN_BAYER": 2
+            },
+            "default_value": "XI_BIN_MONO"
+        },
+        "is_synthetic": false
+    },
+    "decimation_selector": {
+        "Name": "decimation_selector",
+        "Description": "Selects Decimation engine to configure.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_DEC_SELECT_SENSOR": "parameters for image sensor decimation are selected",
+                "XI_DEC_SELECT_DEVICE_FPGA": "parameters for device (camera) FPGA decimation are selected",
+                "XI_DEC_SELECT_HOST_CPU": "parameters for Host CPU decimation are selected"
+            },
+            "enum_ints": {
+                "XI_DEC_SELECT_SENSOR": 0,
+                "XI_DEC_SELECT_DEVICE_FPGA": 1,
+                "XI_DEC_SELECT_HOST_CPU": 2
+            },
+            "default_value": "XI_DEC_SELECT_SENSOR"
+        },
+        "is_synthetic": false
+    },
+    "decimation_vertical": {
+        "Name": "decimation_vertical",
+        "Description": "Vertical sub-sampling of the image. This reduces the vertical resolution (height) of the image by the specified vertical decimation factor.",
+        "Note": "Setting this parameter may automatically change other Binning/Decimation parameters in order to achieve a valid combination.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "decimation_horizontal": {
+        "Name": "decimation_horizontal",
+        "Description": "Horizontal sub-sampling of the image. This reduces the horizontal resolution (width) of the image by the specified horizontal decimation factor.",
+        "Note": "Setting this parameter may automatically change other Binning/Decimation parameters in order to achieve a valid combination.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "decimation_horizontal_pattern": {
+        "Name": "decimation_horizontal_pattern",
+        "Description": "Defines decimation horizontal pattern.",
+        "Note": "Setting this parameter may automatically change other Binning/Decimation parameters in order to achieve a valid combination.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_DEC_MONO": "adjacent pixels are decimated",
+                "XI_DEC_BAYER": "Bayer pattern is preserved during pixel decimation"
+            },
+            "enum_ints": {
+                "XI_DEC_MONO": 1,
+                "XI_DEC_BAYER": 2
+            },
+            "default_value": "XI_DEC_MONO"
+        },
+        "is_synthetic": false
+    },
+    "decimation_vertical_pattern": {
+        "Name": "decimation_vertical_pattern",
+        "Description": "Defines decimation vertical pattern.",
+        "Note": "Setting this parameter may automatically change other Binning/Decimation parameters in order to achieve a valid combination.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_DEC_MONO": "adjacent pixels are decimated",
+                "XI_DEC_BAYER": "Bayer pattern is preserved during pixel decimation"
+            },
+            "enum_ints": {
+                "XI_DEC_MONO": 1,
+                "XI_DEC_BAYER": 2
+            },
+            "default_value": "XI_DEC_MONO"
+        },
+        "is_synthetic": false
+    },
+    "exp_priority": {
+        "Name": "exp_priority",
+        "Description": "Exposure priority for Auto Exposure / Auto Gain function.",
+        "1.0": ">>> meaning:",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "ag_max_limit": {
+        "Name": "ag_max_limit",
+        "Description": "Maximum limit of gain in AEAG procedure.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "Depends"
+        },
+        "is_synthetic": false
+    },
+    "ae_max_limit": {
+        "Name": "ae_max_limit",
+        "Description": "Maximum limit of exposure (in uSec) in AEAG procedure.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "200000"
+        },
+        "is_synthetic": false
+    },
+    "aeag_level": {
+        "Name": "aeag_level",
+        "Description": "Average intensity of output signal AEAG should achieve(in %).",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "50"
+        },
+        "is_synthetic": false
+    },
+    "limit_bandwidth": {
+        "Name": "limit_bandwidth",
+        "Description": "Camera acquisition data-rate Limit on transport layer in Megabits (1000000) per second. API controls the camera clock or increases the line period by 1 in order to achieve the closest data-rate as the Limit value set, ensuring the data-rate is below the Limit. This parameter can be used to decrease data-rate e.g. when more cameras are connected to same interface to share same channel. In order to activate the limit - application should set also XI_PRM_LIMIT_BANDWIDTH_MODE= XI_ON, see example below.",
+        "Note": "Controlling method (clock or line period) depends on the camera model.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "Example": "See more at our application note about Multiple Cameras Setup.",
+        "is_synthetic": false
+    },
+    "limit_bandwidth_mode": {
+        "Name": "limit_bandwidth_mode",
+        "Description": "Controls if the XI_PRM_LIMIT_BANDWIDTHis active. When disabled, lower level specific features are expected to control the throughput. When enabled,XI_PRM_LIMIT_BANDWIDTHcontrols the overall throughput.",
+        "Note": "This parameter is not supported on MQ, MU, MD, MR camera families.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_OFF": "Turn parameter off",
+                "XI_ON": "Turn parameter on"
+            },
+            "enum_ints": {
+                "XI_OFF": 0,
+                "XI_ON": 1
+            },
+            "default_value": "XI_ON"
+        },
+        "is_synthetic": false
+    },
+    "sensor_bit_depth": {
+        "Name": "sensor_bit_depth",
+        "Description": "Returns the bit depth of the pixel data received from sensor.",
+        "Note": "Read more at XiAPI Image Data Flow.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_BPP_8": "8 bit per pixel",
+                "XI_BPP_9": "9 bit per pixel",
+                "XI_BPP_10": "10 bit per pixel",
+                "XI_BPP_11": "11 bit per pixel",
+                "XI_BPP_12": "12 bit per pixel",
+                "XI_BPP_13": "13 bit per pixel",
+                "XI_BPP_14": "14 bit per pixel",
+                "XI_BPP_15": "15 bit per pixel",
+                "XI_BPP_16": "16 bit per pixel",
+                "XI_BPP_24": "24 bit per pixel",
+                "XI_BPP_32": "32 bit per pixel"
+            },
+            "enum_ints": {
+                "XI_BPP_8": 8,
+                "XI_BPP_9": 9,
+                "XI_BPP_10": 10,
+                "XI_BPP_11": 11,
+                "XI_BPP_12": 12,
+                "XI_BPP_13": 13,
+                "XI_BPP_14": 14,
+                "XI_BPP_15": 15,
+                "XI_BPP_16": 16,
+                "XI_BPP_24": 24,
+                "XI_BPP_32": 32
+            },
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "output_bit_depth": {
+        "Name": "output_bit_depth",
+        "Description": "The bit depth of the output data from camera (=transport layer).",
+        "Note": "Read more at XiAPI Image Data Flow.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_BPP_8": "8 bit per pixel",
+                "XI_BPP_9": "9 bit per pixel",
+                "XI_BPP_10": "10 bit per pixel",
+                "XI_BPP_11": "11 bit per pixel",
+                "XI_BPP_12": "12 bit per pixel",
+                "XI_BPP_13": "13 bit per pixel",
+                "XI_BPP_14": "14 bit per pixel",
+                "XI_BPP_15": "15 bit per pixel",
+                "XI_BPP_16": "16 bit per pixel",
+                "XI_BPP_24": "24 bit per pixel",
+                "XI_BPP_32": "32 bit per pixel"
+            },
+            "enum_ints": {
+                "XI_BPP_8": 8,
+                "XI_BPP_9": 9,
+                "XI_BPP_10": 10,
+                "XI_BPP_11": 11,
+                "XI_BPP_12": 12,
+                "XI_BPP_13": 13,
+                "XI_BPP_14": 14,
+                "XI_BPP_15": 15,
+                "XI_BPP_16": 16,
+                "XI_BPP_24": 24,
+                "XI_BPP_32": 32
+            },
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "image_data_bit_depth": {
+        "Name": "image_data_bit_depth",
+        "Description": "The bit depth of the pixel data returned by function xiGetImage. If MONO16 or RAW16 image formats are used this parameter defines the alignment of the data on the xiGetImage.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_BPP_8": "8 bit per pixel",
+                "XI_BPP_9": "9 bit per pixel",
+                "XI_BPP_10": "10 bit per pixel",
+                "XI_BPP_11": "11 bit per pixel",
+                "XI_BPP_12": "12 bit per pixel",
+                "XI_BPP_13": "13 bit per pixel",
+                "XI_BPP_14": "14 bit per pixel",
+                "XI_BPP_15": "15 bit per pixel",
+                "XI_BPP_16": "16 bit per pixel",
+                "XI_BPP_24": "24 bit per pixel",
+                "XI_BPP_32": "32 bit per pixel"
+            },
+            "enum_ints": {
+                "XI_BPP_8": 8,
+                "XI_BPP_9": 9,
+                "XI_BPP_10": 10,
+                "XI_BPP_11": 11,
+                "XI_BPP_12": 12,
+                "XI_BPP_13": 13,
+                "XI_BPP_14": 14,
+                "XI_BPP_15": 15,
+                "XI_BPP_16": 16,
+                "XI_BPP_24": 24,
+                "XI_BPP_32": 32
+            },
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "output_bit_packing": {
+        "Name": "output_bit_packing",
+        "Description": "This feature enables bit packing on transport data layer, thus increasing the maximum frame rate when data with 10 or 12 bits per pixel is transported. For more info please see Transport Data Packingfeature description.",
+        "Note": "Read more at XiAPI Image Data Flow.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "output_bit_packing_type": {
+        "Name": "output_bit_packing_type",
+        "Description": "This feature chooses output data packing type(ximea grouping 10g160, 12g192, 14g224), PFNC packing 10p, 12p...). For more info please see Transport Data Packingfeature description.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_DATA_PACK_XI_GROUPING": "Data grouping (10g160, 12g192, 14g224).",
+                "XI_DATA_PACK_PFNC_LSB_PACKING": "Data packing (10p, 12p)"
+            },
+            "enum_ints": {
+                "XI_DATA_PACK_XI_GROUPING": 0,
+                "XI_DATA_PACK_PFNC_LSB_PACKING": 1
+            },
+            "default_value": "XI_DATA_PACK_XI_GROUPING"
+        },
+        "is_synthetic": false
+    },
+    "iscooled": {
+        "Name": "iscooled",
+        "Description": "Returns 1 for cameras that support cooling.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "cooling": {
+        "Name": "cooling",
+        "Description": "Set camera cooling control. Replaced by XI_PRM_TEMP_CONTROL_MODE",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_TEMP_CTRL_MODE_OFF": "Controlling of elements (TEC/Peltier, Fans) is turned off",
+                "XI_TEMP_CTRL_MODE_AUTO": "Controlling of elements is performed automatically by API or camera in order to reach parameter TARGET_TEMP.",
+                "XI_TEMP_CTRL_MODE_MANUAL": "Controlling of elements is done manually by application."
+            },
+            "enum_ints": {
+                "XI_TEMP_CTRL_MODE_OFF": 0,
+                "XI_TEMP_CTRL_MODE_AUTO": 1,
+                "XI_TEMP_CTRL_MODE_MANUAL": 2
+            },
+            "default_value": "XI_TEMP_CTRL_MODE_OFF"
+        },
+        "is_synthetic": false
+    },
+    "target_temp": {
+        "Name": "target_temp",
+        "Description": "Set target temperature for automatic temperature control.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "temp_selector": {
+        "Name": "temp_selector",
+        "Description": "Temperature sensor selector.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_TEMP_IMAGE_SENSOR_DIE_RAW": "Image sensor die (non-calibrated)",
+                "XI_TEMP_IMAGE_SENSOR_DIE": "Image sensor die (calibrated)",
+                "XI_TEMP_SENSOR_BOARD": "Image sensor PCB",
+                "XI_TEMP_INTERFACE_BOARD": "Data interface PCB",
+                "XI_TEMP_FRONT_HOUSING": "Front part of camera housing",
+                "XI_TEMP_REAR_HOUSING": "Rear part of camera housing",
+                "XI_TEMP_TEC1_COLD": "TEC1 cold side temperature",
+                "XI_TEMP_TEC1_HOT": "TEC1 hot side temperature"
+            },
+            "enum_ints": {
+                "XI_TEMP_IMAGE_SENSOR_DIE_RAW": 0,
+                "XI_TEMP_IMAGE_SENSOR_DIE": 1,
+                "XI_TEMP_SENSOR_BOARD": 2,
+                "XI_TEMP_INTERFACE_BOARD": 3,
+                "XI_TEMP_FRONT_HOUSING": 4,
+                "XI_TEMP_REAR_HOUSING": 5,
+                "XI_TEMP_TEC1_COLD": 6,
+                "XI_TEMP_TEC1_HOT": 7
+            },
+            "default_value": "XI_TEMP_SENSOR_BOARD"
+        },
+        "is_synthetic": false
+    },
+    "temp": {
+        "Name": "temp",
+        "Description": "Selected thermometer reading in degree Celsius. Thermometer can be selected by XI_PRM_TEMP_SELECTOR.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "device_temperature_ctrl_mode": {
+        "Name": "device_temperature_ctrl_mode",
+        "Description": "Temperature reading of thermometer chip. Sensor is located on the PCB close to imaging sensor. Units: degrees of Celsius.",
+        "Note": "On some camera models, when some component (e.g. housing) reaches critical temperature, the mode is changed to XI_TEMP_CTRL_MODE_OFF automatically by camera and this mode remains off. It can be re-enabled by setting mode to XI_TEMP_CTRL_MODE_AUTO. By getting XI_PRM_TEMP_CONTROL_MODE, application can get the information, about current state. XI_PRM_CHIP_TEMP or \"chip_temp\"¶",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "chip_temp": {
+        "Name": "chip_temp",
+        "Description": "Temperature reading of thermometer chip. Sensor is located on the PCB close to imaging sensor. Units: degrees of Celsius.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "hous_temp": {
+        "Name": "hous_temp",
+        "Description": "Camera housing temperature.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "hous_back_side_temp": {
+        "Name": "hous_back_side_temp",
+        "Description": "Camera housing back side temperature.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "sensor_board_temp": {
+        "Name": "sensor_board_temp",
+        "Description": "Camera sensor board temperature.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "device_temperature_element_sel": {
+        "Name": "device_temperature_element_sel",
+        "Description": "Temperature element selector (TEC, Fan)",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_TEMP_ELEM_TEC1": "TEC1 = TEC/Peltier that is closest to the image sensor",
+                "XI_TEMP_ELEM_TEC2": "TEC2 = TEC/Peltier location depends on camera model",
+                "XI_TEMP_ELEM_FAN1": "Temperature element fan current or rotation (FAN1 = Fan)",
+                "XI_TEMP_ELEM_FAN1_THRS_TEMP": "Temperature element fan start rotation threshold temperature"
+            },
+            "enum_ints": {
+                "XI_TEMP_ELEM_TEC1": 11,
+                "XI_TEMP_ELEM_TEC2": 12,
+                "XI_TEMP_ELEM_FAN1": 31,
+                "XI_TEMP_ELEM_FAN1_THRS_TEMP": 32
+            },
+            "default_value": "XI_TEMP_ELEM_TEC1"
+        },
+        "is_synthetic": false
+    },
+    "device_temperature_element_val": {
+        "Name": "device_temperature_element_val",
+        "Description": "Temperature element value in percents of full control range.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "Note": "Works only for color cameras.",
+        "is_synthetic": false
+    },
+    "cms": {
+        "Name": "cms",
+        "Description": "Enable or disable color management.",
+        "Note": "This feature is in Beta stage.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_CMS_DIS": "disables color management",
+                "XI_CMS_EN": "enables color management (high CPU usage)",
+                "XI_CMS_EN_FAST": "enables fast color management (high RAM usage)"
+            },
+            "enum_ints": {
+                "XI_CMS_DIS": 0,
+                "XI_CMS_EN": 1,
+                "XI_CMS_EN_FAST": 2
+            },
+            "default_value": "XI_CMS_DIS"
+        },
+        "is_synthetic": false
+    },
+    "cms_intent": {
+        "Name": "cms_intent",
+        "Description": "Defines rendering intents. See more at our support page CMS INTENT.",
+        "Note1": "This feature is in Beta stage.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_CMS_INTENT_PERCEPTUAL": "CMS intent perceptual",
+                "XI_CMS_INTENT_RELATIVE_COLORIMETRIC": "CMS intent relative colorimetry",
+                "XI_CMS_INTENT_SATURATION": "CMS intent saturation",
+                "XI_CMS_INTENT_ABSOLUTE_COLORIMETRIC": "CMS intent absolute colorimetry"
+            },
+            "enum_ints": {
+                "XI_CMS_INTENT_PERCEPTUAL": 0,
+                "XI_CMS_INTENT_RELATIVE_COLORIMETRIC": 1,
+                "XI_CMS_INTENT_SATURATION": 2,
+                "XI_CMS_INTENT_ABSOLUTE_COLORIMETRIC": 3
+            },
+            "default_value": "XI_CMS_INTENT_PERCEPTUAL"
+        },
+        "is_synthetic": false
+    },
+    "apply_cms": {
+        "Name": "apply_cms",
+        "Description": "If set to XI_ON applies CMS profile to xiGetImage.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "input_cms_profile": {
+        "Name": "input_cms_profile",
+        "Description": "Filename of the input cms profile (e.g. input.icc)",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "output_cms_profile": {
+        "Name": "output_cms_profile",
+        "Description": "Filename of the output cms profile (e.g. output.icc)",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "iscolor": {
+        "Name": "iscolor",
+        "Description": "Returns 1 for color cameras.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "cfa": {
+        "Name": "cfa",
+        "Description": "Returns color filter array type of RAW data.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_CFA_NONE": "Result pixels have no filters applied in this format",
+                "XI_CFA_BAYER_RGGB": "Regular RGGB",
+                "XI_CFA_CMYG": "AK Sony sens",
+                "XI_CFA_RGR": "2R+G readout",
+                "XI_CFA_BAYER_BGGR": "BGGR readout",
+                "XI_CFA_BAYER_GRBG": "GRBG readout",
+                "XI_CFA_BAYER_GBRG": "GBRG readout",
+                "XI_CFA_POLAR_A_BAYER_BGGR": "BGGR polarized 4x4 macropixel",
+                "XI_CFA_POLAR_A": "Polarized 2x2 macropixel"
+            },
+            "enum_ints": {
+                "XI_CFA_NONE": 0,
+                "XI_CFA_BAYER_RGGB": 1,
+                "XI_CFA_CMYG": 2,
+                "XI_CFA_RGR": 3,
+                "XI_CFA_BAYER_BGGR": 4,
+                "XI_CFA_BAYER_GRBG": 5,
+                "XI_CFA_BAYER_GBRG": 6,
+                "XI_CFA_POLAR_A_BAYER_BGGR": 7,
+                "XI_CFA_POLAR_A": 8
+            },
+            "default_value": "XI_CFA_NONE"
+        },
+        "is_synthetic": false
+    },
+    "gammaY": {
+        "Name": "gammaY",
+        "Description": "Luminosity gamma.Lowering the value increases correction.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "gammaC": {
+        "Name": "gammaC",
+        "Description": "Chromaticity gamma.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "sharpness": {
+        "Name": "sharpness",
+        "Description": "Sharpness Strength. Increasing the value results in sharper image.",
+        "Note": "Works also for XI_MONO* formats, but only for color cameras.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "ccMTX00": {
+        "Name": "ccMTX00",
+        "Description": "Color Correction Matrix element [0][0].Correction Matrix elements:",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "defccMTX": {
+        "Name": "defccMTX",
+        "Description": "Set default Color Correction Matrix",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "ccMTXnorm": {
+        "Name": "ccMTXnorm",
+        "Description": "Activates normalization of color correction matrix.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "trigger_source": {
+        "Name": "trigger_source",
+        "Description": "Defines source of trigger.",
+        "Note": "To set input as external trigger, XI_PRM_GPI_MODEof selected input should be set to XI_GPI_TRIGGER. See example atXI_PRM_GPI_MODE.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_TRG_OFF": "Capture of next image is automatically started after previous.",
+                "XI_TRG_EDGE_RISING": "Capture is started on rising edge of selected input.",
+                "XI_TRG_EDGE_FALLING": "Capture is started on falling edge of selected input",
+                "XI_TRG_SOFTWARE": "Capture is started with software trigger.",
+                "XI_TRG_LEVEL_HIGH": "Specifies that the trigger is considered valid as long as the level of the source signal is high.",
+                "XI_TRG_LEVEL_LOW": "Specifies that the trigger is considered valid as long as the level of the source signal is low."
+            },
+            "enum_ints": {
+                "XI_TRG_OFF": 0,
+                "XI_TRG_EDGE_RISING": 1,
+                "XI_TRG_EDGE_FALLING": 2,
+                "XI_TRG_SOFTWARE": 3,
+                "XI_TRG_LEVEL_HIGH": 4,
+                "XI_TRG_LEVEL_LOW": 5
+            },
+            "default_value": "XI_TRG_OFF"
+        },
+        "Example": "For more examples see xiAPI Camera Trigger and Synchronization Signals.",
+        "is_synthetic": false
+    },
+    "trigger_software": {
+        "Name": "trigger_software",
+        "Description": "Generates an internal trigger. XI_PRM_TRG_SOURCEhas to be set to XI_TRG_SOFTWARE.",
+        "Note": "Some models ( xiMU- MU9 andxiQ) return error code if sensor is not ready to start exposure of next image. Other cameras return XI_OK even if sensor is not ready to start exposure.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "trigger_selector": {
+        "Name": "trigger_selector",
+        "Description": "This parameter selects the type of trigger. For more information about enumerator XI_TRG_SEL_EXPOSURE_ACTIVE please refer to our Exposure Defined by Trigger Pulse Lengthsupport page. Frame Burst Modessupport page. Multiple exposures in one framesupport page.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_TRG_SEL_FRAME_START": "Trigger starts the capture of one frame",
+                "XI_TRG_SEL_EXPOSURE_ACTIVE": "Trigger controls the start and length of the exposure.",
+                "XI_TRG_SEL_FRAME_BURST_START": "Trigger starts the capture of the bursts of frames in an acquisition.",
+                "XI_TRG_SEL_FRAME_BURST_ACTIVE": "Trigger controls the duration of the capture of the bursts of frames in an acquisition.",
+                "XI_TRG_SEL_MULTIPLE_EXPOSURES": "Trigger which when first trigger starts exposure and consequent pulses are gating exposure(active HI)",
+                "XI_TRG_SEL_EXPOSURE_START": "Trigger controls the start of the exposure of one Frame.",
+                "XI_TRG_SEL_MULTI_SLOPE_PHASE_CHANGE": "Trigger controls the multi slope phase in one Frame (phase0 -> phase1) or (phase1 -> phase2).",
+                "XI_TRG_SEL_ACQUISITION_START": "Trigger starts acquisition of first frame."
+            },
+            "enum_ints": {
+                "XI_TRG_SEL_FRAME_START": 0,
+                "XI_TRG_SEL_EXPOSURE_ACTIVE": 1,
+                "XI_TRG_SEL_FRAME_BURST_START": 2,
+                "XI_TRG_SEL_FRAME_BURST_ACTIVE": 3,
+                "XI_TRG_SEL_MULTIPLE_EXPOSURES": 4,
+                "XI_TRG_SEL_EXPOSURE_START": 5,
+                "XI_TRG_SEL_MULTI_SLOPE_PHASE_CHANGE": 6,
+                "XI_TRG_SEL_ACQUISITION_START": 7
+            },
+            "default_value": "XI_TRG_SEL_FRAME_START"
+        },
+        "is_synthetic": false
+    },
+    "trigger_overlap": {
+        "Name": "trigger_overlap",
+        "Description": "This parameter selects the type of trigger overlap.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_TRG_OVERLAP_OFF": "No trigger overlap is permitted. If camera is in read-out phase, all triggers are rejected.",
+                "XI_TRG_OVERLAP_READ_OUT": "Trigger is accepted only when sensor is ready to start next exposure with defined exposure time. Trigger is rejected when sensor is not ready for new exposure with defined exposure time. (see Note1)",
+                "XI_TRG_OVERLAP_PREV_FRAME": "Trigger is accepted by camera any time. If sensor is not ready for the next exposure - the trigger is latched and sensor starts exposure as soon as exposure can be started with defined exposure time."
+            },
+            "enum_ints": {
+                "XI_TRG_OVERLAP_OFF": 0,
+                "XI_TRG_OVERLAP_READ_OUT": 1,
+                "XI_TRG_OVERLAP_PREV_FRAME": 2
+            },
+            "default_value": "XI_TRG_OVERLAP_PREV_FRAME"
+        },
+        "Note1": "This mode is planned and not yet supported by cameras.",
+        "is_synthetic": false
+    },
+    "acq_frame_burst_count": {
+        "Name": "acq_frame_burst_count",
+        "Description": "Sets the number of frames to be acquired after trigger pulse has been sent to the camera. This setting is valid only if the trigger selector is set to FrameBurstStart. For more info please refer to our Frame Burst Modessupport page. If burst count is set to zero (0) then number of acquired frames will not be limited (=endless).",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "timestamp": {
+        "Name": "timestamp",
+        "Description": "Reads the current timestamp value from camera in nanoseconds (only valid for xiB, xiC, xiX camera families).",
+        "parameter_type": {
+            "typename": "Unsigned integer 64 bit",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "gpi_selector": {
+        "Name": "gpi_selector",
+        "Description": "Selects GPI.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_GPI_PORT1": "GPI port 1",
+                "XI_GPI_PORT2": "GPI port 2",
+                "XI_GPI_PORT3": "GPI port 3",
+                "XI_GPI_PORT4": "GPI port 4",
+                "XI_GPI_PORT5": "GPI port 5",
+                "XI_GPI_PORT6": "GPI port 6",
+                "XI_GPI_PORT7": "GPI port 7",
+                "XI_GPI_PORT8": "GPI port 8",
+                "XI_GPI_PORT9": "GPI port 9",
+                "XI_GPI_PORT10": "GPI port 10",
+                "XI_GPI_PORT11": "GPI port 11",
+                "XI_GPI_PORT12": "GPI port 12"
+            },
+            "enum_ints": {
+                "XI_GPI_PORT1": 1,
+                "XI_GPI_PORT2": 2,
+                "XI_GPI_PORT3": 3,
+                "XI_GPI_PORT4": 4,
+                "XI_GPI_PORT5": 5,
+                "XI_GPI_PORT6": 6,
+                "XI_GPI_PORT7": 7,
+                "XI_GPI_PORT8": 8,
+                "XI_GPI_PORT9": 9,
+                "XI_GPI_PORT10": 10,
+                "XI_GPI_PORT11": 11,
+                "XI_GPI_PORT12": 12
+            },
+            "default_value": "1"
+        },
+        "Example": "See XI_PRM_GPI_LEVELOn each camera family or model the relation of gpi_index and physical pin differs. Following table list the camera families and gpi_index relations.Models: MQ cameras (MQ.*)Models: MC cameras (MC.*)Models: MX X2G2 cameras (MX.*X2G2.*)Models: MX X4G2 cameras (MX.*X4G2.*)Models: MX X4G3 cameras (MX.*X4G3.*)Models: MX X8G3 cameras (MX.*X8G3-FF.*)Models: CB X8G3 cameras (CB.*X8G3.*)Models: CB X4G2 cameras (CB.*)Models: MX377 MTP cameras (MX377.*MTP.*)",
+        "is_synthetic": false
+    },
+    "gpi_mode": {
+        "Name": "gpi_mode",
+        "Description": "Defines GPI functionality.",
+        "Note1": "To use GPI as trigger source, the XI_PRM_TRG_SOURCEshould be also set to XI_TRG_EDGE_RISING or XI_TRG_EDGE_FALLING",
+        "Note2": "If bidirectional (input/output) pin is used, set XI_PRM_GPO_MODEto XI_GPO_HIGH_IMPEDANCE. This will disable output driver on the pin from camera.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_GPI_OFF": "Input is not used for triggering, but can be used to get parameter GPI_LEVEL. This can be used to switch I/O line on some cameras to input mode.",
+                "XI_GPI_TRIGGER": "Input can be used for triggering.",
+                "XI_GPI_EXT_EVENT": "External signal input (not implemented)"
+            },
+            "enum_ints": {
+                "XI_GPI_OFF": 0,
+                "XI_GPI_TRIGGER": 1,
+                "XI_GPI_EXT_EVENT": 2
+            },
+            "default_value": "XI_GPI_OFF"
+        },
+        "Example": "",
+        "is_synthetic": false
+    },
+    "gpi_level": {
+        "Name": "gpi_level",
+        "Description": "Level of digital input selected by XI_PRM_GPI_SELECTOR.",
+        "Note": "When used on pin that could be input or output (E.g. pin 8 on MC023 camera), then associated GPO needs to be in mode XI_GPO_HIGH_IMPEDANCE . Otherwise pin can be pulled down (GPO_OFF) or up (GPO_ON). Such pins are HIGH_IMPEDANCE as default so application does not to setup it when used only as input.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "Example": "",
+        "is_synthetic": false
+    },
+    "gpi_level_at_image_exp_start": {
+        "Name": "gpi_level_at_image_exp_start",
+        "Description": "Level of digital input selected by XI_PRM_GPI_SELECTORsampled at exposure start of the last image received by GetImage.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "Example": "",
+        "is_synthetic": false
+    },
+    "gpi_level_at_image_exp_end": {
+        "Name": "gpi_level_at_image_exp_end",
+        "Description": "Level of digital input selected by XI_PRM_GPI_SELECTORsampled at exposure end of the last image received by GetImage.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "Example": "",
+        "is_synthetic": false
+    },
+    "gpo_selector": {
+        "Name": "gpo_selector",
+        "Description": "Selects GPO.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_GPO_PORT1": "GPO port 1",
+                "XI_GPO_PORT2": "GPO port 2",
+                "XI_GPO_PORT3": "GPO port 3",
+                "XI_GPO_PORT4": "GPO port 4",
+                "XI_GPO_PORT5": "GPO port 5",
+                "XI_GPO_PORT6": "GPO port 6",
+                "XI_GPO_PORT7": "GPO port 7",
+                "XI_GPO_PORT8": "GPO port 8",
+                "XI_GPO_PORT9": "GPO port 9",
+                "XI_GPO_PORT10": "GPO port 10",
+                "XI_GPO_PORT11": "GPO port 11",
+                "XI_GPO_PORT12": "GPO port 12"
+            },
+            "enum_ints": {
+                "XI_GPO_PORT1": 1,
+                "XI_GPO_PORT2": 2,
+                "XI_GPO_PORT3": 3,
+                "XI_GPO_PORT4": 4,
+                "XI_GPO_PORT5": 5,
+                "XI_GPO_PORT6": 6,
+                "XI_GPO_PORT7": 7,
+                "XI_GPO_PORT8": 8,
+                "XI_GPO_PORT9": 9,
+                "XI_GPO_PORT10": 10,
+                "XI_GPO_PORT11": 11,
+                "XI_GPO_PORT12": 12
+            },
+            "default_value": "1"
+        },
+        "Example": "See XI_PRM_GPO_MODEOn each camera family or model the relation of gpo_index and physical pin differs. Following table list the camera families and gpi_index relations.Models: MQ cameras (MQ.*)Models: MC cameras (MC.*)Models: MX X2G2 cameras (MX.*X2G2.*)Models: MX X4G2 cameras (MX.*X4G2.*)Models: MX X4G3 cameras (MX.*X4G3.*)Models: MX X8G3 cameras (MX.*X8G3-FF.*)Models: CB X8G3 cameras (CB.*X8G3.*)Models: CB X4G2 cameras (CB.*)Models: MX377 MTP cameras (MX377.*MTP.*)",
+        "is_synthetic": false
+    },
+    "gpo_mode": {
+        "Name": "gpo_mode",
+        "Description": "Defines GPO functionality.",
+        "Note1": "On some camera models (MR, MH): Modes FRAME_ACTIVE or EXPOSURE_ACTIVE are supported only if XI_PRM_TRG_SOURCEis set to XI_TRG_SOFTWARE or XI_TRG_EDGE_RISING or XI_TRG_EDGE_FALLING. See sectionXI_PRM_TRG_SOURCEOn modelsxiMU(MU9)xiQ.",
+        "Note2": "Some camera families (e.g. MR) does not support the software control of outputs. Only one of mode: FRAME_ACTIVE and EXPOSURE_ACTIVE can be set.",
+        "Note3": "Duration of pulse depends on camera model and polarity of signal.",
+        "Note4": "Each bidirectional line has only one control for inverter (as in GenICam-SFNC). If output mode with _NEG extension is set then also input signal becomes inverted.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_GPO_OFF": "Output is off (zero voltage or switched_off)",
+                "XI_GPO_ON": "Output is on (voltage or switched_on)",
+                "XI_GPO_FRAME_ACTIVE": "Output is on while frame exposure,read,transfer.",
+                "XI_GPO_FRAME_ACTIVE_NEG": "Output is off while frame exposure,read,transfer.",
+                "XI_GPO_EXPOSURE_ACTIVE": "Output is on while frame exposure",
+                "XI_GPO_EXPOSURE_ACTIVE_NEG": "Output is off while frame exposure",
+                "XI_GPO_FRAME_TRIGGER_WAIT": "Output is on while camera is ready for trigger",
+                "XI_GPO_FRAME_TRIGGER_WAIT_NEG": "Output is off while camera is ready for trigger.",
+                "XI_GPO_EXPOSURE_PULSE": "Output is on short pulse at the beginning of frame exposure.",
+                "XI_GPO_EXPOSURE_PULSE_NEG": "Output is off short pulse at the beginning of frame exposure.",
+                "XI_GPO_BUSY": "Output is on when camera has received trigger until end of transfer",
+                "XI_GPO_BUSY_NEG": "Output is off when camera has received trigger until end of transfer",
+                "XI_GPO_HIGH_IMPEDANCE": "Associated pin is in high impedance (tri-stated) and can be driven externally. E.g. for triggering or reading status by GPI_LEVEL.",
+                "XI_GPO_FRAME_BUFFER_OVERFLOW": "Frame buffer overflow status.",
+                "XI_GPO_EXPOSURE_ACTIVE_FIRST_ROW": "Output is on while the first row exposure.",
+                "XI_GPO_EXPOSURE_ACTIVE_FIRST_ROW_NEG": "Output is off while the first row exposure.",
+                "XI_GPO_EXPOSURE_ACTIVE_ALL_ROWS": "Output is on while all rows exposure together.",
+                "XI_GPO_EXPOSURE_ACTIVE_ALL_ROWS_NEG": "Output is off while all rows exposure together.",
+                "XI_GPO_TXD": "Output is connected to TXD of UART module"
+            },
+            "enum_ints": {
+                "XI_GPO_OFF": 0,
+                "XI_GPO_ON": 1,
+                "XI_GPO_FRAME_ACTIVE": 2,
+                "XI_GPO_FRAME_ACTIVE_NEG": 3,
+                "XI_GPO_EXPOSURE_ACTIVE": 4,
+                "XI_GPO_EXPOSURE_ACTIVE_NEG": 5,
+                "XI_GPO_FRAME_TRIGGER_WAIT": 6,
+                "XI_GPO_FRAME_TRIGGER_WAIT_NEG": 7,
+                "XI_GPO_EXPOSURE_PULSE": 8,
+                "XI_GPO_EXPOSURE_PULSE_NEG": 9,
+                "XI_GPO_BUSY": 10,
+                "XI_GPO_BUSY_NEG": 11,
+                "XI_GPO_HIGH_IMPEDANCE": 12,
+                "XI_GPO_FRAME_BUFFER_OVERFLOW": 13,
+                "XI_GPO_EXPOSURE_ACTIVE_FIRST_ROW": 14,
+                "XI_GPO_EXPOSURE_ACTIVE_FIRST_ROW_NEG": 15,
+                "XI_GPO_EXPOSURE_ACTIVE_ALL_ROWS": 16,
+                "XI_GPO_EXPOSURE_ACTIVE_ALL_ROWS_NEG": 17,
+                "XI_GPO_TXD": 18
+            },
+            "default_value": "XI_GPO_OFF"
+        },
+        "Example": "",
+        "is_synthetic": false
+    },
+    "led_selector": {
+        "Name": "led_selector",
+        "Description": "Selects LED.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_LED_SEL1": "LED 1",
+                "XI_LED_SEL2": "LED 2",
+                "XI_LED_SEL3": "LED 3",
+                "XI_LED_SEL4": "LED 4",
+                "XI_LED_SEL5": "LED 5"
+            },
+            "enum_ints": {
+                "XI_LED_SEL1": 1,
+                "XI_LED_SEL2": 2,
+                "XI_LED_SEL3": 3,
+                "XI_LED_SEL4": 4,
+                "XI_LED_SEL5": 5
+            },
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "led_mode": {
+        "Name": "led_mode",
+        "Description": "Defines LED functionality.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_LED_HEARTBEAT": "Set led to blink (1 Hz) if link is OK.",
+                "XI_LED_TRIGGER_ACTIVE": "Set led to blink if trigger detected.",
+                "XI_LED_EXT_EVENT_ACTIVE": "Set led to blink if external signal detected.",
+                "XI_LED_LINK": "Set led to blink if link is OK.",
+                "XI_LED_ACQUISITION": "Set led to blink if data streaming",
+                "XI_LED_EXPOSURE_ACTIVE": "Set led to blink if sensor integration time.",
+                "XI_LED_FRAME_ACTIVE": "Set led to blink if device busy/not busy.",
+                "XI_LED_OFF": "Set led to off.",
+                "XI_LED_ON": "Set led to on.",
+                "XI_LED_BLINK": "Blinking (1Hz)."
+            },
+            "enum_ints": {
+                "XI_LED_HEARTBEAT": 0,
+                "XI_LED_TRIGGER_ACTIVE": 1,
+                "XI_LED_EXT_EVENT_ACTIVE": 2,
+                "XI_LED_LINK": 3,
+                "XI_LED_ACQUISITION": 4,
+                "XI_LED_EXPOSURE_ACTIVE": 5,
+                "XI_LED_FRAME_ACTIVE": 6,
+                "XI_LED_OFF": 7,
+                "XI_LED_ON": 8,
+                "XI_LED_BLINK": 9
+            },
+            "default_value": "XI_LED_HEARTBEAT"
+        },
+        "is_synthetic": false
+    },
+    "dbnc_en": {
+        "Name": "dbnc_en",
+        "Description": "Enable/Disable debounce to selected GPI (see",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "dbnc_t0": {
+        "Name": "dbnc_t0",
+        "Description": "Debounce time (x * 10us) for transition to inactive level of GPI selected by XI_PRM_DEBOUNCE_POL.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "dbnc_t1": {
+        "Name": "dbnc_t1",
+        "Description": "Debounce time (x * 10us)for transition to active level of GPI selected by XI_PRM_DEBOUNCE_POL",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "dbnc_pol": {
+        "Name": "dbnc_pol",
+        "Description": "Debounce polarity selects active level of GPI (see XI_PRM_GPI_SELECTORparameter). Does not inverts the signal if set.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "Note": "Some of XIMEA cameras can be equipped with controlled lens. API for lens control contains couple of parameters.Lens tested OK with CB cameras:",
+        "is_synthetic": false
+    },
+    "lens_mode": {
+        "Name": "lens_mode",
+        "Description": "Status of lens control interface. This shall be set to XI_ON before any Lens operations.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "lens_aperture_value": {
+        "Name": "lens_aperture_value",
+        "Description": "Current lens aperture value in aperture stops. Examples: 2.8, 4, 5.6, 8, 11.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "lens_aperture_index": {
+        "Name": "lens_aperture_index",
+        "Description": "Current lens aperture motor step value.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "lens_focus_movement_value": {
+        "Name": "lens_focus_movement_value",
+        "Description": "Lens current focus movement value to be used by XI_PRM_LENS_FOCUS_MOVEin motor steps. Positive numbers will direct the movement to infinity. Negative numbers will direct the movement to macro.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "lens_focus_move": {
+        "Name": "lens_focus_move",
+        "Description": "Moves lens focus motor by steps set in XI_PRM_LENS_FOCUS_MOVEMENT_VALUE",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "lens_focal_length": {
+        "Name": "lens_focal_length",
+        "Description": "Lens focal distance in mm. This parameter is constant for prime lens and can change in real time for zoom lens.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "lens_feature_selector": {
+        "Name": "lens_feature_selector",
+        "Description": "Selects the current feature which is accessible by XI_PRM_LENS_FEATURE",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_LENS_FEATURE_MOTORIZED_FOCUS_SWITCH": "Status of lens motorized focus switch",
+                "XI_LENS_FEATURE_MOTORIZED_FOCUS_BOUNDED": "On read = 1 if motorized focus is on one of limits.",
+                "XI_LENS_FEATURE_MOTORIZED_FOCUS_CALIBRATION": "(planned feature) On read = 1 if motorized focus is calibrated. Write 1 to start calibration.",
+                "XI_LENS_FEATURE_IMAGE_STABILIZATION_ENABLED": "On read = 1 if image stabilization is enabled. Write 1 to enable image stabilization.",
+                "XI_LENS_FEATURE_IMAGE_STABILIZATION_SWITCH_STATUS": "On read = 1 if image stabilization switch is in position On.",
+                "XI_LENS_FEATURE_IMAGE_ZOOM_SUPPORTED": "On read = 1 if lens supports zoom = are not prime."
+            },
+            "enum_ints": {
+                "XI_LENS_FEATURE_MOTORIZED_FOCUS_SWITCH": 1,
+                "XI_LENS_FEATURE_MOTORIZED_FOCUS_BOUNDED": 2,
+                "XI_LENS_FEATURE_MOTORIZED_FOCUS_CALIBRATION": 3,
+                "XI_LENS_FEATURE_IMAGE_STABILIZATION_ENABLED": 4,
+                "XI_LENS_FEATURE_IMAGE_STABILIZATION_SWITCH_STATUS": 5,
+                "XI_LENS_FEATURE_IMAGE_ZOOM_SUPPORTED": 6
+            },
+            "default_value": "XI_LENS_FEATURE_MOTORIZED_FOCUS_SWITCH"
+        },
+        "is_synthetic": false
+    },
+    "lens_feature": {
+        "Name": "lens_feature",
+        "Description": "Allows access to lens feature value currently selected by XI_PRM_LENS_FEATURE_SELECTOR.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "device_name": {
+        "Name": "device_name",
+        "Description": "Return device name.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "device_type": {
+        "Name": "device_type",
+        "Description": "Returns device type (1394, USB2.0, USB3.0, PCIe, ...).",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "device_model_id": {
+        "Name": "device_model_id",
+        "Description": "Returns the device model id.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "sensor_model_id": {
+        "Name": "sensor_model_id",
+        "Description": "Returns the device sensor model id.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "device_sn": {
+        "Name": "device_sn",
+        "Description": "Returns device serial number. Only string form is possible. It might contain also alphabet characters.",
+        "parameter_type": {
+            "typename": "String",
+            "default_value": "0"
+        },
+        "Example": "",
+        "is_synthetic": false
+    },
+    "device_sens_sn": {
+        "Name": "device_sens_sn",
+        "Description": "Returns sensor serial number.",
+        "parameter_type": {
+            "typename": "String",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "device_inst_path": {
+        "Name": "device_inst_path",
+        "Description": "Returns device instance path in operating system.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "device_loc_path": {
+        "Name": "device_loc_path",
+        "Description": "Returns device location path in operating system. It should reflect the connection position.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "device_user_id": {
+        "Name": "device_user_id",
+        "Description": "Get/Set custom user ID stored in camera non volatile memory. This can be later used as a handle for opening or identification.",
+        "Note1": "It is currently available only on some models",
+        "Note2": "For xiQcamera devices are supported maximum length 56 characters.",
+        "Note3": "For xiCcamera devices are supported maximum length 48 characters.",
+        "Note4": "For xiB,xiT,xiXcamera devices are supported maximum length 4 characters. (Power off/on required after User ID changed)",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "Example": " Example of setting and retrieving the DEVICE_USER_IDOnly after a successful reboot of the camera, it can be opened with the newly assigned",
+        "is_synthetic": false
+    },
+    "device_manifest": {
+        "Name": "device_manifest",
+        "Description": "Get XML of current device parameters and capabilities.",
+        "Note": "Available currently on xiQUSB3.0,xiB,xiTcameras.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "image_user_data": {
+        "Name": "image_user_data",
+        "Description": "Sets the user data (32bit number) into camera. The following frame captured by camera will have this number stored at image header. The number is accessible later after xiGetImage in XI_IMG structure as image_user_data.",
+        "Supported cameras": "xiB, xiT",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "imgdataformatrgb32alpha": {
+        "Name": "imgdataformatrgb32alpha",
+        "Description": "The alpha channel of RGB32 output image format(see XI_PRM_IMAGE_DATA_FORMAT).",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "imgpayloadsize": {
+        "Name": "imgpayloadsize",
+        "Description": "Buffer size in bytes sufficient for output image returned by GetImage",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "transport_pixel_format": {
+        "Name": "transport_pixel_format",
+        "Description": "Transport pixel format is format of data transported by link to transport layer. It might be modified after setting of XI_PRM_IMAGE_DATA_FORMAT,XI_PRM_OUTPUT_DATA_PACKING,XI_PRM_OUTPUT_DATA_BIT_DEPTH, ...",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_TRANSPORT_DATA_TARGET_CPU_RAM": "normal CPU memory buffer is used for image data",
+                "XI_TRANSPORT_DATA_TARGET_GPU_RAM": "data is delivered straight to GPU memory using GPUDirect technology",
+                "XI_TRANSPORT_DATA_TARGET_UNIFIED": "CUDA managed memory is used for image data.",
+                "XI_TRANSPORT_DATA_TARGET_ZEROCOPY": "CUDA zerocopy memory is used for image data."
+            },
+            "enum_ints": {
+                "XI_TRANSPORT_DATA_TARGET_CPU_RAM": 0,
+                "XI_TRANSPORT_DATA_TARGET_GPU_RAM": 1,
+                "XI_TRANSPORT_DATA_TARGET_UNIFIED": 2,
+                "XI_TRANSPORT_DATA_TARGET_ZEROCOPY": 3
+            },
+            "default_value": "XI_GenTL_Image_Format_Mono8"
+        },
+        "is_synthetic": false
+    },
+    "transport_data_target": {
+        "Name": "transport_data_target",
+        "Description": "Sets image data delivery target to CPU RAM (default) or GPU RAM.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_TRANSPORT_DATA_TARGET_CPU_RAM": "normal CPU memory buffer is used for image data",
+                "XI_TRANSPORT_DATA_TARGET_GPU_RAM": "data is delivered straight to GPU memory using GPUDirect technology",
+                "XI_TRANSPORT_DATA_TARGET_UNIFIED": "CUDA managed memory is used for image data.",
+                "XI_TRANSPORT_DATA_TARGET_ZEROCOPY": "CUDA zerocopy memory is used for image data."
+            },
+            "enum_ints": {
+                "XI_TRANSPORT_DATA_TARGET_CPU_RAM": 0,
+                "XI_TRANSPORT_DATA_TARGET_GPU_RAM": 1,
+                "XI_TRANSPORT_DATA_TARGET_UNIFIED": 2,
+                "XI_TRANSPORT_DATA_TARGET_ZEROCOPY": 3
+            },
+            "default_value": "XI_TRANSPORT_DATA_TARGET_CPU_RAM"
+        },
+        "is_synthetic": false
+    },
+    "sensor_clock_freq_hz": {
+        "Name": "sensor_clock_freq_hz",
+        "Description": "Set or return the sensor clock frequency. This clock is specific to sensor used. See documentation/application for the camera to use this parameter.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "Depends"
+        },
+        "is_synthetic": false
+    },
+    "sensor_clock_freq_index": {
+        "Name": "sensor_clock_freq_index",
+        "Description": "Sensor clock frequency. Selects frequency on cameras which supports only some specific frequencies.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "Depends"
+        },
+        "is_synthetic": false
+    },
+    "sensor_output_channel_count": {
+        "Name": "sensor_output_channel_count",
+        "Description": "Number of output channels from sensor used for data transfer.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_CHANN_CNT2": "2 sensor readout channels.",
+                "XI_CHANN_CNT4": "4 sensor readout channels.",
+                "XI_CHANN_CNT8": "8 sensor readout channels.",
+                "XI_CHANN_CNT16": "16 sensor readout channels.",
+                "XI_CHANN_CNT24": "24 sensor readout channels.",
+                "XI_CHANN_CNT32": "32 sensor readout channels.",
+                "XI_CHANN_CNT48": "48 sensor readout channels."
+            },
+            "enum_ints": {
+                "XI_CHANN_CNT2": 2,
+                "XI_CHANN_CNT4": 4,
+                "XI_CHANN_CNT8": 8,
+                "XI_CHANN_CNT16": 16,
+                "XI_CHANN_CNT24": 24,
+                "XI_CHANN_CNT32": 32,
+                "XI_CHANN_CNT48": 48
+            },
+            "default_value": "Depends"
+        },
+        "is_synthetic": false
+    },
+    "framerate": {
+        "Name": "framerate",
+        "Description": "Defines frames per second of sensor. See more details in article Frame Rate ControlOn some camera models it is possible to change or limit acquisition frame rate. Frame rate value should be within possible range, useXI_PRM_INFO_MAX,XI_PRM_INFO_MIN.",
+        "Note1": "Use following code to set the frame rate to 10 FPS on MQ, MD cameras.",
+        "Note2": "Use following code to limit the frame rate to 10 FPS on CB,MT,MX,MC cameras.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "counter_selector": {
+        "Name": "counter_selector",
+        "Description": "Selects which frame counter must be returned",
+        "Note1": "Available only on PCIe cameras xiX,xiB,xiTcameras.)",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_CNT_SEL_TRANSPORT_SKIPPED_FRAMES": "Number of skipped frames on transport layer (e.g. when image gets lost while transmission). Occur when capacity of transport channel does not allow to transfer all data.",
+                "XI_CNT_SEL_API_SKIPPED_FRAMES": "Number of skipped frames on API layer. Occur when application does not process the images as quick as they are received from the camera.",
+                "XI_CNT_SEL_TRANSPORT_TRANSFERRED_FRAMES": "Number of delivered buffers since last acquisition start.",
+                "XI_CNT_SEL_FRAME_MISSED_TRIGGER_DUETO_OVERLAP": "Number of missed triggers due to overlap. (see Note2)",
+                "XI_CNT_SEL_FRAME_MISSED_TRIGGER_DUETO_FRAME_BUFFER_OVR": "Number of missed triggers due to frame buffer full. (see Note2)",
+                "XI_CNT_SEL_FRAME_BUFFER_OVERFLOW": "Frame buffer full counter. (see Note2)"
+            },
+            "enum_ints": {
+                "XI_CNT_SEL_TRANSPORT_SKIPPED_FRAMES": 0,
+                "XI_CNT_SEL_API_SKIPPED_FRAMES": 1,
+                "XI_CNT_SEL_TRANSPORT_TRANSFERRED_FRAMES": 2,
+                "XI_CNT_SEL_FRAME_MISSED_TRIGGER_DUETO_OVERLAP": 3,
+                "XI_CNT_SEL_FRAME_MISSED_TRIGGER_DUETO_FRAME_BUFFER_OVR": 4,
+                "XI_CNT_SEL_FRAME_BUFFER_OVERFLOW": 5
+            },
+            "default_value": "XI_CNT_SEL_TRANSPORT_SKIPPED_FRAMES"
+        },
+        "is_synthetic": false
+    },
+    "counter_value": {
+        "Name": "counter_value",
+        "Description": "Returns value of selected (by XI_PRM_COUNTER_SELECTOR) frame counter.",
+        "Note": "All counters are reset with the camera open, and counters XI_CNT_SEL_TRANSPORT_SKIPPED_FRAMES, XI_CNT_SEL_API_SKIPPED_FRAMES and XI_CNT_SEL_TRANSPORT_TRANSFERRED_FRAMES are also reset with acquisition start.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "acq_timing_mode": {
+        "Name": "acq_timing_mode",
+        "Description": "This parameter defines the acquisition timing mode. More information about enumerators XI_ACQ_TIMING_MODE_FRAME_RATE and XI_ACQ_TIMING_MODE_FRAME_RATE_LIMIT please refer to our Frame Rate Controlsupport page.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_ACQ_TIMING_MODE_FREE_RUN": "camera acquires images at a maximum possible framerate",
+                "XI_ACQ_TIMING_MODE_FRAME_RATE": "Selects a mode when sensor frame acquisition frequency is set to parameter FRAMERATE",
+                "XI_ACQ_TIMING_MODE_FRAME_RATE_LIMIT": "Selects a mode when sensor frame acquisition frequency is limited by parameter FRAMERATE"
+            },
+            "enum_ints": {
+                "XI_ACQ_TIMING_MODE_FREE_RUN": 0,
+                "XI_ACQ_TIMING_MODE_FRAME_RATE": 1,
+                "XI_ACQ_TIMING_MODE_FRAME_RATE_LIMIT": 2
+            },
+            "default_value": "XI_ACQ_TIMING_MODE_FREE_RUN"
+        },
+        "is_synthetic": false
+    },
+    "available_bandwidth": {
+        "Name": "available_bandwidth",
+        "Description": "Defines buffer handling. Can be safe, data will be copied to user/app buffer or unsafe, user will get internally allocated buffer without data copy. Size of the image buffer can be obtained by parameter XI_PRM_IMAGE_PAYLOAD_SIZE",
+        "Note": "Click to below link to open simple description of buffer policy. buffer_policy_in_xiApi.png",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_BP_UNSAFE": "User gets pointer to internally allocated circle buffer and data may be overwritten by device.",
+                "XI_BP_SAFE": "Data from device will be copied to user allocated buffer or xiApi allocated memory."
+            },
+            "enum_ints": {
+                "XI_BP_UNSAFE": 0,
+                "XI_BP_SAFE": 1
+            },
+            "default_value": "XI_BP_UNSAFE"
+        },
+        "is_synthetic": false
+    },
+    "buffer_policy": {
+        "Name": "buffer_policy",
+        "Description": "Defines buffer handling. Can be safe, data will be copied to user/app buffer or unsafe, user will get internally allocated buffer without data copy. Size of the image buffer can be obtained by parameter XI_PRM_IMAGE_PAYLOAD_SIZE",
+        "Note": "Click to below link to open simple description of buffer policy. buffer_policy_in_xiApi.png",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_BP_UNSAFE": "User gets pointer to internally allocated circle buffer and data may be overwritten by device.",
+                "XI_BP_SAFE": "Data from device will be copied to user allocated buffer or xiApi allocated memory."
+            },
+            "enum_ints": {
+                "XI_BP_UNSAFE": 0,
+                "XI_BP_SAFE": 1
+            },
+            "default_value": "XI_BP_UNSAFE"
+        },
+        "is_synthetic": false
+    },
+    "LUTEnable": {
+        "Name": "LUTEnable",
+        "Description": "Activates Look-Up-Table (LUT).",
+        "Note1": "Possible value: 0 - sensor pixels are transferred directly",
+        "Note2": "Possible value: 1 - sensor pixels are mapped through LUT",
+        "Note3": "LUT parameters are valid only for some cameras. E.g. xiQ supports LUT. xiMU (MU9PM-MH) does NOT support it.",
+        "Note4": "For xiQ cameras setting XI_PRM_LUT_ENalso uploads previously set values in to camera. Values are latched in API.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "LUTIndex": {
+        "Name": "LUTIndex",
+        "Description": "Controls the index (offset) of the coefficient to access in the LUT.",
+        "Note1": "All xiQ cameras have LUT N-bit to N-bit, based on the XI_PRM_SENSOR_DATA_BIT_DEPTHFor the specific camera. All xiC/xiX/xiT cameras have LUT 12-bit to 12-bit.",
+        "Note2": "Range of applicable indexes depends on sensor digitization bit depth (sensor_bit_depth). Use XI_PRM_INFO_MAX,XI_PRM_INFO_MIN.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "LUTValue": {
+        "Name": "LUTValue",
+        "Description": "Defines value at entry LUTIndex of the LUT.",
+        "Note1": "Range of applicable values depends on sensor digitization bit depth (sensor_bit_depth). Use XI_PRM_INFO_MAX,XI_PRM_INFO_MIN.",
+        "Note2": "For xiQ cameras setting values has no direct effect on image, only after setting XI_PRM_LUT_ENto value 1, will apply all changes to camera.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "trigger_delay": {
+        "Name": "trigger_delay",
+        "Description": "When set delay time is inserted between camera trigger input and activating sensor integration. Delay time is set in us.",
+        "Note": "Setting of this parameter is applicable for selected cameras: xiMU(MU9). Granularity of real delay duration depends on sensor settings (line read out time). Typical granularity is up to 100 microseconds. Maximum time is approx. 100ms for xiMU camera.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "ts_rst_mode": {
+        "Name": "ts_rst_mode",
+        "Description": "Defines way timestamp reset engine is armed.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_TS_RST_ARM_ONCE": "Engine is disabled after TimeStamp has been reset after selected event.",
+                "XI_TS_RST_ARM_PERSIST": "Engine is armed permanently so each selected event will trigger TimeStamp reset."
+            },
+            "enum_ints": {
+                "XI_TS_RST_ARM_ONCE": 0,
+                "XI_TS_RST_ARM_PERSIST": 1
+            },
+            "default_value": "XI_TS_RST_ARM_ONCE"
+        },
+        "is_synthetic": false
+    },
+    "ts_rst_source": {
+        "Name": "ts_rst_source",
+        "Description": "Defines source for timestamp reset engine as well as the polarity active signal. The engine is edge sensitive.",
+        "Note": "Number of active GPI or GPO depends on camera model.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_TS_RST_OFF": "No source selected TimeStamp reset is not armed.",
+                "XI_TS_RST_SRC_GPI_1": "GPI1 rising edge is active (signal after de-bounce module)",
+                "XI_TS_RST_SRC_GPI_2": "GPI2 rising edge is active",
+                "XI_TS_RST_SRC_GPI_3": "GPI3 rising edge is active",
+                "XI_TS_RST_SRC_GPI_4": "GPI4 rising edge is active",
+                "XI_TS_RST_SRC_GPI_1_INV": "GPI1 falling edge is active",
+                "XI_TS_RST_SRC_GPI_2_INV": "GPI2 falling edge is active",
+                "XI_TS_RST_SRC_GPI_3_INV": "GPI3 falling edge is active",
+                "XI_TS_RST_SRC_GPI_4_INV": "GPI4 falling edge is active",
+                "XI_TS_RST_SRC_GPO_1": "TimeStamp reset source selected GPO1",
+                "XI_TS_RST_SRC_GPO_2": "TimeStamp reset source selected GPO2",
+                "XI_TS_RST_SRC_GPO_3": "TimeStamp reset source selected GPO3",
+                "XI_TS_RST_SRC_GPO_4": "TimeStamp reset source selected GPO4",
+                "XI_TS_RST_SRC_GPO_1_INV": "TimeStamp reset source selected GPO1 inverted",
+                "XI_TS_RST_SRC_GPO_2_INV": "TimeStamp reset source selected GPO2 inverted",
+                "XI_TS_RST_SRC_GPO_3_INV": "TimeStamp reset source selected GPO3 inverted",
+                "XI_TS_RST_SRC_GPO_4_INV": "TimeStamp reset source selected GPO4 inverted",
+                "XI_TS_RST_SRC_TRIGGER": "TRIGGER to sensor rising edge is active",
+                "XI_TS_RST_SRC_TRIGGER_INV": "TRIGGER to sensor rising edge is active",
+                "XI_TS_RST_SRC_SW": "TRIGGER to sensor rising edge is active. TimeStamp is reset by software take effect imminently.",
+                "XI_TS_RST_SRC_EXPACTIVE": "Exposure Active signal rising edge",
+                "XI_TS_RST_SRC_EXPACTIVE_INV": "Exposure Active signal falling edge",
+                "XI_TS_RST_SRC_FVAL": "Frame valid signal rising edge (internal signal in camera)",
+                "XI_TS_RST_SRC_FVAL_INV": "Frame valid signal falling edge (internal signal in camera)",
+                "XI_TS_RST_SRC_GPI_5": "GPI5 rising edge is active",
+                "XI_TS_RST_SRC_GPI_6": "GPI6 rising edge is active",
+                "XI_TS_RST_SRC_GPI_5_INV": "GPI5 falling edge is active",
+                "XI_TS_RST_SRC_GPI_6_INV": "GPI6 falling edge is active",
+                "XI_TS_RST_SRC_GPI_7": "TimeStamp reset source selected GPI7 (after de bounce)",
+                "XI_TS_RST_SRC_GPI_8": "TimeStamp reset source selected GPI8 (after de bounce)",
+                "XI_TS_RST_SRC_GPI_9": "TimeStamp reset source selected GPI9 (after de bounce)",
+                "XI_TS_RST_SRC_GPI_10": "TimeStamp reset source selected GPI10 (after de bounce)",
+                "XI_TS_RST_SRC_GPI_11": "TimeStamp reset source selected GPI11 (after de bounce)",
+                "XI_TS_RST_SRC_GPI_7_INV": "TimeStamp reset source selected GPI7 inverted (after de bounce)",
+                "XI_TS_RST_SRC_GPI_8_INV": "TimeStamp reset source selected GPI8 inverted (after de bounce)",
+                "XI_TS_RST_SRC_GPI_9_INV": "TimeStamp reset source selected GPI9 inverted (after de bounce)",
+                "XI_TS_RST_SRC_GPI_10_INV": "TimeStamp reset source selected GPI10 inverted (after de bounce)",
+                "XI_TS_RST_SRC_GPI_11_INV": "TimeStamp reset source selected GPI11 inverted (after de bounce)"
+            },
+            "enum_ints": {
+                "XI_TS_RST_OFF": 0,
+                "XI_TS_RST_SRC_GPI_1": 1,
+                "XI_TS_RST_SRC_GPI_2": 2,
+                "XI_TS_RST_SRC_GPI_3": 3,
+                "XI_TS_RST_SRC_GPI_4": 4,
+                "XI_TS_RST_SRC_GPI_1_INV": 5,
+                "XI_TS_RST_SRC_GPI_2_INV": 6,
+                "XI_TS_RST_SRC_GPI_3_INV": 7,
+                "XI_TS_RST_SRC_GPI_4_INV": 8,
+                "XI_TS_RST_SRC_GPO_1": 9,
+                "XI_TS_RST_SRC_GPO_2": 10,
+                "XI_TS_RST_SRC_GPO_3": 11,
+                "XI_TS_RST_SRC_GPO_4": 12,
+                "XI_TS_RST_SRC_GPO_1_INV": 13,
+                "XI_TS_RST_SRC_GPO_2_INV": 14,
+                "XI_TS_RST_SRC_GPO_3_INV": 15,
+                "XI_TS_RST_SRC_GPO_4_INV": 16,
+                "XI_TS_RST_SRC_TRIGGER": 17,
+                "XI_TS_RST_SRC_TRIGGER_INV": 18,
+                "XI_TS_RST_SRC_SW": 19,
+                "XI_TS_RST_SRC_EXPACTIVE": 20,
+                "XI_TS_RST_SRC_EXPACTIVE_INV": 21,
+                "XI_TS_RST_SRC_FVAL": 22,
+                "XI_TS_RST_SRC_FVAL_INV": 23,
+                "XI_TS_RST_SRC_GPI_5": 24,
+                "XI_TS_RST_SRC_GPI_6": 25,
+                "XI_TS_RST_SRC_GPI_5_INV": 26,
+                "XI_TS_RST_SRC_GPI_6_INV": 27,
+                "XI_TS_RST_SRC_GPI_7": 28,
+                "XI_TS_RST_SRC_GPI_8": 29,
+                "XI_TS_RST_SRC_GPI_9": 30,
+                "XI_TS_RST_SRC_GPI_10": 31,
+                "XI_TS_RST_SRC_GPI_11": 32,
+                "XI_TS_RST_SRC_GPI_7_INV": 33,
+                "XI_TS_RST_SRC_GPI_8_INV": 34,
+                "XI_TS_RST_SRC_GPI_9_INV": 35,
+                "XI_TS_RST_SRC_GPI_10_INV": 36,
+                "XI_TS_RST_SRC_GPI_11_INV": 37
+            },
+            "default_value": "XI_TS_RST_OFF"
+        },
+        "is_synthetic": false
+    },
+    "isexist": {
+        "Name": "isexist",
+        "Description": "Returns 1 if camera connected and works properly.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "acq_buffer_size": {
+        "Name": "acq_buffer_size",
+        "Description": "Defines the size of the acquisition buffer in bytes(see Image below). This is a circle buffer which contains image data from sensor. This parameter can be set only when acquisition is stopped.",
+        "Note1": "If the processing of this image takes more time than these 7seconds, the image data will be automatically overwritten with new image data due to the circular character of the buffer.",
+        "Note2": "The maximal value for this parameter is 2147483647 because it uses the signed integer.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "100000000"
+        },
+        "Example": "Sensor gives 1MB of data per image @ 10 frames/second, Application retrieves image data by xiGetImage, Application has access to the frame at most 7 seconds (70MB/(1MB*10fps))",
+        "is_synthetic": false
+    },
+    "acq_buffer_size_unit": {
+        "Name": "acq_buffer_size_unit",
+        "Description": "Acquisition buffer size unit. Default 1. E.g. Value 1024 means that buffer_size is in KiBytes.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "acq_transport_buffer_size": {
+        "Name": "acq_transport_buffer_size",
+        "Description": "Size of one transport buffer in bytes (only valid for MQ,MD camera families). Frame/Field can contain multiple transport buffers. To decrease CPU load and increase system performance on committing transport buffers to kernel driver, transport buffer size has to be as high as possible. However in case of small Frame/Field size and high framerates it is necessary to decrease transport buffer size and increase queue of Frame/Field buffers ( XI_PRM_BUFFERS_QUEUE_SIZE). Check outHow to optimize software performance on high frame ratesfor more info.",
+        "Note": "Whole range minimum to maximum is not guaranteed on all tested configurations. Please be aware of possible issues on some controllers.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "Example": "Application set transport buffer size to 128KiB for small (80KB images)",
+        "is_synthetic": false
+    },
+    "acq_transport_packet_size": {
+        "Name": "acq_transport_packet_size",
+        "Description": "Acquisition transport packet size in bytes. (only valid for MQ,MD camera families)",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "buffers_queue_size": {
+        "Name": "buffers_queue_size",
+        "Description": " XI_PRM_BUFFERS_QUEUE_SIZE- 1 is the maximum number of images which can be stored in the buffers queue.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "4"
+        },
+        "Example": "Application sets queue size to 7Sensor acquires images at 10 frames/second. It means new image is acquired every 100ms, therefore queue can contain up to 6 images acquired during 600ms (=6*100ms) time span.Application needs typically 40ms for processing of an imageIf it takes 400ms for the application to process one of the images (e.g. saving it to a server) the subsequent 4 frames are still available since they are stored in the queue (images 17-19 on the below figure).Illustration of normal status when application is processing one frame longerIf it takes 1000ms for the application to process one of the images, the buffer queue will fill up and some images will be skipped (images 16-20 on the below figure). The user can check for such situation by checking the image sequence number (nframe of XI_IMG structure) of each image.Illustration of state when application gets late. Longer than queue. XI_PRM_BUFFER_POLICYmust be set to XI_BP_SAFE. In this case API copies the image to a user/API allocated memory where it can be accessed without the risk of being overwritten. This copying however takes extra CPU time.",
+        "is_synthetic": false
+    },
+    "acq_transport_buffer_commit": {
+        "Name": "acq_transport_buffer_commit",
+        "Description": "Defines number of buffers to be committed to transport layer. (only valid for USB 3.0 camera families)",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "recent_frame": {
+        "Name": "recent_frame",
+        "Description": "This parameter changes the behavior of xiGetImage.",
+        "Note1": "possible value: 0 - Retrieves next available image from buffer",
+        "Note2": "possible value: 1 - Retrieves the most recent image from buffer",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "device_reset": {
+        "Name": "device_reset",
+        "Description": "Resets the camera firmware. From the functional view, it is the same as disconnection and connection of the camera.It is typically followed by an enumeration of the operating system which might take some time (e.g. 10 seconds). Application shall wait some time after the reset and then use xiGetNumberDevices in order to enumerate the camera again. It should be used on the device with the stopped acquisition. After re-enumeration closing of the old device to release its handler is recommended. A new handler should be used for further image acquisition.",
+        "Note": "currently supported only for xiQ camera family",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "concat_img_mode": {
+        "Name": "concat_img_mode",
+        "Description": "Enable/disable the Concatenated Images in One Buffer feature",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "concat_img_count": {
+        "Name": "concat_img_count",
+        "Description": "Number of Concatenated Images in One Buffer",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "concat_img_transport_img_offset": {
+        "Name": "concat_img_transport_img_offset",
+        "Description": "Offset between images when feature Concatenated Images in One Buffer is enabled",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "probe_selector": {
+        "Name": "probe_selector",
+        "Description": "Select Probe",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_PROBE_SELECTOR_CURRENT_MAINBOARD_VCC_IN": "Current probe on Main Board at VCC_IN power supply",
+                "XI_PROBE_SELECTOR_VOLTAGE_MAINBOARD_VCC_IN": "Voltage probe on Main Board at VCC_IN power supply",
+                "XI_PROBE_SELECTOR_CURRENT_MAINBOARD_VCC_ADJ2": "Current probe on Main Board at VCC_ADJ2 power supply",
+                "XI_PROBE_SELECTOR_VOLTAGE_MAINBOARD_VCC_ADJ2": "Voltage probe on Main Board at VCC_ADJ2 power supply",
+                "XI_PROBE_SELECTOR_CURRENT_MAINBOARD_VCC_ADJ1": "Current probe on Main Board at VCC_ADJ1 power supply",
+                "XI_PROBE_SELECTOR_VOLTAGE_MAINBOARD_VCC_ADJ1": "Voltage probe on Main Board at VCC_ADJ1 power supply",
+                "XI_PROBE_SELECTOR_CURRENT_MAINBOARD_VCC_PLT": "Current probe on Main Board at VCC_PLT power supply",
+                "XI_PROBE_SELECTOR_VOLTAGE_MAINBOARD_VCC_PLT": "Voltage probe on Main Board at VCC_PLT power supply",
+                "XI_PROBE_SELECTOR_VOLTAGE_SENSORBOARD_VCC_ADJ1": "Voltage probe on Sensor Board at VCC_ADJ1",
+                "XI_PROBE_SELECTOR_VOLTAGE_SENSORBOARD_VCC_ADJ2": "Voltage probe on Sensor Board at VCC_ADJ2",
+                "XI_PROBE_SELECTOR_VOLTAGE_SENSORBOARD_VCC_5V0": "Voltage probe on Sensor Board at VCC_5V0",
+                "XI_PROBE_SELECTOR_VOLTAGE_SENSORBOARD_VCC_3V3": "Voltage probe on Sensor Board at VCC_3V3",
+                "XI_PROBE_SELECTOR_VOLTAGE_DATA_CON_INPUT": "Voltage probe on device input, if device is bus powered",
+                "XI_PROBE_SELECTOR_VOLTAGE_PELTIER1": "Voltage probe on peltier #1",
+                "XI_PROBE_SELECTOR_CURRENT_PELTIER1": "Current probe on peltier #1",
+                "XI_PROBE_SELECTOR_VOLTAGE_PELTIER2": "Voltage probe on peltier #2",
+                "XI_PROBE_SELECTOR_CURRENT_PELTIER2": "Current probe on peltier #2"
+            },
+            "enum_ints": {
+                "XI_PROBE_SELECTOR_CURRENT_MAINBOARD_VCC_IN": 0,
+                "XI_PROBE_SELECTOR_VOLTAGE_MAINBOARD_VCC_IN": 1,
+                "XI_PROBE_SELECTOR_CURRENT_MAINBOARD_VCC_ADJ2": 2,
+                "XI_PROBE_SELECTOR_VOLTAGE_MAINBOARD_VCC_ADJ2": 3,
+                "XI_PROBE_SELECTOR_CURRENT_MAINBOARD_VCC_ADJ1": 4,
+                "XI_PROBE_SELECTOR_VOLTAGE_MAINBOARD_VCC_ADJ1": 5,
+                "XI_PROBE_SELECTOR_CURRENT_MAINBOARD_VCC_PLT": 6,
+                "XI_PROBE_SELECTOR_VOLTAGE_MAINBOARD_VCC_PLT": 7,
+                "XI_PROBE_SELECTOR_VOLTAGE_SENSORBOARD_VCC_ADJ1": 8,
+                "XI_PROBE_SELECTOR_VOLTAGE_SENSORBOARD_VCC_ADJ2": 9,
+                "XI_PROBE_SELECTOR_VOLTAGE_SENSORBOARD_VCC_5V0": 10,
+                "XI_PROBE_SELECTOR_VOLTAGE_SENSORBOARD_VCC_3V3": 11,
+                "XI_PROBE_SELECTOR_VOLTAGE_DATA_CON_INPUT": 12,
+                "XI_PROBE_SELECTOR_VOLTAGE_PELTIER1": 13,
+                "XI_PROBE_SELECTOR_CURRENT_PELTIER1": 14,
+                "XI_PROBE_SELECTOR_VOLTAGE_PELTIER2": 15,
+                "XI_PROBE_SELECTOR_CURRENT_PELTIER2": 16
+            },
+            "default_value": "XI_PROBE_SELECTOR_CURRENT_MAINBOARD_VCC_IN"
+        },
+        "is_synthetic": false
+    },
+    "probe_value": {
+        "Name": "probe_value",
+        "Description": "Returns Value of the selected Probe",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "column_fpn_correction": {
+        "Name": "column_fpn_correction",
+        "Description": "Correction of column fpn.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_OFF": "Turn parameter off",
+                "XI_ON": "Turn parameter on"
+            },
+            "enum_ints": {
+                "XI_OFF": 0,
+                "XI_ON": 1
+            },
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "row_fpn_correction": {
+        "Name": "row_fpn_correction",
+        "Description": "Correction of row fpn.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_OFF": "Turn parameter off",
+                "XI_ON": "Turn parameter on"
+            },
+            "enum_ints": {
+                "XI_OFF": 0,
+                "XI_ON": 1
+            },
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "column_black_offset_correction": {
+        "Name": "column_black_offset_correction",
+        "Description": "Correction of column black offset.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_OFF": "Turn parameter off",
+                "XI_ON": "Turn parameter on"
+            },
+            "enum_ints": {
+                "XI_OFF": 0,
+                "XI_ON": 1
+            },
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "row_black_offset_correction": {
+        "Name": "row_black_offset_correction",
+        "Description": "Correction of row black offset.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_OFF": "Turn parameter off",
+                "XI_ON": "Turn parameter on"
+            },
+            "enum_ints": {
+                "XI_OFF": 0,
+                "XI_ON": 1
+            },
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "sensor_mode": {
+        "Name": "sensor_mode",
+        "Description": "Current sensor mode. Allows to select sensor mode by one integer. Setting of this parameter affects: image dimensions and downsampling.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_SENS_MD0": "Sensor mode number 0",
+                "XI_SENS_MD1": "Sensor mode number 1",
+                "XI_SENS_MD2": "Sensor mode number 2",
+                "XI_SENS_MD3": "Sensor mode number 3",
+                "XI_SENS_MD4": "Sensor mode number 4",
+                "XI_SENS_MD5": "Sensor mode number 5",
+                "XI_SENS_MD6": "Sensor mode number 6",
+                "XI_SENS_MD7": "Sensor mode number 7",
+                "XI_SENS_MD8": "Sensor mode number 8",
+                "XI_SENS_MD9": "Sensor mode number 9",
+                "XI_SENS_MD10": "Sensor mode number 10",
+                "XI_SENS_MD11": "Sensor mode number 11",
+                "XI_SENS_MD12": "Sensor mode number 12",
+                "XI_SENS_MD13": "Sensor mode number 13",
+                "XI_SENS_MD14": "Sensor mode number 14",
+                "XI_SENS_MD15": "Sensor mode number 15"
+            },
+            "enum_ints": {
+                "XI_SENS_MD0": 0,
+                "XI_SENS_MD1": 1,
+                "XI_SENS_MD2": 2,
+                "XI_SENS_MD3": 3,
+                "XI_SENS_MD4": 4,
+                "XI_SENS_MD5": 5,
+                "XI_SENS_MD6": 6,
+                "XI_SENS_MD7": 7,
+                "XI_SENS_MD8": 8,
+                "XI_SENS_MD9": 9,
+                "XI_SENS_MD10": 10,
+                "XI_SENS_MD11": 11,
+                "XI_SENS_MD12": 12,
+                "XI_SENS_MD13": 13,
+                "XI_SENS_MD14": 14,
+                "XI_SENS_MD15": 15
+            },
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "hdr": {
+        "Name": "hdr",
+        "Description": "Enable High Dynamic Range sensor feature.",
+        "Note1": "enables HDR mode for certain type of sensors. For more information see HDR modesupport page.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "hdr_kneepoint_count": {
+        "Name": "hdr_kneepoint_count",
+        "Description": "number of kneepoints.",
+        "Note1": "Defines the number of kneepoints in the Piecewise Linear Response (PWLR) curve.",
+        "Note2": "In case of one kneepoint, the kneepoint is defined by parameters (T2,SL2). In case of two kneepoints define both (T1,SL1), (T2,SL2).",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "hdr_t1": {
+        "Name": "hdr_t1",
+        "Description": "Exposure time (T1) of 1st kneepoint in % of XI_PRM_EXPOSURE",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "60"
+        },
+        "is_synthetic": false
+    },
+    "hdr_t2": {
+        "Name": "hdr_t2",
+        "Description": "Exposure time (T2) of 2nd kneepoint in % of",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "80"
+        },
+        "is_synthetic": false
+    },
+    "hdr_kneepoint1": {
+        "Name": "hdr_kneepoint1",
+        "Description": "Saturation level (SL1) of 1st kneepoint in % of sensor saturation.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "40"
+        },
+        "is_synthetic": false
+    },
+    "hdr_kneepoint2": {
+        "Name": "hdr_kneepoint2",
+        "Description": "Saturation level (SL2) of 2nd kneepoint in % of sensor saturation.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "60"
+        },
+        "is_synthetic": false
+    },
+    "image_black_level": {
+        "Name": "image_black_level",
+        "Description": "Black level is calculated level (in pixel counts) that should reflect the value of pixels without light. It should be the same as XI_IMG.black_level from last image get using xiGetImage. Setting of this parameter does not affect the data from sensor or API when camera is connected. It can be used for setting black level only for Offline Processing.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "image_area": {
+        "Name": "image_area",
+        "Description": "Defines image area of sensor as output.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_IMAGE_AREA_ACTIVE": "All light sensitive pixels suggested by image vendor.",
+                "XI_IMAGE_AREA_ACTIVE_AND_MASKED": "All Active pixels plus masked pixels surrounding the Active area."
+            },
+            "enum_ints": {
+                "XI_IMAGE_AREA_ACTIVE": 0,
+                "XI_IMAGE_AREA_ACTIVE_AND_MASKED": 1
+            },
+            "default_value": "XI_IMAGE_AREA_ACTIVE"
+        },
+        "is_synthetic": false
+    },
+    "dual_adc_mode": {
+        "Name": "dual_adc_mode",
+        "Description": "Sets DualADC Mode",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_DUAL_ADC_MODE_OFF": "Disable DualADC feature",
+                "XI_DUAL_ADC_MODE_COMBINED": "Set Combined mode",
+                "XI_DUAL_ADC_MODE_NON_COMBINED": "Set NonCombined mode"
+            },
+            "enum_ints": {
+                "XI_DUAL_ADC_MODE_OFF": 0,
+                "XI_DUAL_ADC_MODE_COMBINED": 1,
+                "XI_DUAL_ADC_MODE_NON_COMBINED": 2
+            },
+            "default_value": "XI_DUAL_ADC_MODE_OFF"
+        },
+        "is_synthetic": false
+    },
+    "dual_adc_gain_ratio": {
+        "Name": "dual_adc_gain_ratio",
+        "Description": "Sets DualADC Gain Ratio in dB",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "dual_adc_threshold": {
+        "Name": "dual_adc_threshold",
+        "Description": "Sets DualADC Threshold value",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "50"
+        },
+        "is_synthetic": false
+    },
+    "compression_region_selector": {
+        "Name": "compression_region_selector",
+        "Description": "Sets Compression Region Selector",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "1"
+        },
+        "is_synthetic": false
+    },
+    "compression_region_start": {
+        "Name": "compression_region_start",
+        "Description": "Sets Compression Region Start",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "compression_region_gain": {
+        "Name": "compression_region_gain",
+        "Description": "Sets Compression Region Gain",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "version_selector": {
+        "Name": "version_selector",
+        "Description": "Selects module/unit, which version we get.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_VER_API": "version of API",
+                "XI_VER_DRV": "version of device driver",
+                "XI_VER_MCU1": "version of MCU1 firmware.",
+                "XI_VER_MCU2": "version of MCU2 firmware.",
+                "XI_VER_MCU3": "version of MCU3 firmware.",
+                "XI_VER_FPGA1": "version of FPGA1 firmware.",
+                "XI_VER_XMLMAN": "version of XML manifest.",
+                "XI_VER_HW_REV": "version of hardware revision.",
+                "XI_VER_FACTORY_SET": "version of factory set."
+            },
+            "enum_ints": {
+                "XI_VER_API": 0,
+                "XI_VER_DRV": 1,
+                "XI_VER_MCU1": 2,
+                "XI_VER_MCU2": 3,
+                "XI_VER_MCU3": 4,
+                "XI_VER_FPGA1": 5,
+                "XI_VER_XMLMAN": 6,
+                "XI_VER_HW_REV": 7,
+                "XI_VER_FACTORY_SET": 8
+            },
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "version": {
+        "Name": "version",
+        "Description": "Returns version of selected module/unit(XI_PRM_VERSION_SELECTOR).",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "api_version": {
+        "Name": "api_version",
+        "Description": "Returns the version of API.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "drv_version": {
+        "Name": "drv_version",
+        "Description": "Returns the version of the current device driver.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "version_mcu1": {
+        "Name": "version_mcu1",
+        "Description": "Returns the version of the current MCU1 firmware.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "version_mcu2": {
+        "Name": "version_mcu2",
+        "Description": "Returns the version of the current MCU2 firmware.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "version_mcu3": {
+        "Name": "version_mcu3",
+        "Description": "Returns the version of the current MCU3 firmware.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "version_fpga1": {
+        "Name": "version_fpga1",
+        "Description": "Returns version of FPGA firmware currently running.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "version_xmlman": {
+        "Name": "version_xmlman",
+        "Description": "Returns version of XML manifest.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "hw_revision": {
+        "Name": "hw_revision",
+        "Description": "Returns the hardware revision number of the camera.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "factory_set_version": {
+        "Name": "factory_set_version",
+        "Description": "Returns version of factory set.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "debug_level": {
+        "Name": "debug_level",
+        "Description": "Setting the API debug level allows to select amount of messages stored to debug output.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_DL_DETAIL": "(see Note1)",
+                "XI_DL_TRACE": "Prints errors, warnings and important informations",
+                "XI_DL_WARNING": "Prints all errors and warnings",
+                "XI_DL_ERROR": "Prints all errors",
+                "XI_DL_FATAL": "Prints only important errors",
+                "XI_DL_DISABLED": "Prints no messages"
+            },
+            "enum_ints": {
+                "XI_DL_DETAIL": 0,
+                "XI_DL_TRACE": 1,
+                "XI_DL_WARNING": 2,
+                "XI_DL_ERROR": 3,
+                "XI_DL_FATAL": 4,
+                "XI_DL_DISABLED": 100
+            },
+            "default_value": "XI_DL_WARNING"
+        },
+        "Note1": "Prints same as XI_DL_TRACE plus locking of resources.",
+        "Note2": "In Windows use DebugView to view the current messages.",
+        "Note3": "In Linux the messages are printed to stderr",
+        "is_synthetic": false
+    },
+    "auto_bandwidth_calculation": {
+        "Name": "auto_bandwidth_calculation",
+        "Description": "Setting this parameter the application can control API behavior. Setting to XI_OFF - API will skip auto bandwidth measurement and calculation before opening the camera (xiOpenDevice), resulting in reducing the time to open a camera. Setting to XI_ON the measurement is enabled (default).",
+        "Note1": "It is important to set this parameter to XI_OFF in case when multiple cameras are connected to one hub with enabled acquisition and new camera should be opened - to not affect overall streaming by auto bandwidth measurement.",
+        "Note2": "When set to value XI_OFF, the time required to open a camera (xiOpenDevice) is reduced.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_ON"
+        },
+        "is_synthetic": false
+    },
+    "new_process_chain_enable": {
+        "Name": "new_process_chain_enable",
+        "Description": "Setting this parameter the application can control API behavior. When set to XI_OFF - API will use original processing in image pipe for cameras families MU, MQ, MD. Setting to XI_ON - API will use newer processing type.",
+        "Note": "There are some differences between processing so the switching may be done with caution. For older implementation we advise to stick to original processing. Only if some features require the newer processing it might be enabled. Switching may be done before xiOpenDevice.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_ON"
+        },
+        "is_synthetic": false
+    },
+    "proc_num_threads": {
+        "Name": "proc_num_threads",
+        "Description": "Number of threads per image processor. An application can change this number in order to optimize performance or decrease number of threads to save resources.",
+        "Note": "Some of XIMEA cameras contain Flash File System. It allows to store/read small customer file in each camera. For more information visit our knowledge base article How to work with FFS.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "read_file_ffs": {
+        "Name": "read_file_ffs",
+        "Description": "File data to be read from camera flash file system.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "Example": "For reading out Hyper-Spectral sensor calibration data from the camera - use the same code as above, but replace the filename with 'sens_calib.dat'. Code to be used for HSI Calibration:",
+        "is_synthetic": false
+    },
+    "write_file_ffs": {
+        "Name": "write_file_ffs",
+        "Description": "File data to be written to camera flash file system.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "Example": "Delete file:",
+        "is_synthetic": false
+    },
+    "ffs_file_name": {
+        "Name": "ffs_file_name",
+        "Description": "Name of file to be written/read from camera FFS.",
+        "Note": "On MX,MC,CB,MT cameras family, there is limited set of filenames. User's application can use filenames: User1, User2, User3 to store some application specific data.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "is_synthetic": false
+    },
+    "ffs_file_id": {
+        "Name": "ffs_file_id",
+        "Description": "File number(id) in camera FFS.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "Example": "Get list of files:",
+        "is_synthetic": false
+    },
+    "ffs_file_size": {
+        "Name": "ffs_file_size",
+        "Description": "Size of a file specified with parameter XI_PRM_FFS_FILE_IDin bytes.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "free_ffs_size": {
+        "Name": "free_ffs_size",
+        "Description": "Size of free camera flash file system space in bytes.",
+        "parameter_type": {
+            "typename": "Unsigned integer 64 bit",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "used_ffs_size": {
+        "Name": "used_ffs_size",
+        "Description": "Size of used camera flash file system space in bytes.",
+        "parameter_type": {
+            "typename": "Unsigned integer 64 bit",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "ffs_access_key": {
+        "Name": "ffs_access_key",
+        "Description": "Setting of the key enables file operations on some cameras. It is required to set before usage of XI_PRM_WRITE_FILE_FFS.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "xiapi_context_list": {
+        "Name": "xiapi_context_list",
+        "Description": "API Context contains the text representation of current settings for offline image processing. It can be gotten while acquisition to store the context. Respectively, it can be set while offline processing - to restore the context.",
+        "parameter_type": {
+            "typename": "String"
+        },
+        "Note": "Some of XIMEA cameras have sensors with specific features.",
+        "is_synthetic": false
+    },
+    "sensor_feature_selector": {
+        "Name": "sensor_feature_selector",
+        "Description": "Selects the current feature which is accessible by XI_PRM_SENSOR_FEATURE_VALUE. See more at our support page,SENSOR FEATURE SELECTOR.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_SENSOR_FEATURE_ZEROROT_ENABLE": "Sensor Zero ROT enable for ONSEMI PYTHON family. For camera model:MQ013xG-ON (on/off)",
+                "XI_SENSOR_FEATURE_BLACK_LEVEL_CLAMP": "Black level offset clamping (value). for Camera model:MD",
+                "XI_SENSOR_FEATURE_MD_FPGA_DIGITAL_GAIN_DISABLE": "Disable digital component of gain for MD family (1=disabled/0=enabled)",
+                "XI_SENSOR_FEATURE_ACQUISITION_RUNNING": "Sensor acquisition is running status (0/1). Could be stopped by setting of 0. For camera model:CB,MC,MX,MT",
+                "XI_SENSOR_FEATURE_TIMING_MODE": "Sensor timing mode (value depends on sensor)",
+                "XI_SENSOR_FEATURE_PARALLEL_ADC": "When ON, all pixels are readout by 2-parallel ADC reducing the maximal framerate (to a half) and improving the image quality. This is available only on some cameras. (on/off)",
+                "XI_SENSOR_FEATURE_BLACK_LEVEL_OFFSET_RAW": "Sensor specific register raw black level offset (value)",
+                "XI_SENSOR_FEATURE_SHORT_INTERVAL_SHUTTER": "Sensor short Interval Shutter (on/off)",
+                "XI_SENSOR_FEATURE_AUTO_LOW_POWER_MODE_AUTO": "Sensor low power mode (on/off)",
+                "XI_SENSOR_FEATURE_HIGH_CONVERSION_GAIN": "Serves as additional analog gain of 9.7 dB in pixels before conversion, essentially improving the image quality. This is available only on some cameras. (on/off)",
+                "XI_SENSOR_FEATURE_DUAL_TRG_EXP_ZONE_DIVIDER_POSITION": "Sensor Dual Trigger Exposure Zone Divider Position"
+            },
+            "enum_ints": {
+                "XI_SENSOR_FEATURE_ZEROROT_ENABLE": 0,
+                "XI_SENSOR_FEATURE_BLACK_LEVEL_CLAMP": 1,
+                "XI_SENSOR_FEATURE_MD_FPGA_DIGITAL_GAIN_DISABLE": 2,
+                "XI_SENSOR_FEATURE_ACQUISITION_RUNNING": 3,
+                "XI_SENSOR_FEATURE_TIMING_MODE": 4,
+                "XI_SENSOR_FEATURE_PARALLEL_ADC": 5,
+                "XI_SENSOR_FEATURE_BLACK_LEVEL_OFFSET_RAW": 6,
+                "XI_SENSOR_FEATURE_SHORT_INTERVAL_SHUTTER": 7,
+                "XI_SENSOR_FEATURE_AUTO_LOW_POWER_MODE_AUTO": 8,
+                "XI_SENSOR_FEATURE_HIGH_CONVERSION_GAIN": 9,
+                "XI_SENSOR_FEATURE_DUAL_TRG_EXP_ZONE_DIVIDER_POSITION": 10
+            },
+            "default_value": "XI_SENSOR_FEATURE_ZEROROT_ENABLE"
+        },
+        "is_synthetic": false
+    },
+    "sensor_feature_value": {
+        "Name": "sensor_feature_value",
+        "Description": "Allows access to sensor feature value currently selected by XI_PRM_SENSOR_FEATURE_SELECTOR",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "acquisition_status_selector": {
+        "Name": "acquisition_status_selector",
+        "Description": "Selects the internal acquisition signal to read using XI_PRM_ACQUISITION_STATUS",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_ACQUISITION_STATUS_ACQ_ACTIVE": "Device is currently doing an acquisition of one or many frames."
+            },
+            "enum_ints": {
+                "XI_ACQUISITION_STATUS_ACQ_ACTIVE": 0
+            },
+            "default_value": "XI_ACQUISITION_STATUS_ACQ_ACTIVE"
+        },
+        "is_synthetic": false
+    },
+    "acquisition_status": {
+        "Name": "acquisition_status",
+        "Description": "Returns status of acquisition.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_OFF": "Turn parameter off",
+                "XI_ON": "Turn parameter on"
+            },
+            "enum_ints": {
+                "XI_OFF": 0,
+                "XI_ON": 1
+            },
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "dp_unit_selector": {
+        "Name": "dp_unit_selector",
+        "Description": "Data Pipe Unit Selector.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_DP_UNIT_SENSOR": "Selects device image sensor",
+                "XI_DP_UNIT_FPGA": "Selects device image FPGA"
+            },
+            "enum_ints": {
+                "XI_DP_UNIT_SENSOR": 0,
+                "XI_DP_UNIT_FPGA": 1
+            },
+            "default_value": "XI_DP_UNIT_SENSOR"
+        },
+        "is_synthetic": false
+    },
+    "dp_proc_selector": {
+        "Name": "dp_proc_selector",
+        "Description": "Data Pipe Processor Selector.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_DP_PROC_NONE": "Default empty processor",
+                "XI_DP_PROC_CHANNEL_MUXER": "Channel Muxer (selected processor combines multiple input channels)",
+                "XI_DP_PROC_PIXEL_SEQUENCER": "Selects pixel data output sequence",
+                "XI_DP_PROC_CHANNEL_1": "Selects sensor output channel 1",
+                "XI_DP_PROC_CHANNEL_2": "Selects sensor output channel 2",
+                "XI_DP_PROC_FRAME_BUFFER": "Selects frame buffer memory"
+            },
+            "enum_ints": {
+                "XI_DP_PROC_NONE": 0,
+                "XI_DP_PROC_CHANNEL_MUXER": 1,
+                "XI_DP_PROC_PIXEL_SEQUENCER": 2,
+                "XI_DP_PROC_CHANNEL_1": 3,
+                "XI_DP_PROC_CHANNEL_2": 4,
+                "XI_DP_PROC_FRAME_BUFFER": 5
+            },
+            "default_value": "XI_DP_PROC_NONE"
+        },
+        "is_synthetic": false
+    },
+    "dp_param_selector": {
+        "Name": "dp_param_selector",
+        "Description": "Data Pipe Processor parameter Selector.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_DP_PARAM_NONE": "Empty parameter",
+                "XI_DP_PARAM_CHMUX_CHANNEL_SELECTOR": "Defines output of Channel Muxer processor",
+                "XI_DP_PARAM_CHMUX_ALPHA": "Channel merger coefficient Alpha",
+                "XI_DP_PARAM_CHMUX_BETA": "Channel merger coefficient Beta",
+                "XI_DP_PARAM_PIXSEQ_SELECTOR": "PixSeq Selector",
+                "XI_DP_PARAM_CHANNEL_TIMING": "Selected channel timing",
+                "XI_DP_PARAM_FRAMEBUF_MODE": "Frame Buffer Mode",
+                "XI_DP_PARAM_FRAMEBUF_SIZE": "Frame Buffer Size Bytes"
+            },
+            "enum_ints": {
+                "XI_DP_PARAM_NONE": 0,
+                "XI_DP_PARAM_CHMUX_CHANNEL_SELECTOR": 1,
+                "XI_DP_PARAM_CHMUX_ALPHA": 2,
+                "XI_DP_PARAM_CHMUX_BETA": 3,
+                "XI_DP_PARAM_PIXSEQ_SELECTOR": 4,
+                "XI_DP_PARAM_CHANNEL_TIMING": 5,
+                "XI_DP_PARAM_FRAMEBUF_MODE": 6,
+                "XI_DP_PARAM_FRAMEBUF_SIZE": 7
+            },
+            "default_value": "XI_DP_PARAM_NONE"
+        },
+        "is_synthetic": false
+    },
+    "dp_param_value": {
+        "Name": "dp_param_value",
+        "Description": "Data Pipe processor parameter value.",
+        "parameter_type": {
+            "typename": "Float",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "gentl_stream_en": {
+        "Name": "gentl_stream_en",
+        "Description": "Control of GenTL data stream. Enabling by XI_ON the acquisition buffering must be controlled by GenTL interface (e.g. DSAllocAndAnnounceBuffer, DSQueueBuffer)",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "XI_OFF"
+        },
+        "is_synthetic": false
+    },
+    "gentl_stream_context": {
+        "Name": "gentl_stream_context",
+        "Description": "Pointer to GenTL stream context. It can be used later with GenTL buffers handling.",
+        "Note": "Parameters for for global control of the device settings. They allow loading or saving factory or user-defined settings to the camera memory.",
+        "parameter_type": {
+            "typename": "String",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "user_set_selector": {
+        "Name": "user_set_selector",
+        "Description": "User Set to be loaded by XI_PRM_USER_SET_LOAD.",
+        "Note": "Available only on some camera models: MX377, MJ042, MJ150.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_US_12_STD_L": "12bit per channel STD Low Gain mode preset.",
+                "XI_US_12_STD_H": "12bit per channel STD High Gain mode preset.",
+                "XI_US_14_STD_L": "14bit per channel STD Low Gain mode preset.",
+                "XI_US_NONE": "No preset selected.",
+                "XI_US_14_STD_H": "14bit per channel STD High Gain mode preset.",
+                "XI_US_2_12_CMS_S_L": "12bit per channel, 2 samples,  CMS(summing) Low Gain mode preset.",
+                "XI_US_2_12_CMS_S_H": "12bit per channel, 2 samples,  CMS(summing) High Gain mode preset.",
+                "XI_US_2_14_CMS_S_L": "14bit per channel, 2 samples,  CMS(summing) Low Gain mode preset.",
+                "XI_US_2_14_CMS_S_H": "14bit per channel, 2 samples,  CMS(summing) High Gain mode preset.",
+                "XI_US_4_12_CMS_S_L": "12bit per channel, 4 samples,  CMS(summing) Low Gain mode preset.",
+                "XI_US_4_12_CMS_S_H": "12bit per channel, 4 samples,  CMS(summing) High Gain mode preset.",
+                "XI_US_4_14_CMS_S_L": "14bit per channel, 4 samples,  CMS(summing) Low Gain mode preset.",
+                "XI_US_4_14_CMS_S_H": "14bit per channel, 4 samples,  CMS(summing) High Gain mode preset.",
+                "XI_US_2_12_HDR_HL": "12bit per channel, 2 samples,  HDR High Low Gain mode preset.",
+                "XI_US_2_12_HDR_L": "12bit per channel, 2 samples,  HDR Low Gain mode preset.",
+                "XI_US_2_12_HDR_H": "12bit per channel, 2 samples,  HDR High Gain mode preset.",
+                "XI_US_4_12_CMS_HDR_HL": "12bit per channel, 4 samples,  CMS + HDR High Low Gain mode preset.",
+                "XI_US_2_14_HDR_L": "14bit per channel, 2 samples,  HDR Low Gain mode preset.",
+                "XI_US_2_14_HDR_H": "14bit per channel, 2 samples,  HDR High Gain mode preset.",
+                "XI_US_2_12_CMS_A_L": "12bit per channel, 2 samples,  CMS(averaging) Low Gain mode preset.",
+                "XI_US_2_12_CMS_A_H": "12bit per channel, 2 samples,  CMS(averaging) High Gain mode preset."
+            },
+            "enum_ints": {
+                "XI_US_12_STD_L": 10,
+                "XI_US_12_STD_H": 11,
+                "XI_US_14_STD_L": 12,
+                "XI_US_NONE": 999,
+                "XI_US_14_STD_H": 13,
+                "XI_US_2_12_CMS_S_L": 14,
+                "XI_US_2_12_CMS_S_H": 15,
+                "XI_US_2_14_CMS_S_L": 16,
+                "XI_US_2_14_CMS_S_H": 17,
+                "XI_US_4_12_CMS_S_L": 18,
+                "XI_US_4_12_CMS_S_H": 19,
+                "XI_US_4_14_CMS_S_L": 20,
+                "XI_US_4_14_CMS_S_H": 21,
+                "XI_US_2_12_HDR_HL": 22,
+                "XI_US_2_12_HDR_L": 23,
+                "XI_US_2_12_HDR_H": 24,
+                "XI_US_4_12_CMS_HDR_HL": 25,
+                "XI_US_2_14_HDR_L": 26,
+                "XI_US_2_14_HDR_H": 27,
+                "XI_US_2_12_CMS_A_L": 28,
+                "XI_US_2_12_CMS_A_H": 29
+            },
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "user_set_load": {
+        "Name": "user_set_load",
+        "Description": "Loads User Set selected by XI_PRM_USER_SET_SELECTOR. User Set is list of API parameters and values, which is applied similarily as xiSetParam one by one. If setting of some parameter fails, the process of loading is aborted and error value is returned to the application. All parameters changed remains without any restore to previous state.",
+        "Note": "Available only on some camera models: MX377, MJ042, MJ150.",
+        "parameter_type": {
+            "typename": "Integer",
+            "default_value": "0"
+        },
+        "is_synthetic": false
+    },
+    "user_set_default": {
+        "Name": "user_set_default",
+        "Description": "Selected User Set to load and make active when the device is opened. Change might affect default mode in other applications, e.g. CamTool.",
+        "Note": "Available only on some camera models: MX377, MJ042, MJ150.",
+        "parameter_type": {
+            "typename": "Enumerator",
+            "enum_values": {
+                "XI_US_12_STD_L": "12bit per channel STD Low Gain mode preset.",
+                "XI_US_12_STD_H": "12bit per channel STD High Gain mode preset.",
+                "XI_US_14_STD_L": "14bit per channel STD Low Gain mode preset.",
+                "XI_US_NONE": "No preset selected.",
+                "XI_US_14_STD_H": "14bit per channel STD High Gain mode preset.",
+                "XI_US_2_12_CMS_S_L": "12bit per channel, 2 samples,  CMS(summing) Low Gain mode preset.",
+                "XI_US_2_12_CMS_S_H": "12bit per channel, 2 samples,  CMS(summing) High Gain mode preset.",
+                "XI_US_2_14_CMS_S_L": "14bit per channel, 2 samples,  CMS(summing) Low Gain mode preset.",
+                "XI_US_2_14_CMS_S_H": "14bit per channel, 2 samples,  CMS(summing) High Gain mode preset.",
+                "XI_US_4_12_CMS_S_L": "12bit per channel, 4 samples,  CMS(summing) Low Gain mode preset.",
+                "XI_US_4_12_CMS_S_H": "12bit per channel, 4 samples,  CMS(summing) High Gain mode preset.",
+                "XI_US_4_14_CMS_S_L": "14bit per channel, 4 samples,  CMS(summing) Low Gain mode preset.",
+                "XI_US_4_14_CMS_S_H": "14bit per channel, 4 samples,  CMS(summing) High Gain mode preset.",
+                "XI_US_2_12_HDR_HL": "12bit per channel, 2 samples,  HDR High Low Gain mode preset.",
+                "XI_US_2_12_HDR_L": "12bit per channel, 2 samples,  HDR Low Gain mode preset.",
+                "XI_US_2_12_HDR_H": "12bit per channel, 2 samples,  HDR High Gain mode preset.",
+                "XI_US_4_12_CMS_HDR_HL": "12bit per channel, 4 samples,  CMS + HDR High Low Gain mode preset.",
+                "XI_US_2_14_HDR_L": "14bit per channel, 2 samples,  HDR Low Gain mode preset.",
+                "XI_US_2_14_HDR_H": "14bit per channel, 2 samples,  HDR High Gain mode preset.",
+                "XI_US_2_12_CMS_A_L": "12bit per channel, 2 samples,  CMS(averaging) Low Gain mode preset.",
+                "XI_US_2_12_CMS_A_H": "12bit per channel, 2 samples,  CMS(averaging) High Gain mode preset."
+            },
+            "enum_ints": {
+                "XI_US_12_STD_L": 10,
+                "XI_US_12_STD_H": 11,
+                "XI_US_14_STD_L": 12,
+                "XI_US_NONE": 999,
+                "XI_US_14_STD_H": 13,
+                "XI_US_2_12_CMS_S_L": 14,
+                "XI_US_2_12_CMS_S_H": 15,
+                "XI_US_2_14_CMS_S_L": 16,
+                "XI_US_2_14_CMS_S_H": 17,
+                "XI_US_4_12_CMS_S_L": 18,
+                "XI_US_4_12_CMS_S_H": 19,
+                "XI_US_4_14_CMS_S_L": 20,
+                "XI_US_4_14_CMS_S_H": 21,
+                "XI_US_2_12_HDR_HL": 22,
+                "XI_US_2_12_HDR_L": 23,
+                "XI_US_2_12_HDR_H": 24,
+                "XI_US_4_12_CMS_HDR_HL": 25,
+                "XI_US_2_14_HDR_L": 26,
+                "XI_US_2_14_HDR_H": 27,
+                "XI_US_2_12_CMS_A_L": 28,
+                "XI_US_2_12_CMS_A_H": 29
+            },
+            "default_value": "0"
+        },
+        " Description ": "The parameter modifiers allow you to acquire more information about the camera parameters (e.g. min. or max. value). Also with certain parameters they allow direct update of these parameters without interrupting the image acquisition loop (e.g. setting of exposure and gain).",
+        "is_synthetic": false
+    }
+}

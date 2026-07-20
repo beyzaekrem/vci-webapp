@@ -1,0 +1,12 @@
+.git
+.gitignore
+.vscode
+.dockerignore
+.idea
+build
+typings
+__pycache__
+Dockerfile
+
+# Remove later
+captureserver

@@ -1,0 +1,75 @@
+{
+    "type": "VCI_REAL_TCP",
+    "version": "2.1",
+    "dataset": {
+        "frame_count": 10000000000000000,
+        "start_frame": 0,
+        "path": "",
+        "camera_path": "",
+        "flip_images": true,
+        "flip_masks": true,
+        "to_world": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+        ]
+    },
+    "reconstructor": {
+        "gpu": 1,
+        "num_cameras_reconstruction": 16,
+        "floor_offset": 0.0,
+        "level": 9,
+        "partial_masks": true
+    },
+    "volume": {
+        "position": [
+            0,
+            1.5,
+            0
+        ],
+        "scale": 1.7
+    },
+    "server": {
+        "ip": "127.0.0.1",
+        "port": 25565
+    },
+    "capture_servers": {
+        "ips": [
+            "10.3.10.1",
+            "10.3.10.2",
+            "10.3.10.3",
+            "10.3.10.4",
+            "10.3.10.5",
+            "10.3.10.6",
+            "10.3.10.7",
+            "10.3.10.8",
+            "10.3.10.9",
+            "10.3.10.10",
+            "10.3.10.11",
+            "10.3.10.13",
+            "10.3.10.14",
+            "10.3.10.15"
+        ],
+        "trigger": "10.3.10.20:8080"
+    },
+    "renderer": {
+        "gpu": 0
+    },
+    "inpainting": {
+        "enable": true,
+        "path": "/data/home/zingsheim/Documents/Repositories/RIFTCast/inpainting"
+    }
+}

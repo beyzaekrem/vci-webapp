@@ -1,0 +1,16 @@
+
+
+[project]
+name = "vci"
+
+dependencies = [
+    "nerfstudio" # you may want to consider pinning the version, ie "nerfstudio==0.1.19"
+]
+
+version = "0.1.0"
+
+[tool.setuptools.packages.find]
+include = ["vci*"]
+
+[project.entry-points.'nerfstudio.dataparser_configs']
+vci-data = 'vci.config:VCIDataparser'

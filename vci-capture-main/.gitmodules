@@ -1,0 +1,3 @@
+[submodule "external/vci-websocket"]
+    path = external/vci-websocket
+    url = ../vci-websocket.git

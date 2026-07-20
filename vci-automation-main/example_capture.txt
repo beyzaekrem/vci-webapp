@@ -1,0 +1,5 @@
+
+python scripts/capture/record.py --capture-name DATE_course_students --single
+
+python scripts/capture/replay.py --capture-name DATE_course_students --fps 0 --quality avif
+

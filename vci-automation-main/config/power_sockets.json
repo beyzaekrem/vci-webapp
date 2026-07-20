@@ -1,0 +1,351 @@
+{
+    "PDU1": {
+        "ip": "10.3.10.101",
+        "device_type": "servers",
+        "sockets": {
+            "Capture_01": [
+                "vci-01"
+            ],
+            "Capture_02": [
+                "vci-02"
+            ],
+            "Capture_03": [
+                "vci-03"
+            ],
+            "Socket 04": [],
+            "Capture_11": [
+                "vci-11"
+            ],
+            "Capture_12": [
+                "vci-12"
+            ],
+            "Capture_13": [
+                "vci-13"
+            ],
+            "Socket 08": [],
+            "Capture_04": [
+                "vci-04"
+            ],
+            "Capture_05": [
+                "vci-05"
+            ],
+            "Capture_06": [
+                "vci-06"
+            ],
+            "Socket 12": [],
+            "Capture_14": [
+                "vci-14"
+            ],
+            "Capture_15": [
+                "vci-14"
+            ],
+            "Caputre_16": [],
+            "Socket 16": [],
+            "Capture_07": [
+                "vci-07"
+            ],
+            "Capture_08": [
+                "vci-08"
+            ],
+            "Capture_09": [
+                "vci-09"
+            ],
+            "Socket 20": [],
+            "Caputre_17": [],
+            "Caputre_18": [],
+            "Capture_10": [],
+            "Capture_Master": []
+        }
+    },
+    "PDU2": {
+        "ip": "10.3.10.102",
+        "device_type": "cameras",
+        "sockets": {
+            "Kamera_01": [
+                ""
+            ],
+            "Kamera_02": [
+                ""
+            ],
+            "Kamera_03": [
+                ""
+            ],
+            "Kamera_04": [
+                ""
+            ],
+            "Kamera_05": [
+                ""
+            ],
+            "Kamera_06": [
+                ""
+            ],
+            "Kamera_07": [
+                ""
+            ],
+            "Kamera_08": [
+                ""
+            ],
+            "Kamera_09": [
+                ""
+            ],
+            "Kamera_10": [
+                ""
+            ],
+            "Kamera_11": [
+                "C0018",
+                "vci-01"
+            ],
+            "Kamera_12": [
+                "C0007",
+                "vci-01"
+            ],
+            "Kamera_13": [
+                "C0025",
+                "vci-04"
+            ],
+            "Kamera_14": [
+                "C0010",
+                "vci-05"
+            ],
+            "Kamera_15": [
+                "C0039",
+                "vci-06"
+            ],
+            "Kamera_16": [
+                "C0038",
+                "vci-03"
+            ],
+            "Kamera_17": [
+                ""
+            ],
+            "Kamera_18": [
+                ""
+            ],
+            "Kamera_19": [
+                ""
+            ],
+            "Kamera_21": [
+                ""
+            ],
+            "Kamera_22": [
+                ""
+            ],
+            "Kamera_23": [
+                ""
+            ],
+            "Kamera_24": [
+                ""
+            ]
+        }
+    },
+    "PDU3": {
+        "ip": "10.3.10.103",
+        "device_type": "cameras",
+        "sockets": {
+            "MehrfachOben0": [
+                "C0012",
+                "vci-03"
+            ],
+            "Rig_01": [
+                "M0005",
+                "M0007",
+                "C1005",
+                "vci-04"
+            ],
+            "Kamera_32 05-4": [
+                "C0031",
+                "vci-08"
+            ],
+            "Kamera_36 06-4": [
+                "C1004",
+                "vci-09"
+            ],
+            "Rig_02": [
+                "M0008, M0009",
+                "C0016",
+                "vci-05"
+            ],
+            "Rig_03": [
+                "M0010",
+                "M0011",
+                "C0020",
+                "vci-06"
+            ],
+            "Kamera_40 07-4": [
+                "C0019",
+                "vci-10"
+            ],
+            "Rig_04": [
+                "C0009",
+                "M0015",
+                "M0016",
+                "vci-07"
+            ],
+            "Rig_05": [
+                "M0020",
+                "C0021",
+                "M0022",
+                "vci-08"
+            ],
+            "Rig_06": [
+                "",
+                "",
+                "",
+                ""
+            ],
+            "Kamera_44 08-4": [
+                "C0013",
+                "vci-11"
+            ],
+            "Kamera_48 09-4": [
+                "C0024",
+                "vci-12"
+            ],
+            "Rig_07": [
+                "M0004",
+                "M0006",
+                "C0037",
+                "vci-10"
+            ],
+            "MehrfachKamerasOben": [
+                "C0034",
+                "C0006",
+                "C1002",
+                "vci-01",
+                "vci-02",
+                "vci-07"
+            ],
+            "Kamera_52 10-4": [
+                "C0001",
+                "vci-13"
+            ],
+            "Rig_08": [
+                "C0014",
+                "M0017",
+                "M0018",
+                "vci-11"
+            ],
+            "MehrfachOben": [
+                "C0004",
+                "C0029",
+                "vci-01"
+            ],
+            "Rig_09": [
+                "M0001",
+                "M0003",
+                "C1000",
+                "vci-12"
+            ],
+            "Kamera_56 11-4": [
+                "C0030",
+                "vci-14"
+            ],
+            "Test max390W soonR10": [
+                "M0013",
+                "M0014",
+                "C0040",
+                "vci-13"
+            ],
+            "Test max390W soonR11": [
+                "C0022",
+                "M0023",
+                "M0024",
+                "vci-14"
+            ],
+            "Rig_12": [
+                "C0000",
+                "M0019",
+                "M0021",
+                "vci-15"
+            ],
+            "Kamera_60 12-4": [
+                "C1001",
+                "vci-15"
+            ],
+            "TriggerBox": [
+                "TriggerBox"
+            ]
+        }
+    },
+    "PDU4": {
+        "ip": "10.3.10.104",
+        "device_type": "lights",
+        "sockets": [
+            "Socket 01",
+            "Socket 02",
+            "Socket 03",
+            "Socket 04",
+            "Socket 05",
+            "Socket 06",
+            "Socket 07",
+            "Socket 08",
+            "Socket 09",
+            "Socket 10",
+            "Socket 11",
+            "Socket 12",
+            "Socket 13",
+            "Socket 14",
+            "Socket 15",
+            "Socket 16",
+            "Socket 17",
+            "Socket 18",
+            "Socket 19",
+            "Socket 20"
+        ]
+    },
+    "PDU5": {
+        "ip": "10.3.10.105",
+        "device_type": "lights",
+        "sockets": [
+            "Socket 01",
+            "Socket 02",
+            "Socket 03",
+            "Socket 04",
+            "Socket 05",
+            "Socket 06",
+            "Socket 07",
+            "Socket 08",
+            "Socket 09",
+            "Socket 10",
+            "Socket 11",
+            "Socket 12",
+            "Socket 13",
+            "Socket 14",
+            "Socket 15",
+            "Socket 16",
+            "Socket 17",
+            "Socket 18",
+            "Socket 19",
+            "Socket 20"
+        ]
+    },
+    "PDU6": {
+        "ip": "10.3.10.106",
+        "device_type": "lights",
+        "sockets": [
+            "Socket 01",
+            "Socket 02",
+            "Socket 03",
+            "Socket 04",
+            "Socket 05",
+            "Socket 06",
+            "Socket 07",
+            "Socket 08",
+            "Socket 09",
+            "Socket 10",
+            "Socket 11",
+            "Socket 12",
+            "Socket 13",
+            "Socket 14",
+            "Socket 15",
+            "Socket 16",
+            "Socket 17",
+            "Socket 18",
+            "Socket 19",
+            "Socket 20"
+        ]
+    },
+    "missing_cameras": [
+        "C0005, C0008, C0026, C0028 (center pillar 7-10, servers: vci-2 and vci-03)"
+    ]
+}

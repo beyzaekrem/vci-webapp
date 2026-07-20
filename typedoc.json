@@ -1,0 +1,28 @@
+{
+  "tsconfig": "tsconfig.typedoc.json",
+  "entryPoints": [
+    "src/network",
+    "src/Utility",
+    "src/Components",
+    "src/pages",
+    "src/router.tsx"
+  ],
+  "projectDocuments": [
+    "ProjectStructure.md"
+  ],
+  "entryPointStrategy": "expand",
+  "out": "public/docs",
+  "exclude": [
+    "**/*.css",
+    "**/*.scss",
+    "**/*.json",
+    "src/main.tsx",
+    "node_modules/**"
+  ],
+  "excludeNotDocumented": false,
+  "excludeReferences": true,
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeProtected": false,
+  "disableSources": false
+}

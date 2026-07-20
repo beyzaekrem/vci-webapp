@@ -1,0 +1,31 @@
+{
+    "cameras": [
+        {
+            "serialnumber": "9999",
+            "resolution": [
+                512,
+                512
+            ],
+            "type": "Color",
+            "pixel_layout": "BGGR"
+        },
+        {
+            "serialnumber": "7777",
+            "resolution": [
+                512,
+                512
+            ],
+            "type": "Color",
+            "pixel_layout": "RGGB"
+        },
+        {
+            "serialnumber": "8888",
+            "resolution": [
+                512,
+                512
+            ],
+            "type": "Mono",
+            "pixel_layout": "Mono"
+        }
+    ]
+}

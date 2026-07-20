@@ -1,0 +1,75 @@
+[project]
+name = "sparrow"
+version = "0.0.1"
+authors = [
+    { name = "Janelle Pfeifer", email = "pfeifer@cs.uni-bonn.de" },
+    { name = "Markus Plack", email = "markus.plack@gmail.com" },
+    { name = "Elisabeth Jüttner", email = "s6eljuet@uni-bonn.de" },
+]
+description = "VCI Capture Server Software"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "charonload",
+    "natsort",
+    "kornia",
+    "opencv-python",
+    "OpenExr",
+    "tqdm",
+    "torchvision",
+    "colour-science",
+    "matplotlib",
+]
+
+
+[project.optional-dependencies]
+dev = ["black", "clang-format", "docformatter", "isort", "ruff"]
+
+
+[tool.black]
+line-length = 120
+
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+py_version = 39
+
+
+[tool.docformatter]
+wrap-summaries = 120
+wrap-descriptions = 120
+pre-summary-newline = true
+tab-width = 4
+black = true
+syntax = "numpy"
+
+
+[tool.ruff]
+src = ["src"]
+line-length = 120
+output-format = "full"
+extend-select = ["D"]
+
+
+[tool.ruff.lint]
+preview = false
+select = ["ALL"]
+ignore = [
+    # General rules
+    "C90", # mccabe
+    "D",   # pydocstyle (Still disabled despite partial configuration)
+    "TD",  # flake8-todos
+    "FIX", # flake8-fixme
+    # Specific rules
+    "COM812",  # trailing-comma-missing
+    "PLR0912", # too-many-branches
+    "PLR0913", # too-many-args
+    "PLR0915", # too-many-statements
+]
+
+[tool.ruff.lint.flake8-unused-arguments]
+ignore-variadic-names = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"

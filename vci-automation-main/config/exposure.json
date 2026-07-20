@@ -1,0 +1,17 @@
+{
+  "default": {
+    "exposure": 8000,
+    "gain": 6,
+    "illumination": 99
+  },
+  "speedy": {
+    "exposure": 4050,
+    "gain": 12,
+    "illumination": 99
+  },
+  "low_light": {
+    "exposure": 35312,
+    "gain": 12,
+    "illumination": 10
+  }
+}
