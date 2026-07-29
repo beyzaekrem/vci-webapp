@@ -23,7 +23,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-/.VSCodeCOunter
+/.VSCodeCounter
 
 /docs
 /md-docs
@@ -31,7 +31,12 @@ yarn-error.log*
 
 deps.svg
 deps.components.svg
-# Python venv
-vci-capture-main/venv/
-vci-capture-main/__pycache__/
+
+# Python venv & Caches
+venv/
+.venv/
+env/
+**/venv/
+**/__pycache__/
+**/*.egg-info/
 *.pyc
