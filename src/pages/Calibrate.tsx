@@ -41,7 +41,7 @@ export function Calibrate() {
 
   return (
     <div>
-      <div style={{ width: "100vw", height: "100vh" }}>
+      <div style={{ width: "100%", height: "100vh" }}>
         <SelectCameras storage={storage} selectionKey={selectionKey} />
         <div style={{ position: "relative" }}>
           <div className="d-flex justify-content-center">

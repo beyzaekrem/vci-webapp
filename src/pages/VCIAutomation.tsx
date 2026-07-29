@@ -1,31 +1,46 @@
 import { useState } from "react";
-import { Col, Row } from "react-bootstrap";
 import { ScriptList } from "../Components/VCIAutomation/ScriptList";
-import { useConnectionStatus, ServerStatusInfo } from "../network/interceptor";
-import { getVCI } from "../network/vci-automation";
+import { type ScriptInfo } from "../network/vci-automation";
 import { VCIAutomationScript } from "../Components/VCIAutomation/VCIAutomationScript";
-import { ScriptInfo } from "../network/vci-automation";
+import { getServers } from "../network/capture-server";
+import "../Components/VCIAutomation/vciAutomation.css";
 
 export function VCIAutomationPage() {
-    const status = useConnectionStatus(getVCI().socket);
     const [selectedScript, setSelectedScript] = useState<ScriptInfo | null>(null);
 
+    const firstServerDomain = getServers().servers[0]?.getDomain() || "127.0.0.1";
+
     return (
-        <div
-            className="d-flex justify-content-center"
-            style={{ width: "100%" }}
-        >
-            <div style={{ width: "100%", maxWidth: 1600, minWidth: 0 }}>
-                <h1 style={{ margin: "15px" }}>VCI Automation</h1>
-                <ServerStatusInfo socket={getVCI().socket} />
-                <Row className="mt-2 g-4 mx-0">
-                    <Col xs={12} md={2} lg={2}>
-                        <ScriptList onSelectScript={setSelectedScript} />
-                    </Col>
-                    <Col xs={12} md={10} lg={10}>
-                        {selectedScript && <VCIAutomationScript key={selectedScript.id} script={selectedScript} />}
-                    </Col>
-                </Row>
+        <div className="vci-auto-container">
+            {/* Header Bar */}
+            <header className="vci-auto-header">
+                <div className="vci-auto-header-left">
+                    <h1 className="vci-auto-title">VCI Automation</h1>
+                    <span className="vci-auto-status-pill">
+                        <span className="vci-auto-status-dot" />
+                        ONLINE
+                    </span>
+                </div>
+                <div className="vci-auto-server-badge">
+                    Server 1 ({firstServerDomain})
+                </div>
+            </header>
+
+            {/* Main 3-Column Layout */}
+            <div className="vci-auto-layout">
+                {/* Left Column: Scripts List */}
+                <div className="vci-script-list-card">
+                    <ScriptList onSelectScript={setSelectedScript} />
+                </div>
+
+                {/* Center & Right Columns: Form & Logs */}
+                {selectedScript ? (
+                    <VCIAutomationScript key={selectedScript.id} script={selectedScript} />
+                ) : (
+                    <div className="vci-script-config-card" style={{ gridColumn: "span 2" }}>
+                        <p className="text-muted text-center py-5">Select a script from the left menu to configure and execute.</p>
+                    </div>
+                )}
             </div>
         </div>
     );

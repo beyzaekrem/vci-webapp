@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Card, ListGroup } from "react-bootstrap";
 import { getVCI, ScriptInfo } from "../../network/vci-automation";
 
 export function ScriptList({
@@ -12,46 +11,41 @@ export function ScriptList({
 
     // When list is loaded, select the first script
     useEffect(() => {
-        if(scripts.length === 0) {
-            return;
-        }
-        if(activeScript && scripts.some((script) => script.id === activeScript.id)) {
-            return;
-        }
+        if (scripts.length === 0) return;
+        if (activeScript && scripts.some((script) => script.id === activeScript.id)) return;
         setActiveScript(scripts[0] || null);
     }, [activeScript, scripts]);
 
     // Call onSelectScript when activeScript changes
     useEffect(() => {
-        if(!activeScript) {
-            return;
-        }
+        if (!activeScript) return;
         onSelectScript(activeScript);
     }, [activeScript, onSelectScript]);
 
     return (
-        <Card>
-            <Card.Header>Scripts</Card.Header>
-            {isLoadingScripts && <div className="px-3 pt-3 text-start">Loading scripts...</div>}
-            {scriptsError &&
-                <pre className="px-3 pt-3 mb-0 text-danger text-start">{scriptsError}</pre>
-            }
-            <ListGroup variant="flush">
+        <>
+            <h2 className="vci-script-list-title">Scripts</h2>
+            {isLoadingScripts && <div className="text-muted text-center py-3">Loading scripts...</div>}
+            {scriptsError && (
+                <div className="text-danger small text-center py-2 px-1">{scriptsError}</div>
+            )}
+            <ul className="vci-script-list-items">
                 {scripts.map((script) => (
-                    <ListGroup.Item
+                    <li
                         key={script.id}
-                        action
-                        active={script.id === activeScript?.id}
+                        className={`vci-script-item ${script.id === activeScript?.id ? "active" : ""}`}
                         onClick={() => setActiveScript(script)}
                     >
                         {script.name}
-                    </ListGroup.Item>
+                    </li>
                 ))}
                 {!isLoadingScripts && scripts.length === 0 && (
-                    <ListGroup.Item>No scripts available</ListGroup.Item>
+                    <li className="vci-script-item text-muted" style={{ cursor: "default" }}>
+                        No scripts available
+                    </li>
                 )}
-            </ListGroup>
-        </Card>
+            </ul>
+        </>
     );
 }
 

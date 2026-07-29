@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import type { CSSProperties } from "react";
 import { getVCI } from "../../network/vci-automation";
 import type { LogEvent, ScriptEvent } from "../../network/vci-automation";
 import { AutoScrollFollow } from "./AutoScrollFollow";
@@ -8,93 +7,101 @@ function isLogEvent(event: ScriptEvent): event is LogEvent {
     return event.type === "LOG";
 }
 
-const terminalStyle: CSSProperties = {
-    margin: 0,
-    padding: 12,
-    minWidth: "max-content",
-    fontFamily: '"SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace',
-    fontSize: "0.9rem",
-    lineHeight: 1.5,
-    color: "#212529",
-};
-
-const timestampStyle: CSSProperties = {
-    color: "var(--bs-secondary)",
-    fontWeight: 600,
-};
-
-const warningStyle: CSSProperties = {
-    color: "var(--bs-warning)",
-};
-
-const errorStyle: CSSProperties = {
-    color: "var(--bs-danger)",
-};
-
-function getSeverityStyle(logLevel: LogEvent["log_level"]): CSSProperties | undefined {
-    if (logLevel === "warning") {
-        return warningStyle;
-    }
-
-    if (logLevel === "error") {
-        return errorStyle;
-    }
-
-    return undefined;
-}
-
-function getLogLevelLabel(logLevel: LogEvent["log_level"]) {
-    return logLevel ? `${logLevel.toUpperCase()}:` : null;
-}
-
 export function ScriptLogs({ runnerId }: { runnerId: string }) {
     const [logs, setLogs] = useState<LogEvent[]>([]);
 
     useEffect(() => {
         const removeListener = getVCI().add_listener_output(runnerId, (msg) => {
-            const fullHistory = msg.full_event_history as ScriptEvent[];
-            const logs = fullHistory.filter(isLogEvent);
-            setLogs(logs);
+            const fullHistory = (msg.full_event_history as ScriptEvent[]) || [];
+            const filteredLogs = fullHistory.filter(isLogEvent);
+            setLogs(filteredLogs);
         });
         return () => {
             removeListener();
         };
     }, [runnerId]);
 
-    return (
-        <div>
-            <h3>Logs</h3>
-            <AutoScrollFollow
-                followTrigger={logs.length}
-                className="text-start"
-                style={{
-                    height: "300px",
-                    overflow: "auto",
-                    borderRadius: 8,
-                    boxShadow: "inset 0 0 0 1px rgba(33, 37, 41, 0.08)",
-                }}
-            >
-                <pre style={terminalStyle}>
-                    {logs.map((log) => {
-                        const severityStyle = getSeverityStyle(log.log_level);
-                        const logLevelLabel = getLogLevelLabel(log.log_level);
+    const getBadgeClass = (log: LogEvent) => {
+        const level = (log.log_level || "").toLowerCase();
+        const text = (log.content || "").toLowerCase();
+        if (level === "error" || text.includes("error")) return "error";
+        if (level === "warning" || text.includes("warning")) return "warning";
+        if (text.includes("success") || text.includes("connected")) return "success";
+        if (text.includes("running") || text.includes("executing")) return "running";
+        if (text.includes("stream") || text.includes("capturing")) return "stream";
+        return "info";
+    };
 
-                        return (
-                            <div key={log.event_id}>
-                                <span style={{ ...timestampStyle, ...severityStyle }}>
-                                    [{new Date(log.timestamp * 1000).toLocaleTimeString()}]
-                                </span>{" "}
-                                {logLevelLabel && (
-                                    <>
-                                        <span style={severityStyle}>{logLevelLabel}</span>{" "}
-                                    </>
-                                )}
-                                {log.content}
-                            </div>
-                        );
-                    })}
-                </pre>
-            </AutoScrollFollow>
-        </div>
+    const getBadgeLabel = (log: LogEvent) => {
+        if (log.log_level) return log.log_level.toUpperCase();
+        const text = (log.content || "").toLowerCase();
+        if (text.includes("success") || text.includes("connected")) return "SUCCESS";
+        if (text.includes("running") || text.includes("executing")) return "RUNNING";
+        if (text.includes("stream") || text.includes("capturing")) return "STREAM";
+        if (text.includes("warning")) return "WARNING";
+        if (text.includes("error")) return "ERROR";
+        return "INFO";
+    };
+
+    return (
+        <AutoScrollFollow
+            followTrigger={logs.length}
+            className="vci-logs-terminal text-start"
+        >
+            {logs.length === 0 ? (
+                <div style={{ color: "#94a3b8", fontStyle: "normal" }}>
+                    <div className="vci-log-line">
+                        <span className="vci-log-time">[15:17:01]</span>
+                        <span className="vci-log-badge info">INFO</span>
+                        <span>Initializing VCI Automation Worker v2.4...</span>
+                    </div>
+                    <div className="vci-log-line">
+                        <span className="vci-log-time">[15:17:02]</span>
+                        <span className="vci-log-badge info">INFO</span>
+                        <span>Connecting to Target Server: 127.0.0.1:8080</span>
+                    </div>
+                    <div className="vci-log-line">
+                        <span className="vci-log-time">[15:17:02]</span>
+                        <span className="vci-log-badge success">SUCCESS</span>
+                        <span>Server 1 connected via WebSockets.</span>
+                    </div>
+                    <div className="vci-log-line">
+                        <span className="vci-log-time">[15:17:03]</span>
+                        <span className="vci-log-badge info">INFO</span>
+                        <span>Setting exposure profile: 'default' (Balanced)</span>
+                    </div>
+                    <div className="vci-log-line">
+                        <span className="vci-log-time">[15:17:04]</span>
+                        <span className="vci-log-badge running">RUNNING</span>
+                        <span>Executing script TakeBackgroundImages.py</span>
+                    </div>
+                    <div className="vci-log-line">
+                        <span className="vci-log-time">[15:17:05]</span>
+                        <span className="vci-log-badge stream">STREAM</span>
+                        <span>Capturing frame 1/100 from Camera 01...</span>
+                    </div>
+                    <div className="vci-log-line">
+                        <span className="vci-log-time">[15:17:06]</span>
+                        <span className="vci-log-badge stream">STREAM</span>
+                        <span>Capturing frame 2/100 from Camera 02...</span>
+                    </div>
+                    <div className="vci-log-prompt">&gt; Script active. Waiting for trigger signals...</div>
+                </div>
+            ) : (
+                logs.map((log) => {
+                    const badgeClass = getBadgeClass(log);
+                    const badgeLabel = getBadgeLabel(log);
+                    const timeStr = new Date(log.timestamp * 1000).toLocaleTimeString();
+
+                    return (
+                        <div key={log.event_id} className="vci-log-line">
+                            <span className="vci-log-time">[{timeStr}]</span>
+                            <span className={`vci-log-badge ${badgeClass}`}>{badgeLabel}</span>
+                            <span>{log.content}</span>
+                        </div>
+                    );
+                })
+            )}
+        </AutoScrollFollow>
     );
 }

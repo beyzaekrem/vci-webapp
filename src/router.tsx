@@ -18,7 +18,7 @@ import {
 } from "./pages";
 
 import { WithNotifications } from "./Utility/Notifications";
-import { Sidebar } from "./Components/Sidebar/Sidebar.tsx";
+import { SidebarProvider, AppSidebar } from "./Components/Sidebar/Sidebar.tsx";
 import { LocalStorageProvider } from "./Utility/Storage";
 import { GridFromQueryParam } from "./Components/Videostream/WebsocketGrid.tsx";
 import { StreamsPerServer } from "./Components/Videostream/StreamsPerServer.tsx";
@@ -26,10 +26,16 @@ import { StreamsPerServer } from "./Components/Videostream/StreamsPerServer.tsx"
 function WithSidebarLayout() {
   return (
     <LocalStorageProvider>
-      <Sidebar />
-      <WithNotifications>
-        <Outlet />
-      </WithNotifications>
+      <SidebarProvider>
+        <div className="vci-app-layout">
+          <AppSidebar />
+          <main className="vci-app-main-content">
+            <WithNotifications>
+              <Outlet />
+            </WithNotifications>
+          </main>
+        </div>
+      </SidebarProvider>
     </LocalStorageProvider>
   );
 }
