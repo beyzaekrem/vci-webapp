@@ -43,9 +43,9 @@ export function CameraPreview({
     // Display title formatted as in screenshot e.g. "Camera 03 - Center Rig"
     const cameraDisplayName = useMemo(() => {
         if (!activeEntry) return "No Camera Selected";
-        const camNum = activeEntry.shorthand.replace(/^[A-Z]+/i, "").slice(-2) || "01";
+        const camName = activeEntry.shorthand;
         const slotName = getSlotDisplayName(activeEntry.slot);
-        return `Camera ${camNum} - ${slotName}`;
+        return `Camera ${camName} - ${slotName}`;
     }, [activeEntry]);
 
     function handleDownload() {

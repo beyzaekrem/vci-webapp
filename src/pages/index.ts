@@ -6,7 +6,6 @@
 
 export { About } from "./About";
 export { Calibrate } from "./Calibrate";
-export { Capture } from "./Capture";
 export { CombinedPage } from "./CombinedPage";
 export { ConfigPage } from "./Config";
 export { StartPage } from "./Start";

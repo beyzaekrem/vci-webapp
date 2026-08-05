@@ -14,8 +14,6 @@ sleep 2
 echo "[2/3] Starting vci-automation API server..."
 cd /home/student_polat/Desktop/vci-webapp-master/vci-automation-main
 source venv/bin/activate
-export CUDACXX=/usr/local/cuda/bin/nvcc
-export PATH="/usr/local/cuda/bin:$PATH"
 python scripts/web_service/api_server.py &
 AUTO_PID=$!
 sleep 2

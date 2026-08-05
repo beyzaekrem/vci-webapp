@@ -11,6 +11,7 @@ import {
 } from "./systemLayoutData";
 import { useClientID } from "../../Utility/Storage";
 import { getServers, useCameraIndices } from "../../network/capture-server";
+import { ServerStatusButton } from "../Config/ServerStatusModal";
 import "./previewStreams.css";
 
 export function PreviewStreamsPage() {
@@ -85,6 +86,7 @@ export function PreviewStreamsPage() {
             {/* Header Bar */}
             <header className="ps-header-bar">
                 <h1 className="ps-header-title">Preview Streams</h1>
+                <ServerStatusButton />
             </header>
 
             {/* Main Layout Grid */}

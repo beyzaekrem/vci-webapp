@@ -119,9 +119,9 @@ function SelectServerDropdownSingle({
   setSelection: (sel: CameraSelection) => void;
 }) {
   const servers = getServers();
-  const options = servers.servers.map((server, index) => ({
+  const options = (servers?.servers || []).map((server, index) => ({
     value: index,
-    label: `Server ${index + 1} (${server.getDomain()})`,
+    label: `Server ${index + 1} (${server?.getDomain() || "127.0.0.1"})`,
   }));
   const currentValue = options.find((option) => option.value === selection.server);
   const allCameras = useCameraIndices();
@@ -151,10 +151,15 @@ function SelectCameraIndexSingle({
 }) {
   const allCameras = useCameraIndices();
   const camerasForServer = allCameras.filter(([s]) => s === selection.server);
-  const options = camerasForServer.map(([_, camera]) => ({
-    value: camera,
-    label: `Camera ${camera + 1} (${getServers().servers[selection.server].getCamera(camera).getShorthand()})`,
-  }));
+  const serverObj = getServers().getServer(selection.server);
+  const options = camerasForServer.map(([_, camera]) => {
+    const shorthand = serverObj ? serverObj.getCamera(camera)?.getShorthand() : undefined;
+    const shorthandText = shorthand ? ` (${shorthand})` : "";
+    return {
+      value: camera,
+      label: `Camera ${camera + 1}${shorthandText}`,
+    };
+  });
   const currentValue = options.find((option) => option.value === selection.camera);
   return (
     <div style={{ zIndex: 200 }}>
@@ -209,11 +214,11 @@ function SelectMultipleCameras({
 
   // State for "Add All Cameras" dropdown
   const [selectedServerForAll, setSelectedServerForAll] = useState<number>(0);
-  const addAllServerOptions = servers.servers.map((server, index) => {
+  const addAllServerOptions = (servers?.servers || []).map((server, index) => {
     const cameraCount = camerasAll.filter(([s]) => s === index).length;
     return {
       value: index,
-      label: `Server ${index + 1} (${server.getDomain()}) - ${cameraCount} camera${cameraCount !== 1 ? "s" : ""}`,
+      label: `Server ${index + 1} (${server?.getDomain() || "127.0.0.1"}) - ${cameraCount} camera${cameraCount !== 1 ? "s" : ""}`,
     };
   });
 
@@ -284,9 +289,9 @@ function CameraSelectionRow({
   onRemove: () => void;
 }) {
   const servers = getServers();
-  const serverOptions = servers.servers.map((server, index) => ({
+  const serverOptions = (servers?.servers || []).map((server, index) => ({
     value: index,
-    label: `Server ${index + 1} (${server.getDomain()})`,
+    label: `Server ${index + 1} (${server?.getDomain() || "127.0.0.1"})`,
   }));
   const allCameras = useCameraIndices();
   const camerasForServer = allCameras.filter(([server]) => server === selection.server);

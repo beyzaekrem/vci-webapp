@@ -8,7 +8,6 @@ import { createHashRouter, Outlet } from "react-router-dom";
 import {
   About,
   Calibrate,
-  Capture,
   CombinedPage,
   ConfigPage,
   StartPage,
@@ -81,10 +80,7 @@ export const router = createHashRouter([
         path: "calibrate",
         element: <Calibrate />,
       },
-      {
-        path: "capture",
-        element: <Capture />,
-      },
+
       {
         path: "vci-automation",
         element: <VCIAutomationPage />,

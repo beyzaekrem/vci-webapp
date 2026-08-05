@@ -1,61 +1,126 @@
-import { useEffect, useState } from "react";
-import { SelectCameras } from "../Components/SelectCameras";
-import { useCameraSelectionsReadOnly } from "../Components/SelectCameras";
+import { useEffect, useMemo } from "react";
+import { SelectCameras, useCameraSelections } from "../Components/SelectCameras";
 import { useExposureKeyBindings, useToggleTriggerSourceKeyBindings } from "../Components/CameraHooks";
 import { ContextMenu } from "../Utility/KeyBindings";
-import { useCameraIndices } from "../network/capture-server";
+import { useCameraIndices, getServers } from "../network/capture-server";
 import { Grid, useIntegerZoomKeyBindingsWebsocket } from "../Components/Videostream";
 import { useClientID } from "../Utility/Storage";
+import { ServerStatusButton } from "../Components/Config/ServerStatusModal";
 
 export function Calibrate() {
   const clientID = useClientID();
 
   const storage = "local";
-  const selectionKey = "cameraForCalibration"
-  const currentCam = useCameraSelectionsReadOnly({ storage: storage, selectionKey: selectionKey })[0] || { server: 0, camera: 0 };
-
-  useExposureKeyBindings(currentCam.server, currentCam.camera);
-
-  useToggleTriggerSourceKeyBindings(currentCam.server, currentCam.camera);
-
-  // Set the stream IDs for the main and zoomed stream
-  // We need to use the client ID to ensure that multiple people do not share the same stream ID
-  const [streamIDs, setStreamIDs] = useState<{ zoomedStreamId: string | null, mainStreamId: string | null }>({ zoomedStreamId: null, mainStreamId: null });
-  useEffect(() => {
-    setStreamIDs({
-      zoomedStreamId: clientID + "_calibrationZoomedStreamId_" + currentCam.camera,
-      mainStreamId: clientID + "_calibrationMainStreamId_" + currentCam.camera
-    });
-  }, [currentCam, clientID]);
-
-  useIntegerZoomKeyBindingsWebsocket(streamIDs.zoomedStreamId || "", currentCam.server);
-
-
+  const selectionKey = "cameraForCalibration";
+  const [selections, setSelections] = useCameraSelections({ storage, selectionKey });
   const cameras = useCameraIndices();
-  if(cameras.length === 0) return <div>Loading...</div>;
 
-  const streams = [
-    { serverIndex: currentCam.server!, cameraIndex: currentCam.camera!, streamID: streamIDs.mainStreamId! },
-    { serverIndex: currentCam.server!, cameraIndex: currentCam.camera!, streamID: streamIDs.zoomedStreamId! }
-  ]
+  // Auto-select first available camera if no selection exists
+  useEffect(() => {
+    if (selections.length === 0 && cameras.length > 0) {
+      const [firstServer, firstCam] = cameras[0];
+      setSelections([{ server: firstServer, camera: firstCam }]);
+    }
+  }, [selections, cameras, setSelections]);
+
+  const currentCam = selections[0] || (cameras.length > 0 ? { server: cameras[0][0], camera: cameras[0][1] } : { server: 0, camera: 0 });
+
+  const serverIndex = currentCam.server ?? 0;
+  const cameraIndex = currentCam.camera ?? 0;
+
+  // Stable stream ID generation using primitive dependencies
+  const mainStreamId = useMemo(() => {
+    return `${clientID}_calibrationMainStream_${serverIndex}_${cameraIndex}`;
+  }, [clientID, serverIndex, cameraIndex]);
+
+  const zoomedStreamId = useMemo(() => {
+    return `${clientID}_calibrationZoomedStream_${serverIndex}_${cameraIndex}`;
+  }, [clientID, serverIndex, cameraIndex]);
+
+  // Ensure server is switched to livestream mode
+  useEffect(() => {
+    const server = getServers().getServer(serverIndex);
+    server?.switchMode("livestream");
+  }, [serverIndex]);
+
+  useExposureKeyBindings(serverIndex, cameraIndex);
+  useToggleTriggerSourceKeyBindings(serverIndex, cameraIndex);
+  useIntegerZoomKeyBindingsWebsocket(zoomedStreamId, serverIndex);
+
+  const streams = useMemo(() => [
+    { serverIndex, cameraIndex, streamID: mainStreamId },
+    { serverIndex, cameraIndex, streamID: zoomedStreamId }
+  ], [serverIndex, cameraIndex, mainStreamId, zoomedStreamId]);
+
+  if (cameras.length === 0) {
+    return (
+      <div className="ps-content-wrapper">
+        <header className="ps-header-bar">
+          <h1 className="ps-header-title">Calibrate</h1>
+          <ServerStatusButton />
+        </header>
+        <div style={{ padding: 24, textAlign: "center", color: "#64748b" }}>
+          Loading camera configuration...
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <div style={{ width: "100%", height: "100vh" }}>
-        <SelectCameras storage={storage} selectionKey={selectionKey} />
-        <div style={{ position: "relative" }}>
-          <div className="d-flex justify-content-center">
+    <div className="ps-content-wrapper">
+      {/* Header Bar */}
+      <header className="ps-header-bar">
+        <h1 className="ps-header-title">Calibrate</h1>
+        <ServerStatusButton />
+      </header>
+
+      {/* Main Layout Area */}
+      <main style={{ flex: 1, padding: "20px 24px", display: "flex", flexDirection: "column", gap: "16px", minHeight: 0, overflow: "auto" }}>
+        {/* Top Control Bar Card */}
+        <div style={{
+          backgroundColor: "#ffffff",
+          borderRadius: "12px",
+          border: "1px solid #e2e8f0",
+          padding: "14px 20px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: "16px",
+          boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)"
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <span style={{ fontSize: "13px", fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              Camera Selection:
+            </span>
+            <SelectCameras storage={storage} selectionKey={selectionKey} />
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <ContextMenu category="Camera" />
             <ContextMenu category="Integer Zoom" />
           </div>
-          {
-            streamIDs.zoomedStreamId && streamIDs.mainStreamId &&
-            <div style={{ position: "relative", width: "100%", height: "90vh" }}>
-              <Grid streams={streams} />
-            </div>
-          }
         </div>
-      </div>
+
+        {/* Video Streams Container Card */}
+        <div style={{
+          flex: 1,
+          backgroundColor: "#0b1329",
+          borderRadius: "12px",
+          border: "1px solid #1e293b",
+          padding: "8px",
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "520px",
+          height: "calc(100vh - 210px)",
+          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
+          overflow: "hidden"
+        }}>
+          <div style={{ flex: 1, position: "relative", width: "100%", height: "100%" }}>
+            <Grid streams={streams} />
+          </div>
+        </div>
+      </main>
     </div>
   );
 }

@@ -5,7 +5,6 @@ import {
   Menu,
   Video,
   PlayCircle,
-  Grid,
   Sliders,
   Server,
   Settings,
@@ -84,15 +83,7 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
               VCI Automation
             </NavLink>
 
-            <NavLink
-              to="/capture"
-              className={({ isActive }) =>
-                `vci-sidebar-link ${isActive ? "active" : ""}`
-              }
-              onClick={closeSidebar}
-            >
-              Capture
-            </NavLink>
+
 
             <NavLink
               to="/calibrate"
@@ -155,11 +146,10 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
  * Top-to-bottom sequence matching user screenshot:
  * 1. Preview
  * 2. VCI Automation
- * 3. Capture
- * 4. Calibrate
- * 5. Server Status
- * 6. Settings
- * 7. About
+ * 3. Calibrate
+ * 4. Server Status
+ * 5. Settings
+ * 6. About
  */
 export function AppSidebar() {
   const { openSidebar } = useSidebar();
@@ -168,7 +158,7 @@ export function AppSidebar() {
 
   const isPreviewActive = pathname === "/" || pathname.startsWith("/preview");
   const isAutomationActive = pathname.startsWith("/vci-automation");
-  const isCaptureActive = pathname.startsWith("/capture");
+
   const isCalibrateActive = pathname.startsWith("/calibrate");
   const isServerActive = pathname.startsWith("/servers") || pathname.startsWith("/videostream");
   const isConfigActive = pathname.startsWith("/config");
@@ -212,15 +202,7 @@ export function AppSidebar() {
           <PlayCircle size={19} />
         </NavLink>
 
-        {/* 3. Capture */}
-        <NavLink
-          to="/capture"
-          className={`vci-sidebar-icon-btn ${isCaptureActive ? "active" : ""}`}
-          title="Capture"
-        >
-          {isCaptureActive && <span className="active-indicator" />}
-          <Grid size={19} />
-        </NavLink>
+
 
         {/* 4. Calibrate */}
         <NavLink

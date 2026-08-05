@@ -19,10 +19,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 28px;
+    height: 56px;
+    padding: 0 24px;
     background-color: #ffffff;
     border-bottom: 1px solid #e2e8f0;
     flex-shrink: 0;
+    box-sizing: border-box;
 }
 
 .vci-auto-header-left {
@@ -32,10 +34,10 @@
 }
 
 .vci-auto-title {
-    font-size: 20px;
-    font-weight: 800;
+    font-size: 18px;
+    font-weight: 700;
     color: #0f172a;
-    letter-spacing: -0.3px;
+    letter-spacing: -0.2px;
     margin: 0;
 }
 
@@ -58,6 +60,12 @@
     border-radius: 50%;
     background-color: #22c55e;
     box-shadow: 0 0 6px #22c55e;
+}
+
+.vci-auto-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .vci-auto-server-badge {
@@ -164,8 +172,8 @@
 }
 
 .vci-config-title {
-    font-size: 18px;
-    font-weight: 800;
+    font-size: 16px;
+    font-weight: 700;
     color: #0f172a;
     margin: 0 0 6px 0;
 }

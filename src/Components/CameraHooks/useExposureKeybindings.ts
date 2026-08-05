@@ -2,13 +2,14 @@ import { getServers } from "../../network/capture-server";
 import { useKeyPress } from "../../Utility/KeyBindings";
 import { exposureIconPlus, exposureIconMinus } from "../Icons";
 
-
 export function useExposureKeyBindings(serverIndex: number, cameraIndex: number) {
-    const camera = getServers().getServer(serverIndex).getCamera(cameraIndex);
+    const server = getServers().getServer(serverIndex);
+    const camera = server ? server.getCamera(cameraIndex) : undefined;
+
     useKeyPress({
         key: "NumpadAdd",
         onKeyEvent: () => {
-            camera.setParameterIncremental("exposure", 5000);
+            camera?.setParameterIncremental("exposure", 5000);
         },
         description: "Increase Exposure",
         category: "Camera",
@@ -19,7 +20,7 @@ export function useExposureKeyBindings(serverIndex: number, cameraIndex: number)
     useKeyPress({
         key: "NumpadSubtract",
         onKeyEvent: () => {
-            camera.setParameterIncremental("exposure", -5000);
+            camera?.setParameterIncremental("exposure", -5000);
         },
         description: "Decrease Exposure",
         category: "Camera",
@@ -27,3 +28,4 @@ export function useExposureKeyBindings(serverIndex: number, cameraIndex: number)
         dependencies: [camera],
     });
 }
+

@@ -1,15 +1,20 @@
 import Settings from "../Components/Config/Settings.tsx";
+import { ServerStatusButton } from "../Components/Config/ServerStatusModal";
 
 export function ConfigPage() {
   return (
-    <div
-      style={{ height: "100%" }}
-      className="d-flex justify-content-center"
-    >
-      <div>
-        <h1 className="mt-4">Settings</h1>
+    <div className="ps-content-wrapper">
+      {/* Header Bar */}
+      <header className="ps-header-bar">
+        <h1 className="ps-header-title">Settings</h1>
+        <ServerStatusButton />
+      </header>
+
+      {/* Main Content Area */}
+      <main style={{ flex: 1, padding: "24px 28px", minHeight: 0, overflow: "auto" }}>
         <Settings />
-      </div>
+      </main>
     </div>
   );
 }
+

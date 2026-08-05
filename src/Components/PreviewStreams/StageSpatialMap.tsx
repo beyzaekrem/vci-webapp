@@ -4,6 +4,7 @@ import {
     getPillarKeys,
     getPillarNumber,
     getSlotDisplayName,
+    systemLayout,
     type CameraEntry,
     type SlotName,
 } from "./systemLayoutData";
@@ -15,6 +16,10 @@ const SLOT_Y: Record<SlotName, number> = {
     rig_low: 0.72,
     floor: 0.90,
 };
+
+function formatCameraNodeLabel(shorthand: string): string {
+    return shorthand;
+}
 
 interface StageSpatialMapProps {
     selectedCamera: CameraEntry | null;
@@ -67,7 +72,11 @@ export function StageSpatialMap({
 
                     const leftPct = ((pillarIdx + 0.5) / totalPillars) * 100;
                     const topPct = SLOT_Y[cam.slot] * 100;
-                    const offsetPx = (cam.slotIndex - 0.5) * 18;
+
+                    // Stagger horizontal & vertical offsets so overlapping dots on the same slot don't obscure each other
+                    const totalInSlot = (systemLayout.positions[cam.pillarKey]?.[cam.slot] || []).length;
+                    const offsetX = (cam.slotIndex - (totalInSlot - 1) / 2) * 22;
+                    const offsetY = totalInSlot > 1 ? (cam.slotIndex % 2 === 1 ? -12 : 12) : 0;
 
                     const isActive =
                         selectedCamera?.shorthand === cam.shorthand &&
@@ -75,7 +84,7 @@ export function StageSpatialMap({
                     const resolved = resolvedMap.get(cam.shorthand);
                     const isResolved = !!resolved;
 
-                    const labelNumber = cam.shorthand.replace(/^[A-Z]+/i, "").slice(-2) || "01";
+                    const nodeLabel = formatCameraNodeLabel(cam.shorthand);
 
                     const classes = [
                         "ps-cam-node",
@@ -88,15 +97,15 @@ export function StageSpatialMap({
                             key={`${cam.pillarKey}-${cam.slot}-${cam.slotIndex}`}
                             className={classes}
                             style={{
-                                left: `calc(${leftPct}% + ${offsetPx}px)`,
-                                top: `${topPct}%`,
+                                left: `calc(${leftPct}% + ${offsetX}px)`,
+                                top: `calc(${topPct}% + ${offsetY}px)`,
                             }}
                             title={`${cam.shorthand} – ${getSlotDisplayName(cam.slot)} (Pillar ${cam.pillarIndex})`}
                             onClick={() => {
                                 if (isResolved) onSelectCamera(cam);
                             }}
                         >
-                            <span>{labelNumber}</span>
+                            <span>{nodeLabel}</span>
                         </div>
                     );
                 })}

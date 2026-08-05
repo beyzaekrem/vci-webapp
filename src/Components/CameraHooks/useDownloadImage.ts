@@ -8,8 +8,8 @@ export function useDownloadImage(serverIndex: number, cameraIndex: number) {
         onKeyEvent: () => {
             getServers()
                 .getServer(serverIndex)
-                .getCamera(cameraIndex)
-                .downloadImage();
+                ?.getCamera(cameraIndex)
+                ?.downloadImage();
         },
         description: "Download Full Resolution Image",
         category: "Camera",
@@ -17,5 +17,6 @@ export function useDownloadImage(serverIndex: number, cameraIndex: number) {
         dependencies: [serverIndex, cameraIndex],
     });
 }
+
 
 

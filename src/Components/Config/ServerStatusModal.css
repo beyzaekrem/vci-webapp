@@ -1,0 +1,192 @@
+/* ─────────────────────────────────────────────
+ *  Server Status Modal Styles
+ * ───────────────────────────────────────────── */
+
+.server-status-modal .modal-content {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.server-status-modal-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 16px 24px;
+}
+
+.server-status-modal-header .btn-close {
+    opacity: 0.5;
+}
+
+.server-status-modal-header .btn-close:hover {
+    opacity: 1;
+}
+
+.server-status-modal-title {
+    color: #0f172a;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.server-status-modal-body {
+    padding: 20px 24px;
+    background: #f8fafc;
+}
+
+/* ── Section ── */
+.server-status-section {
+    margin-bottom: 16px;
+}
+
+.server-status-section:last-of-type {
+    margin-bottom: 8px;
+}
+
+.server-status-section-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #64748b;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+}
+
+/* ── Row ── */
+.server-status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    margin-bottom: 6px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.15s ease;
+}
+
+.server-status-row:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.server-status-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+/* ── CSS Dot indicators ── */
+.server-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.server-status-dot.dot-online {
+    background-color: #22c55e;
+    box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+}
+
+.server-status-dot.dot-connecting {
+    background-color: #f59e0b;
+    animation: server-status-pulse 1.5s ease-in-out infinite;
+}
+
+.server-status-dot.dot-closing {
+    background-color: #94a3b8;
+}
+
+.server-status-dot.dot-offline {
+    background-color: #ef4444;
+}
+
+.server-status-dot.dot-inactive {
+    background-color: #cbd5e1;
+}
+
+.server-status-address {
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #1e293b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ── Badge ── */
+.server-status-badge {
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ── Empty state ── */
+.server-status-empty {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    padding: 12px 0;
+    margin: 0;
+}
+
+/* ── Footer note ── */
+.server-status-footer-note {
+    text-align: center;
+    font-size: 0.7rem;
+    color: #94a3b8;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* ── Pulse animation ── */
+@keyframes server-status-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+
+/* ─────────────────────────────────────────────
+ *  Trigger Button (used in page headers)
+ * ───────────────────────────────────────────── */
+.server-status-trigger-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-color: #e2e8f0;
+    color: #475569;
+    background-color: #fff;
+    padding: 5px 14px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+.server-status-trigger-btn:hover {
+    border-color: #94a3b8;
+    color: #0f172a;
+    background-color: #f1f5f9;
+}
+
+.server-status-trigger-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #22c55e;
+    box-shadow: 0 0 5px rgba(34, 197, 94, 0.45);
+}

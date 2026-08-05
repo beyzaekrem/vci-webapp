@@ -114,6 +114,7 @@
 .ps-header-bar {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     height: 56px;
     padding: 0 24px;
     background-color: #ffffff;
@@ -227,11 +228,12 @@
 /* Camera Nodes on Map */
 .ps-cam-node {
     position: absolute;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    min-width: 46px;
+    height: 26px;
+    padding: 0 6px;
+    border-radius: 13px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -239,13 +241,17 @@
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     transform: translate(-50%, -50%);
     z-index: 2;
+    box-sizing: border-box;
 }
 
 .ps-cam-node span {
-    font-size: 9px;
-    font-weight: 700;
-    color: #94a3b8;
+    font-size: 9.5px;
+    font-weight: 800;
+    color: #e2e8f0;
     pointer-events: none;
+    letter-spacing: -0.3px;
+    white-space: nowrap;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
 }
 
 .ps-cam-node:hover {

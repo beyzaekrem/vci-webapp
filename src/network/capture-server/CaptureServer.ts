@@ -447,7 +447,7 @@ export class CaptureServers implements Iterable<CaptureServer> {
      * @param index The server index.
      * @returns The CaptureServer instance at that index.
      */
-    getServer(index: number): CaptureServer {
+    getServer(index: number): CaptureServer | undefined {
         return this.servers[index];
     }
 

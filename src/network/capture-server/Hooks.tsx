@@ -120,7 +120,8 @@ export function useCameraInfoProperty<T>(
   getProperty: (c: CameraSystemData) => T,
   defaultValue: T
 ): T {
-  const ws = getServers().getServer(serverIndex).socket
+  const server = getServers().getServer(serverIndex);
+  const ws = server?.socket;
 
   const obj = useWebSocketAttribute({
     webSocketConnection: ws,
@@ -141,14 +142,15 @@ export function useCameraInfoProperty<T>(
 function useWebSocketAttribute({
   webSocketConnection, defaultValue = -1, getProperty,
 }: {
-  webSocketConnection: CaptureServerConnection;
+  webSocketConnection?: CaptureServerConnection;
   defaultValue?: any;
   getProperty: (c: CameraSystemData) => any;
 }): any {
   const [data, setData] = useState(defaultValue);
-  const ws = webSocketConnection;
 
   useEffect(() => {
+    if (!webSocketConnection) return;
+    const ws = webSocketConnection;
     ws.getSocketEvents().addEventListener("newMessageData", setNewData);
 
     //call setNewData for getProperty with last message if this is called after a message is received
@@ -159,32 +161,25 @@ function useWebSocketAttribute({
     return () => {
       ws.getSocketEvents().removeEventListener("newMessageData", setNewData);
     };
-  }, [getProperty, ws]);
 
-  function setNewData() {
-    const state = ws.getCurrentCamToolState();
+    function setNewData() {
+      const state = ws.getCurrentCamToolState();
 
-    if(state == undefined) {
-      console.warn("current cam tool state is undefined, cannot get new data yet.");
-      return;
-      /*cam tool state gets updated in a newMessageData event of InterceptorConnection.
-      setNewData gets also called in a newMessageData event (which is practically equivalent to onNewMessage function).
-      If cam tool state is updated after this event is triggered, we might end up here.
-      TODO This has never been a problem but see if there is a better way to handle this
-      */
+      if(state == undefined) {
+        return;
+      }
+
+      try {
+        var newValue = getProperty(state);
+        setData((oldValue: any) => {
+          return newValue;
+        });
+      } catch(e) {
+        console.warn(e);
+      }
     }
-
-    try {
-      var newValue = getProperty(state);
-      setData((oldValue: any) => {
-        //only update values in nested obj if they arent equal
-        //if(!deepEqual(oldValue, newValue)){
-        return newValue;
-      });
-    } catch(e) {
-      console.warn(e);
-    }
-  }
+  }, [getProperty, webSocketConnection]);
 
   return data;
 }
+

@@ -33,9 +33,11 @@ export function GridLayout({ length, renderElement }: GridLayoutProps) {
 
     useEffect(() => {
         if(!gridRef.current) return;
+        const w = gridSize.width || 800;
+        const h = gridSize.height || 600;
         const rectResult = largestRect(
-            gridSize.width,
-            gridSize.height,
+            w,
+            h,
             length || 1,
             defaultImageSize.width,
             defaultImageSize.height

@@ -2,13 +2,11 @@ import { useState } from "react";
 import { ScriptList } from "../Components/VCIAutomation/ScriptList";
 import { type ScriptInfo } from "../network/vci-automation";
 import { VCIAutomationScript } from "../Components/VCIAutomation/VCIAutomationScript";
-import { getServers } from "../network/capture-server";
+import { ServerStatusButton } from "../Components/Config/ServerStatusModal";
 import "../Components/VCIAutomation/vciAutomation.css";
 
 export function VCIAutomationPage() {
     const [selectedScript, setSelectedScript] = useState<ScriptInfo | null>(null);
-
-    const firstServerDomain = getServers().servers[0]?.getDomain() || "127.0.0.1";
 
     return (
         <div className="vci-auto-container">
@@ -21,8 +19,8 @@ export function VCIAutomationPage() {
                         ONLINE
                     </span>
                 </div>
-                <div className="vci-auto-server-badge">
-                    Server 1 ({firstServerDomain})
+                <div className="vci-auto-header-right">
+                    <ServerStatusButton />
                 </div>
             </header>
 

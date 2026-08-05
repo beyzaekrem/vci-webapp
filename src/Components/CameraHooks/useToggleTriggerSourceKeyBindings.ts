@@ -2,15 +2,15 @@ import { getServers, useParameter } from "../../network/capture-server";
 import { useKeyPress } from "../../Utility/KeyBindings";
 import { triggerSource as triggerSourceIcon } from "../Icons";
 
-
 export function useToggleTriggerSourceKeyBindings(serverIndex: number, cameraIndex: number) {
-    const camera = getServers().getServer(serverIndex).getCamera(cameraIndex);
+    const server = getServers().getServer(serverIndex);
+    const camera = server ? server.getCamera(cameraIndex) : undefined;
 
-    const x = useParameter(serverIndex, cameraIndex, (cam) => cam.trigger_source);
+    const x = useParameter(serverIndex, cameraIndex, (cam) => cam?.trigger_source);
     const int_value = Number(x?.value?.value || -1);
 
     function refresh() {
-        getServers().getServer(serverIndex).getAllInfo();
+        getServers().getServer(serverIndex)?.getAllInfo();
     }
 
     const triggerSources = {
@@ -28,13 +28,14 @@ export function useToggleTriggerSourceKeyBindings(serverIndex: number, cameraInd
     useKeyPress({
         key: "t",
         onKeyEvent: () => {
-            if(int_value == 3) {
+            if (!camera) return;
+            if (int_value === 3) {
                 camera.setParameter("trigger_source", 1).then(refresh);
             }
-            else if(int_value == 1) {
+            else if (int_value === 1) {
                 camera.setParameter("trigger_source", 3).then(refresh);
             }
-            else if(int_value == 2) {
+            else if (int_value === 2) {
                 camera.setParameter("trigger_source", 3).then(refresh);
             }
         },
@@ -44,3 +45,4 @@ export function useToggleTriggerSourceKeyBindings(serverIndex: number, cameraInd
         icon: display
     });
 }
+
