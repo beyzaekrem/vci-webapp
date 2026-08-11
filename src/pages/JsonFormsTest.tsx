@@ -1,7 +1,7 @@
 import Form from "@rjsf/react-bootstrap";
 import { customizeValidator } from "@rjsf/validator-ajv8";
 import Ajv2020 from "ajv/dist/2020.js";
-import { ImageDisplayWidget } from "../Components/VCIAutomation/RJSF-Extras/Widgets/ImageDisplay.tsx";
+import { ImageDisplayWidget } from "../Components/features/VCIAutomation/RJSF-Extras/Widgets/ImageDisplay.tsx";
 
 const currentData = {
     //uri can also be base64 encoded, e.g. "data:image/png;base64,iVBORw0KGgoAA..."

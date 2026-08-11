@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useKeyPress } from "../../Utility/KeyBindings";
-import { infoIcon, performanceIcon } from "../Icons";
+import { infoIcon, performanceIcon } from "../shared/Icons";
 import { InfoPopUp } from "../../Utility/UI";
 
 /**

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocallyStored } from "../../Utility/Storage";
 import { useCameraIndices } from "../../network/capture-server";
 import { getServers } from "../../network/capture-server";
-import { SelectServer } from "../SelectServer.tsx";
+import { SelectServer } from "../shared/SelectServer.tsx";
 import { GridWithFocusedElement } from "./WebsocketGrid.tsx";
 
 export function StreamsPerServer() {
@@ -15,7 +15,7 @@ export function StreamsPerServer() {
   useEffect(() => {
     const servers = getServers();
     if (serverIndex >= 0 && serverIndex < servers.servers.length) {
-      servers.getServer(serverIndex).switchMode("livestream");
+      servers.getServer(serverIndex)?.switchMode("livestream");
     }
   }, [serverIndex]);
 

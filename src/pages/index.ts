@@ -4,7 +4,7 @@
  * Page-level React components used by the application router.
  */
 
-export { About } from "./About";
+export { Dashboard } from "./Dashboard";
 export { Calibrate } from "./Calibrate";
 export { CombinedPage } from "./CombinedPage";
 export { ConfigPage } from "./Config";

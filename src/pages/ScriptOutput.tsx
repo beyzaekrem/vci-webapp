@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
-import { ScriptInteractions } from "../Components/VCIAutomation/ScriptInteractions";
-import { RenderedScriptOutput } from "../Components/VCIAutomation/RenderedScriptOutput";
-import { ScriptLogs } from "../Components/VCIAutomation/ScriptLogs";
-import { ServerStatusButton } from "../Components/Config/ServerStatusModal";
+import { ScriptInteractions } from "../Components/features/VCIAutomation/ScriptInteractions";
+import { RenderedScriptOutput } from "../Components/features/VCIAutomation/RenderedScriptOutput";
+import { ScriptLogs } from "../Components/features/VCIAutomation/ScriptLogs";
+import { ServerStatusButton } from "../Components/shared/ServerStatusModal";
 
 export function ScriptOutputPage() {
     const { runnerId } = useParams<{ runnerId: string }>();

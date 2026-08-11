@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { largestRect } from "rect-scaler";
 import { useClientSize } from "./useClientSize";
 import { StreamWebsocket } from "./WebsocketStream";
-import { SelectCameraModal, useCameraSelectionsReadOnly } from "../SelectCameras";
+import { SelectCameraModal, useCameraSelectionsReadOnly } from "../features/SelectCameras";
 import { useIntegerZoomKeyBindingsWebsocket } from "./IntegerZoom/IntegerZoomMenu";
-import { useExposureKeyBindings, useToggleTriggerSourceKeyBindings } from "../CameraHooks";
+import { useExposureKeyBindings, useToggleTriggerSourceKeyBindings } from "../features/CameraHooks";
 import { ContextMenu } from "../../Utility/KeyBindings";
-import { useDownloadImage, useFullScreen } from "../CameraHooks";
+import { useDownloadImage, useFullScreen } from "../features/CameraHooks";
 import { useClientID } from "../../Utility/Storage";
 
 interface ScalingResult {
@@ -46,20 +46,23 @@ export function GridLayout({ length, renderElement }: GridLayoutProps) {
     }, [gridSize, defaultImageSize, length]);
 
     return (
-        <div ref={gridRef} style={{ width: "100%", height: "100%" }}>
+        <div ref={gridRef} style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
             {scalingResult && (
                 <div
                     style={{
                         display: "grid",
                         gridTemplateColumns: `repeat(${scalingResult.cols}, 1fr)`,
                         gridTemplateRows: `repeat(${scalingResult.rows}, 1fr)`,
-                        gap: "0px",
+                        gap: "4px",
+                        justifyContent: "center",
+                        alignContent: "center",
+                        margin: "0 auto",
                     }}
                 >
                     {Array.from({ length }).map((_, index) => (
                         <div
                             key={index}
-                            style={{ width: scalingResult.width, height: scalingResult.height, backgroundColor: "#f3f3f3" }}
+                            style={{ width: scalingResult.width, height: scalingResult.height, backgroundColor: "#0b1329", margin: "0 auto" }}
                         >
                             {renderElement({ width: scalingResult.width, height: scalingResult.height }, index)}
                         </div>

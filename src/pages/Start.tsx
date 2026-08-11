@@ -1,7 +1,16 @@
-import { ServerOverview } from "../Components/ServerOverview.tsx";
-import { ServerStatusButton } from "../Components/Config/ServerStatusModal";
+import { useEffect, useRef } from "react";
+import { ServerOverview } from "../Components/shared/ServerOverview.tsx";
+import { ServerStatusButton } from "../Components/shared/ServerStatusModal";
 
 export function StartPage() {
+  const mainRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (mainRef.current) {
+      mainRef.current.scrollTop = 0;
+    }
+  }, []);
+
   return (
     <div className="ps-content-wrapper">
       {/* Header Bar */}
@@ -11,8 +20,8 @@ export function StartPage() {
       </header>
 
       {/* Main Content Card Container - Centered in Viewport */}
-      <main style={{ flex: 1, padding: "32px", display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: 0, overflow: "auto" }}>
-        <div style={{
+      <main ref={mainRef} className="start-main-container" style={{ flex: 1, padding: "32px", display: "flex", justifyContent: "center", alignItems: "flex-start", minHeight: 0, overflow: "auto" }}>
+        <div className="start-card-container" style={{
           width: "100%",
           maxWidth: "850px",
           backgroundColor: "#ffffff",

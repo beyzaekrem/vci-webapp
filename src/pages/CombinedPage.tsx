@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { PreviewStreamsPage } from "../Components/PreviewStreams";
+import { PreviewStreamsPage } from "../Components/features/PreviewStreams";
 
 const url = "/preview";
 

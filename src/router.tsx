@@ -6,7 +6,7 @@
 import { createHashRouter, Outlet } from "react-router-dom";
 
 import {
-  About,
+  Dashboard,
   Calibrate,
   CombinedPage,
   ConfigPage,
@@ -17,7 +17,7 @@ import {
 } from "./pages";
 
 import { WithNotifications } from "./Utility/Notifications";
-import { SidebarProvider, AppSidebar } from "./Components/Sidebar/Sidebar.tsx";
+import { SidebarProvider, AppSidebar } from "./Components/shared/Sidebar/Sidebar.tsx";
 import { LocalStorageProvider } from "./Utility/Storage";
 import { GridFromQueryParam } from "./Components/Videostream/WebsocketGrid.tsx";
 import { StreamsPerServer } from "./Components/Videostream/StreamsPerServer.tsx";
@@ -50,11 +50,7 @@ export const router = createHashRouter([
     children: [
       {
         index: true,
-        element: <About />,
-      },
-      {
-        path: "about",
-        element: <About />,
+        element: <Dashboard />,
       },
       {
         path: "config",

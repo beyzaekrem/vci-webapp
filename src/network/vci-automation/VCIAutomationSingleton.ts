@@ -11,6 +11,7 @@ import type { RJSFSchema, UiSchema } from "@rjsf/utils";
 export type ScriptInfo = {
     id: string;
     name: string;
+    description?: string;
 };
 
 export type ScriptSchemaResponse = {

@@ -1,11 +1,11 @@
 import { useEffect, useMemo } from "react";
-import { SelectCameras, useCameraSelections } from "../Components/SelectCameras";
-import { useExposureKeyBindings, useToggleTriggerSourceKeyBindings } from "../Components/CameraHooks";
+import { SelectCameras, useCameraSelections } from "../Components/features/SelectCameras";
+import { useExposureKeyBindings, useToggleTriggerSourceKeyBindings } from "../Components/features/CameraHooks";
 import { ContextMenu } from "../Utility/KeyBindings";
 import { useCameraIndices, getServers } from "../network/capture-server";
 import { Grid, useIntegerZoomKeyBindingsWebsocket } from "../Components/Videostream";
 import { useClientID } from "../Utility/Storage";
-import { ServerStatusButton } from "../Components/Config/ServerStatusModal";
+import { ServerStatusButton } from "../Components/shared/ServerStatusModal";
 
 export function Calibrate() {
   const clientID = useClientID();
@@ -75,9 +75,9 @@ export function Calibrate() {
       </header>
 
       {/* Main Layout Area */}
-      <main style={{ flex: 1, padding: "20px 24px", display: "flex", flexDirection: "column", gap: "16px", minHeight: 0, overflow: "auto" }}>
+      <main className="cal-main-area" style={{ flex: 1, padding: "20px 24px", display: "flex", flexDirection: "column", gap: "16px", minHeight: 0, overflow: "auto" }}>
         {/* Top Control Bar Card */}
-        <div style={{
+        <div className="cal-control-card" style={{
           backgroundColor: "#ffffff",
           borderRadius: "12px",
           border: "1px solid #e2e8f0",
@@ -103,19 +103,7 @@ export function Calibrate() {
         </div>
 
         {/* Video Streams Container Card */}
-        <div style={{
-          flex: 1,
-          backgroundColor: "#0b1329",
-          borderRadius: "12px",
-          border: "1px solid #1e293b",
-          padding: "8px",
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "520px",
-          height: "calc(100vh - 210px)",
-          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
-          overflow: "hidden"
-        }}>
+        <div className="cal-stream-card">
           <div style={{ flex: 1, position: "relative", width: "100%", height: "100%" }}>
             <Grid streams={streams} />
           </div>

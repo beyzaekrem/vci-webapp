@@ -1,5 +1,5 @@
-import Settings from "../Components/Config/Settings.tsx";
-import { ServerStatusButton } from "../Components/Config/ServerStatusModal";
+import Settings from "../Components/features/Config/Settings.tsx";
+import { ServerStatusButton } from "../Components/shared/ServerStatusModal";
 
 export function ConfigPage() {
   return (
@@ -11,7 +11,7 @@ export function ConfigPage() {
       </header>
 
       {/* Main Content Area */}
-      <main style={{ flex: 1, padding: "24px 28px", minHeight: 0, overflow: "auto" }}>
+      <main className="cfg-main-area" style={{ flex: 1, padding: "24px 28px", minHeight: 0, overflow: "auto" }}>
         <Settings />
       </main>
     </div>

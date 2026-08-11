@@ -1,0 +1,393 @@
+/* ===================================================================
+   Classic Enterprise Dashboard Styling
+   =================================================================== */
+
+.dash-main {
+    flex: 1;
+    padding: 24px 28px;
+    min-height: 0;
+    overflow-y: auto;
+    background-color: #f1f5f9;
+}
+
+.dash-container {
+    max-width: 1040px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ── Welcome Banner ───────────────────────────────────────────────── */
+.dash-welcome-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    border-left: 5px solid #00223d;
+    padding: 22px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    gap: 20px;
+}
+
+.dash-welcome-left {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.dash-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dash-welcome-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+}
+
+.dash-ver-badge {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 12px;
+    letter-spacing: 0.04em;
+}
+
+.dash-welcome-desc {
+    font-size: 13.5px;
+    color: #475569;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.dash-system-status-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.dash-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #22c55e;
+    box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
+}
+
+/* ── Key Metrics Grid ─────────────────────────────────────────────── */
+.dash-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.dash-metric-card {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.dash-metric-icon-box {
+    width: 42px;
+    height: 42px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00223d;
+    flex-shrink: 0;
+}
+
+.dash-metric-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.dash-metric-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.1;
+}
+
+.dash-metric-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+/* ── Modules Section ──────────────────────────────────────────────── */
+.dash-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dash-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dash-section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #334155;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+}
+
+.dash-modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 16px;
+}
+
+.dash-module-card {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.dash-module-card:hover {
+    border-color: #0284c7;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.12);
+    transform: translateY(-1px);
+}
+
+.dash-module-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.dash-module-icon {
+    width: 36px;
+    height: 36px;
+    background-color: #00223d;
+    color: #ffffff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dash-module-badge {
+    background-color: #f1f5f9;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.dash-module-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 6px 0;
+}
+
+.dash-module-desc {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.45;
+    margin: 0 0 16px 0;
+    flex: 1;
+}
+
+.dash-module-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid #f1f5f9;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #0284c7;
+}
+
+.dash-arrow-icon {
+    transition: transform 0.15s ease;
+}
+
+.dash-module-card:hover .dash-arrow-icon {
+    transform: translateX(4px);
+}
+
+/* ── Bottom Section ────────────────────────────────────────────────── */
+.dash-bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.dash-sub-card {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 20px 22px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.dash-sub-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 8px;
+}
+
+.dash-sub-icon {
+    color: #00223d;
+}
+
+.dash-sub-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+}
+
+.dash-sub-text {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.55;
+    margin: 0;
+}
+
+.dash-sub-text kbd {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #cbd5e1;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+}
+
+/* ── Overview & Capabilities Card ─────────────────────────────────── */
+.dash-overview-card {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 22px 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.dash-overview-intro {
+    font-size: 14px;
+    color: #334155;
+    line-height: 1.6;
+    margin: 0 0 18px 0;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.dash-features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 24px;
+}
+
+.dash-feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.dash-feature-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #0284c7;
+    margin-top: 6px;
+    flex-shrink: 0;
+}
+
+.dash-feature-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #0f172a;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.dash-feature-desc {
+    font-size: 12.5px;
+    color: #64748b;
+    line-height: 1.45;
+    margin: 0;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+    .dash-metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dash-features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dash-bottom-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .dash-main {
+        padding: 12px;
+    }
+
+    .dash-welcome-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px 18px;
+        gap: 12px;
+    }
+
+    .dash-system-status-chip {
+        align-self: flex-start;
+    }
+
+    .dash-modules-grid {
+        grid-template-columns: 1fr;
+    }
+}

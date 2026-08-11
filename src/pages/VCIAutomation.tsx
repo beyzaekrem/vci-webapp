@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { ScriptList } from "../Components/VCIAutomation/ScriptList";
+import { ScriptList } from "../Components/features/VCIAutomation/ScriptList";
 import { type ScriptInfo } from "../network/vci-automation";
-import { VCIAutomationScript } from "../Components/VCIAutomation/VCIAutomationScript";
-import { ServerStatusButton } from "../Components/Config/ServerStatusModal";
-import "../Components/VCIAutomation/vciAutomation.css";
+import { VCIAutomationScript } from "../Components/features/VCIAutomation/VCIAutomationScript";
+import { ServerStatusButton } from "../Components/shared/ServerStatusModal";
+import "../Components/features/VCIAutomation/vciAutomation.css";
 
 export function VCIAutomationPage() {
     const [selectedScript, setSelectedScript] = useState<ScriptInfo | null>(null);

@@ -132,7 +132,7 @@ export function ContextMenu({ category }: { category: string }): JSX.Element {
   const actionsContext = useKeyBindingContext();
   const menuRef = useRef<HTMLDivElement>(null);
   return (
-    <ButtonGroup style={{ marginRight: "8px" }} ref={menuRef}>
+    <ButtonGroup className="vci-context-menu-group" style={{ marginRight: "4px" }} ref={menuRef}>
       {(groupBy(actionsContext.keyBindings, "category")[category] || []).map(
         (kb: KeyBindingInfo, index: number): JSX.Element => (
           <KeyBindingButton
