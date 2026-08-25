@@ -105,8 +105,8 @@ export function PreviewStreamsPage() {
     return (
         <div className="ps-content-wrapper">
             {/* Header Bar */}
-            <header className="ps-header-bar ps-unified-header">
-                <div className="ps-header-brand">
+            <header className="ps-header-bar vci-unified-header">
+                <div className="vci-header-left">
                     <button
                         type="button"
                         className="vci-header-hamburger-btn"
@@ -115,10 +115,10 @@ export function PreviewStreamsPage() {
                     >
                         <Menu size={18} />
                     </button>
-                    <h1 className="ps-header-title">Preview</h1>
+                    <h1 className="vci-header-title">Preview</h1>
                 </div>
 
-                <div className="ps-header-right" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <div className="vci-header-right">
                     <HelpButton />
                     <ServerStatusButton />
                 </div>

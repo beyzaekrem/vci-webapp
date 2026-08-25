@@ -17,8 +17,8 @@ export function StartPage() {
   return (
     <div className="ps-content-wrapper">
       {/* Header Bar */}
-      <header className="ps-header-bar">
-        <div style={{ display: "flex", alignItems: "center" }}>
+      <header className="ps-header-bar vci-unified-header">
+        <div className="vci-header-left">
           <button
             type="button"
             className="vci-header-hamburger-btn"
@@ -27,9 +27,9 @@ export function StartPage() {
           >
             <Menu size={18} />
           </button>
-          <h1 className="ps-header-title">Server Status</h1>
+          <h1 className="vci-header-title">Server Status</h1>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <div className="vci-header-right">
           <HelpButton />
           <ServerStatusButton />
         </div>

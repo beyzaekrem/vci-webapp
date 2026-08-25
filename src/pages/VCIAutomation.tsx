@@ -14,8 +14,8 @@ export function VCIAutomationPage() {
     return (
         <div className="vci-auto-container">
             {/* Header Bar */}
-            <header className="ps-header-bar vci-auto-header">
-                <div className="vci-auto-header-left">
+            <header className="ps-header-bar vci-unified-header">
+                <div className="vci-header-left">
                     <button
                         type="button"
                         className="vci-header-hamburger-btn"
@@ -24,13 +24,9 @@ export function VCIAutomationPage() {
                     >
                         <Menu size={18} />
                     </button>
-                    <h1 className="ps-header-title vci-auto-title">VCI Automation</h1>
-                    <span className="vci-auto-status-pill">
-                        <span className="vci-auto-status-dot" />
-                        ONLINE
-                    </span>
+                    <h1 className="vci-header-title">VCI Automation</h1>
                 </div>
-                <div className="vci-auto-header-right" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <div className="vci-header-right">
                     <HelpButton />
                     <ServerStatusButton />
                 </div>
