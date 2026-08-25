@@ -3,11 +3,10 @@
  *
  * Central router configuration for the application.
  */
-import { createHashRouter, Outlet } from "react-router-dom";
+import { createHashRouter, Outlet, Navigate } from "react-router-dom";
 
 import {
   Dashboard,
-  Calibrate,
   CombinedPage,
   ConfigPage,
   StartPage,
@@ -69,12 +68,12 @@ export const router = createHashRouter([
         element: <StreamsPerServer />,
       },
       {
-        path: "preview/:tabKey?",
+        path: "preview",
         element: <CombinedPage />,
       },
       {
         path: "calibrate",
-        element: <Calibrate />,
+        element: <Navigate to="/preview" replace />,
       },
 
       {

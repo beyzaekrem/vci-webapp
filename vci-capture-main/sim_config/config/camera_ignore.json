@@ -1,0 +1,9 @@
+{
+  "cameras": [],
+  "only_open_color_cameras": true,
+  "disable_cameras_on_load": [
+    "C0040",
+    "M0004",
+    "M0020"
+  ]
+}

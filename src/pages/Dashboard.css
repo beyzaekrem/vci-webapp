@@ -1,5 +1,5 @@
 /* ===================================================================
-   Classic Enterprise Dashboard Styling
+   VCI WebApp Dashboard – Theme-Aware Styles
    =================================================================== */
 
 .dash-main {
@@ -7,7 +7,8 @@
     padding: 24px 28px;
     min-height: 0;
     overflow-y: auto;
-    background-color: #f1f5f9;
+    background-color: var(--vci-bg);
+    transition: background-color 0.25s ease;
 }
 
 .dash-container {
@@ -18,18 +19,18 @@
     gap: 20px;
 }
 
-/* ── Welcome Banner ───────────────────────────────────────────────── */
+/* ── Welcome Banner ─────────────────────────────────────────────────── */
 .dash-welcome-card {
-    background-color: #ffffff;
+    background-color: var(--vci-card-bg);
     border-radius: 12px;
-    border: 1px solid #cbd5e1;
-    border-left: 5px solid #00223d;
+    border: 1px solid var(--vci-card-border);
     padding: 22px 28px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--vci-card-shadow);
     gap: 20px;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .dash-welcome-left {
@@ -46,41 +47,46 @@
 
 .dash-welcome-title {
     font-size: 18px;
-    font-weight: 700;
-    color: #0f172a;
+    font-weight: 800;
+    color: var(--vci-text-main);
     margin: 0;
+    transition: color 0.2s ease;
 }
 
 .dash-ver-badge {
-    background-color: #e0f2fe;
-    color: #0369a1;
+    background-color: var(--vci-primary-subtle);
+    color: var(--vci-primary);
+    border: 1px solid var(--vci-border-light);
     font-size: 11px;
     font-weight: 700;
     padding: 2px 8px;
     border-radius: 12px;
     letter-spacing: 0.04em;
+    transition: background-color 0.25s ease, color 0.2s ease;
 }
 
 .dash-welcome-desc {
     font-size: 13.5px;
-    color: #475569;
+    color: var(--vci-text-muted);
     line-height: 1.5;
     margin: 0;
+    transition: color 0.2s ease;
 }
 
 .dash-system-status-chip {
     display: flex;
     align-items: center;
     gap: 8px;
-    background-color: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    color: #166534;
+    background-color: var(--vci-success-bg);
+    border: 1px solid var(--vci-success-border);
+    color: var(--vci-success);
     padding: 8px 14px;
     border-radius: 8px;
     font-size: 12px;
     font-weight: 600;
     white-space: nowrap;
     flex-shrink: 0;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease;
 }
 
 .dash-status-dot {
@@ -91,7 +97,7 @@
     box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
 }
 
-/* ── Key Metrics Grid ─────────────────────────────────────────────── */
+/* ── Key Metrics Grid ───────────────────────────────────────────────── */
 .dash-metrics-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -99,27 +105,29 @@
 }
 
 .dash-metric-card {
-    background-color: #ffffff;
-    border: 1px solid #cbd5e1;
+    background-color: var(--vci-card-bg);
+    border: 1px solid var(--vci-card-border);
     border-radius: 10px;
     padding: 16px 20px;
     display: flex;
     align-items: center;
     gap: 16px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--vci-card-shadow);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .dash-metric-icon-box {
     width: 42px;
     height: 42px;
-    background-color: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background-color: var(--vci-primary-subtle);
+    border: 1px solid var(--vci-border-light);
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #00223d;
+    color: var(--vci-primary);
     flex-shrink: 0;
+    transition: background-color 0.25s ease;
 }
 
 .dash-metric-data {
@@ -130,18 +138,20 @@
 .dash-metric-value {
     font-size: 20px;
     font-weight: 800;
-    color: #0f172a;
+    color: var(--vci-text-main);
     line-height: 1.1;
+    transition: color 0.2s ease;
 }
 
 .dash-metric-label {
     font-size: 12px;
     font-weight: 600;
-    color: #64748b;
+    color: var(--vci-text-muted);
     margin-top: 2px;
+    transition: color 0.2s ease;
 }
 
-/* ── Modules Section ──────────────────────────────────────────────── */
+/* ── Modules Section ───────────────────────────────────────────────── */
 .dash-section {
     display: flex;
     flex-direction: column;
@@ -155,12 +165,13 @@
 }
 
 .dash-section-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: #334155;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--vci-text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     margin: 0;
+    transition: color 0.2s ease;
 }
 
 .dash-modules-grid {
@@ -170,75 +181,125 @@
 }
 
 .dash-module-card {
-    background-color: #ffffff;
-    border: 1px solid #cbd5e1;
+    background-color: var(--vci-card-bg);
+    border: 1px solid var(--vci-card-border);
     border-radius: 10px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     cursor: pointer;
-    transition: all 0.15s ease-in-out;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: all 0.18s ease-in-out;
+    box-shadow: var(--vci-card-shadow);
 }
 
 .dash-module-card:hover {
-    border-color: #0284c7;
-    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.12);
-    transform: translateY(-1px);
+    border-color: var(--vci-primary);
+    box-shadow: 0 4px 16px var(--vci-primary-glow);
+    transform: translateY(-2px);
 }
 
-.dash-module-header {
+/* ── System Capabilities & Page Guide Cards ───────────────────────── */
+.dash-guide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 20px;
+}
+
+.dash-guide-card {
+    background-color: var(--vci-card-bg);
+    border: 1px solid var(--vci-card-border);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--vci-card-shadow);
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dash-guide-card:hover {
+    border-color: var(--vci-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.dash-guide-card-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 12px;
     margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--vci-border);
 }
 
-.dash-module-icon {
-    width: 36px;
-    height: 36px;
-    background-color: #00223d;
+.dash-guide-icon-box {
+    width: 40px;
+    height: 40px;
+    background-color: var(--vci-primary);
     color: #ffffff;
-    border-radius: 8px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px var(--vci-primary-glow);
 }
 
-.dash-module-badge {
-    background-color: #f1f5f9;
-    color: #475569;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 8px;
-    border-radius: 6px;
-    border: 1px solid #e2e8f0;
-}
-
-.dash-module-title {
-    font-size: 15px;
+.dash-guide-card-title {
+    font-size: 16px;
     font-weight: 700;
-    color: #0f172a;
-    margin: 0 0 6px 0;
+    color: var(--vci-text-main);
+    margin: 0 0 2px 0;
 }
 
-.dash-module-desc {
-    font-size: 13px;
-    color: #64748b;
-    line-height: 1.45;
+.dash-guide-card-path {
+    font-family: SFMono-Regular, Consolas, monospace;
+    font-size: 11.5px;
+    color: var(--vci-primary);
+    font-weight: 600;
+}
+
+.dash-guide-card-intro {
+    font-size: 13.5px;
+    color: var(--vci-text-main);
+    font-weight: 600;
+    margin: 0 0 12px 0;
+    line-height: 1.4;
+}
+
+.dash-guide-list {
     margin: 0 0 16px 0;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     flex: 1;
 }
 
-.dash-module-footer {
+.dash-guide-list li {
+    font-size: 12.5px;
+    color: var(--vci-text-muted);
+    line-height: 1.45;
+}
+
+.dash-guide-list li strong {
+    color: var(--vci-text-main);
+}
+
+.dash-guide-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--vci-primary);
     padding-top: 12px;
-    border-top: 1px solid #f1f5f9;
-    font-size: 12.5px;
-    font-weight: 600;
-    color: #0284c7;
+    border-top: 1px dashed var(--vci-border);
+    transition: gap 0.2s ease;
+}
+
+.dash-guide-card:hover .dash-guide-footer {
+    color: var(--vci-primary-hover);
 }
 
 .dash-arrow-icon {
@@ -249,7 +310,7 @@
     transform: translateX(4px);
 }
 
-/* ── Bottom Section ────────────────────────────────────────────────── */
+/* ── Bottom Section ─────────────────────────────────────────────────── */
 .dash-bottom-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -257,11 +318,12 @@
 }
 
 .dash-sub-card {
-    background-color: #ffffff;
-    border: 1px solid #cbd5e1;
+    background-color: var(--vci-card-bg);
+    border: 1px solid var(--vci-card-border);
     border-radius: 10px;
     padding: 20px 22px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--vci-card-shadow);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .dash-sub-header {
@@ -269,54 +331,60 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 10px;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid var(--vci-border);
     padding-bottom: 8px;
+    transition: border-color 0.25s ease;
 }
 
 .dash-sub-icon {
-    color: #00223d;
+    color: var(--vci-primary);
 }
 
 .dash-sub-title {
     font-size: 14px;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--vci-text-main);
     margin: 0;
+    transition: color 0.2s ease;
 }
 
 .dash-sub-text {
     font-size: 13px;
-    color: #475569;
+    color: var(--vci-text-muted);
     line-height: 1.55;
     margin: 0;
+    transition: color 0.2s ease;
 }
 
 .dash-sub-text kbd {
-    background-color: #f1f5f9;
-    color: #0f172a;
+    background-color: var(--vci-surface-2);
+    color: var(--vci-text-main);
     padding: 2px 6px;
     border-radius: 4px;
-    border: 1px solid #cbd5e1;
+    border: 1px solid var(--vci-border-light);
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-size: 12px;
+    transition: background-color 0.25s ease, color 0.2s ease;
 }
 
-/* ── Overview & Capabilities Card ─────────────────────────────────── */
+/* ── Overview Card ──────────────────────────────────────────────────── */
 .dash-overview-card {
-    background-color: #ffffff;
-    border: 1px solid #cbd5e1;
+    background-color: var(--vci-card-bg);
+    border: 1px solid var(--vci-card-border);
     border-radius: 10px;
     padding: 22px 24px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--vci-card-shadow);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .dash-overview-intro {
     font-size: 14px;
-    color: #334155;
+    color: var(--vci-text-body);
     line-height: 1.6;
     margin: 0 0 18px 0;
     padding-bottom: 14px;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid var(--vci-border);
+    transition: color 0.2s ease, border-color 0.25s ease;
 }
 
 .dash-features-grid {
@@ -335,7 +403,7 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: #0284c7;
+    background-color: var(--vci-primary);
     margin-top: 6px;
     flex-shrink: 0;
 }
@@ -343,19 +411,69 @@
 .dash-feature-title {
     font-size: 13.5px;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--vci-text-main);
     display: block;
     margin-bottom: 2px;
+    transition: color 0.2s ease;
 }
 
-.dash-feature-desc {
-    font-size: 12.5px;
-    color: #64748b;
-    line-height: 1.45;
+/* ── Operational Guidelines Section ───────────────────────────────── */
+.dash-guidelines-card {
+    background-color: var(--vci-card-bg);
+    border: 1px solid var(--vci-card-border);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: var(--vci-card-shadow);
+}
+
+.dash-guidelines-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.dash-guideline-item {
+    background-color: var(--vci-surface-2);
+    border: 1px solid var(--vci-border-light);
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dash-guideline-badge {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: var(--vci-primary);
+    text-transform: uppercase;
+}
+
+.dash-guideline-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--vci-text-main);
     margin: 0;
 }
 
-/* ── Responsive ────────────────────────────────────────────────────── */
+.dash-guideline-desc {
+    font-size: 13px;
+    color: var(--vci-text-muted);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.dash-guideline-desc code {
+    background-color: var(--vci-card-bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--vci-border);
+    color: var(--vci-primary);
+    font-size: 12px;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
     .dash-metrics-grid {
         grid-template-columns: 1fr;
@@ -369,7 +487,6 @@
         grid-template-columns: 1fr;
     }
 }
-
 
 @media (max-width: 768px) {
     .dash-main {

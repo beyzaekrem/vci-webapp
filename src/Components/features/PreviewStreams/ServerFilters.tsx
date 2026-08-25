@@ -53,16 +53,20 @@ export function ServerFilters({
                 {/* Server Chips 1, 2, 3... N */}
                 {servers.servers.map((server, idx) => {
                     const count = serverCounts.get(idx) || 0;
+                    const domain = server.getDomain();
                     return (
                         <button
                             key={idx}
                             type="button"
                             className={`ps-server-chip ${selectedServer === idx ? "active" : ""}`}
                             onClick={() => onSelectServer(idx)}
-                            title={`Server ${idx + 1} (${server.getDomain()}) - ${count} cameras`}
+                            title={`Server ${idx + 1} (${domain}) - ${count} cameras`}
                         >
-                            <span className="ps-chip-title">S{idx + 1}</span>
-                            <span className="ps-chip-badge">{count}</span>
+                            <span className="ps-server-chip-left">
+                                <span className="ps-chip-dot" />
+                                <span className="ps-chip-title">Server {idx + 1} ({domain})</span>
+                            </span>
+                            <span className="ps-chip-badge">{count} Cams</span>
                         </button>
                     );
                 })}

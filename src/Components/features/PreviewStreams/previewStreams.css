@@ -1,5 +1,5 @@
 /* ===================================================================
-   Preview Streams Page – Full-Screen UI matching exact user screenshot
+   Preview & Spatial Map Unified Page Styles – Theme-Aware
    =================================================================== */
 
 /* Page Viewport Wrapper - 100% Window Fill */
@@ -7,30 +7,32 @@
     display: flex;
     width: 100vw;
     height: 100vh;
-    background-color: #f4f5f8;
-    color: #1e293b;
+    background-color: var(--vci-bg);
+    color: var(--vci-text-main);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     padding: 0;
     margin: 0;
     overflow: hidden;
     box-sizing: border-box;
+    transition: background-color 0.25s ease;
 }
 
-/* Outer Card Container - Full Screen Fill */
+/* Outer Card Container */
 .ps-outer-card {
     display: flex;
     width: 100%;
     height: 100%;
-    background-color: #ffffff;
+    background-color: var(--vci-surface);
     border-radius: 0;
     box-shadow: none;
     overflow: hidden;
+    transition: background-color 0.25s ease;
 }
 
 /* Integrated Left Dark Blue Icon Sidebar */
 .ps-icon-sidebar {
     width: 60px;
-    background-color: #00223d;
+    background-color: #0f172a;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -74,29 +76,8 @@
 .ps-sidebar-icon-btn.active {
     color: #ffffff;
     background-color: rgba(255, 255, 255, 0.18);
-    border-left: 3px solid #38bdf8;
+    border-left: 3px solid #0284c7;
     border-radius: 0 8px 8px 0;
-}
-
-/* Override Sidebar button inside icon rail */
-.ps-icon-sidebar .sidebar-button {
-    position: static !important;
-    background: none !important;
-    border: none !important;
-    color: rgba(255, 255, 255, 0.8) !important;
-    padding: 0 !important;
-    width: 40px !important;
-    height: 40px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    box-shadow: none !important;
-    border-radius: 8px !important;
-}
-
-.ps-icon-sidebar .sidebar-button:hover {
-    color: #ffffff !important;
-    background-color: rgba(255, 255, 255, 0.12) !important;
 }
 
 /* Main Content Body Wrapper */
@@ -105,31 +86,103 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: #f4f5f8;
+    background-color: var(--vci-bg);
     min-width: 0;
     overflow: hidden;
+    transition: background-color 0.25s ease;
 }
 
-/* Header Bar Inside White Container */
+/* Header Bar Inside Container */
 .ps-header-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 56px;
     padding: 0 24px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #e2e8f0;
+    background-color: var(--vci-header-bg);
+    border-bottom: 1px solid var(--vci-header-border);
     flex-shrink: 0;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .ps-header-title {
     font-size: 18px;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--vci-text-main);
     margin: 0;
+    transition: color 0.2s ease;
 }
 
-/* Main Layout Grid (Left Map 44% + Right Column 56% - Exact Mockup Ratio) */
+/* Unified Header & Tab Bar Styles */
+.ps-unified-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 56px;
+    background: var(--vci-header-bg);
+    border-bottom: 1px solid var(--vci-header-border);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.ps-header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ps-header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Modern Segmented Tab Control */
+.ps-tab-bar {
+    display: flex;
+    align-items: center;
+    background: var(--vci-surface-2);
+    padding: 3px;
+    border-radius: 10px;
+    border: 1px solid var(--vci-border-light);
+    margin-left: 20px;
+    margin-right: auto;
+    gap: 3px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.ps-tab-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 7px 16px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--vci-text-muted);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+    outline: none;
+}
+
+.ps-tab-btn:hover {
+    color: var(--vci-text-main);
+    background: var(--vci-surface-hover);
+}
+
+.ps-tab-btn.active {
+    background: var(--vci-surface);
+    color: var(--vci-primary);
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 1px 2px var(--vci-primary-glow);
+}
+
+/* Main Layout Grid (Left Map 44% + Right Column 56%) */
 .ps-main-layout {
     display: grid;
     grid-template-columns: 44% 1fr;
@@ -141,7 +194,7 @@
     box-sizing: border-box;
 }
 
-/* Left Column: Stage Spatial Map (Expanded along X-axis, Full-Height) */
+/* Left Column: Stage Spatial Map */
 .ps-left-column {
     display: flex;
     flex-direction: column;
@@ -154,14 +207,14 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: #0d1527;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background-color: #0b1329;
+    border: 1px solid #1e293b;
     border-radius: 12px;
     padding: 20px;
-    color: #e2e8f0;
+    color: #f8fafc;
     min-height: 0;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* Right Column: Stacked Camera Preview (Top) & Filters (Bottom) */
@@ -172,6 +225,19 @@
     height: 100%;
     min-height: 0;
     width: 100%;
+}
+
+.ps-top-preview-card {
+    flex: 1 1 0%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.ps-bottom-filters-card {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Card Header Typography */
@@ -186,7 +252,7 @@
 
 .ps-card-subtitle {
     font-size: 12px;
-    color: #64748b;
+    color: #94a3b8;
     margin: 0 0 16px 0;
 }
 
@@ -202,11 +268,54 @@
     margin-bottom: 0;
 }
 
+.ps-header-controls-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.ps-dimension-toggle-group {
+    display: flex;
+    align-items: center;
+    background-color: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 8px;
+    padding: 2px;
+    gap: 2px;
+}
+
+.ps-dimension-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.ps-dimension-btn:hover {
+    color: #38bdf8;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.ps-dimension-btn.active {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(2, 132, 199, 0.5);
+}
+
 .ps-view-toggle-group {
     display: flex;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 8px;
     padding: 2px;
     gap: 2px;
@@ -238,13 +347,84 @@
     box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
 }
 
-/* Scrollable 2D Map Wrapper (Prevents squishing on mobile) */
+/* 3D Map Placeholder */
+.ps-3d-map-placeholder {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 240px;
+    width: 100%;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px dashed rgba(56, 189, 248, 0.3);
+    border-radius: 12px;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.ps-3d-placeholder-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    max-width: 320px;
+}
+
+.ps-3d-icon-badge {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #38bdf8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+    animation: pulse3d 3s infinite ease-in-out;
+}
+
+@keyframes pulse3d {
+    0%, 100% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 28px rgba(56, 189, 248, 0.3); }
+}
+
+.ps-3d-placeholder-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 0;
+}
+
+.ps-3d-placeholder-desc {
+    font-size: 12px;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.ps-3d-placeholder-tag {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.12);
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+/* Scrollable 2D Map Wrapper */
 .ps-map-scroll-wrapper {
     flex: 1;
     width: 100%;
     min-height: 0;
     overflow-x: auto;
     overflow-y: hidden;
+    padding: 0 28px;
+    box-sizing: border-box;
 }
 
 .ps-map-grid {
@@ -253,6 +433,7 @@
     width: 100%;
     min-width: 960px;
     min-height: 280px;
+    overflow: visible;
 }
 
 /* Touch-Friendly Grouped Pillar Grid */
@@ -360,7 +541,6 @@
     border-radius: 4px;
 }
 
-
 /* Vertical Pillar Lines */
 .ps-pillar-col {
     position: absolute;
@@ -437,22 +617,7 @@
     cursor: not-allowed;
 }
 
-/* ===================================================================
-   Top Right: Camera Preview Card (Sized to fit video aspect without side black bars)
-   =================================================================== */
-.ps-top-preview-card {
-    flex: 1 1 0%;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.ps-bottom-filters-card {
-    flex: 0 0 auto;
-    display: flex;
-    flex-direction: column;
-}
-
+/* Camera Preview Card */
 .ps-preview-card {
     flex: 1;
     height: 100%;
@@ -638,9 +803,7 @@
     cursor: not-allowed;
 }
 
-/* ===================================================================
-   Bottom Right: Server Filters Card (Compact Chip Box Layout)
-   =================================================================== */
+/* Server Filters Card */
 .ps-filters-card {
     flex: 0 0 auto;
     background-color: #0c1421;
@@ -714,6 +877,25 @@
     box-shadow: 0 2px 10px rgba(2, 132, 199, 0.4);
 }
 
+.ps-server-chip-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ps-chip-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #22c55e;
+    display: inline-block;
+}
+
+.ps-server-chip.active .ps-chip-dot {
+    background-color: #38bdf8;
+    box-shadow: 0 0 6px #38bdf8;
+}
+
 .ps-chip-title {
     font-weight: 700;
     white-space: nowrap;
@@ -723,286 +905,665 @@
     font-size: 10px;
     font-weight: 700;
     background-color: rgba(0, 0, 0, 0.3);
-    padding: 2px 6px;
+    padding: 2px 8px;
     border-radius: 10px;
     color: currentColor;
     opacity: 0.9;
 }
 
 .ps-server-chip.active .ps-chip-badge {
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: rgba(255, 255, 255, 0.2);
     color: #ffffff;
 }
 
-/* ===================================================================
-   Mobile Camera Selector (Collapsible Dropdown Panel)
-   Hidden on desktop, visible on mobile <= 768px
-   =================================================================== */
-
-/* Hidden on desktop by default */
+/* Mobile Camera Selector */
 .ps-mobile-selector {
     display: none;
 }
 
-/* Desktop-only helper: visible on desktop, hidden on mobile */
 .ps-desktop-only {
     display: flex;
     flex-direction: column;
 }
 
 /* ===================================================================
-   Responsive Breakpoints for Mobile, Tablet, Laptop
+   Calibration View Styles
    =================================================================== */
+.ps-cal-main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px 20px;
+    gap: 14px;
+    min-height: 0;
+    overflow: hidden;
+    background-color: var(--vci-bg);
+    transition: background-color 0.25s ease;
+}
 
-/* Smaller Laptops & Desktop */
+/* Professional Calibration Toolbar */
+.ps-cal-toolbar-pro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--vci-card-bg);
+    border: 1px solid var(--vci-card-border);
+    border-radius: 12px;
+    padding: 8px 16px;
+    gap: 12px;
+    box-shadow: var(--vci-card-shadow);
+    flex-wrap: wrap;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.ps-toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    background: var(--vci-surface-2);
+    border: 1px solid var(--vci-border);
+    border-radius: 8px;
+    padding: 3px;
+    transition: background-color 0.25s ease;
+}
+
+.ps-tb-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 10px;
+    height: 30px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--vci-text-muted);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+
+.ps-tb-btn:hover {
+    background: var(--vci-surface);
+    color: var(--vci-text-main);
+    border-color: var(--vci-border-light);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.ps-tb-btn:active {
+    transform: scale(0.96);
+}
+
+.ps-tb-btn.active {
+    background: var(--vci-primary-subtle);
+    color: var(--vci-primary);
+    border-color: var(--vci-border-light);
+    font-weight: 700;
+}
+
+.ps-tb-btn.primary {
+    background: #0284c7;
+    color: #ffffff;
+    border-color: #0284c7;
+}
+
+.ps-tb-btn.primary:hover {
+    background: #0369a1;
+}
+
+.ps-tb-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--vci-border-light);
+    margin: 0 4px;
+}
+
+.ps-cal-stream-container {
+    flex: 1;
+    background: #0b1329;
+    border-radius: 14px;
+    border: 1px solid #1e293b;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    min-height: 480px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+}
+
+.ps-cal-empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Floating On-Stream Calibration Controller (Only active in Preview Mode) */
+.ps-stream-controls-overlay {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: rgba(11, 19, 41, 0.82);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 8px 10px;
+    z-index: 20;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    user-select: none;
+}
+
+.ps-dpad-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 28px);
+    grid-template-rows: repeat(3, 28px);
+    gap: 3px;
+    align-items: center;
+    justify-items: center;
+}
+
+.ps-dpad-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    transition: all 0.15s ease;
+}
+
+.ps-dpad-btn:hover {
+    background: #0284c7;
+    border-color: #38bdf8;
+    color: #ffffff;
+    transform: scale(1.08);
+}
+
+.ps-dpad-btn:active {
+    transform: scale(0.95);
+}
+
+.ps-zoom-quick-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    justify-content: center;
+}
+
+.ps-zoom-btn {
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #e2e8f0;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ps-zoom-btn:hover {
+    background: #0284c7;
+    border-color: #38bdf8;
+    color: #ffffff;
+}
+
+/* Dual Calibration Grid Split Layout */
+.ps-cal-grid-split {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 16px;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+}
+
+.ps-cal-stream-card {
+    display: flex;
+    flex-direction: column;
+    background: #070c14;
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ps-cal-stream-card.reference-card {
+    border-color: rgba(148, 163, 184, 0.2);
+}
+
+.ps-cal-stream-card.active-cal-card {
+    border-color: #0284c7;
+    box-shadow: 0 0 16px rgba(2, 132, 199, 0.4);
+}
+
+.ps-cal-stream-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ps-cal-stream-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #f8fafc;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ps-cal-stream-badge {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.ps-cal-stream-badge.ref-badge {
+    background: rgba(148, 163, 184, 0.15);
+    color: #94a3b8;
+    border-color: rgba(148, 163, 184, 0.3);
+}
+
+.ps-cal-stream-body {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+}
+
+/* ===================================================================
+   Responsive Breakpoints
+/* ===================================================================
+   Responsive Breakpoints for Mobile & Tablet
+   =================================================================== */
 @media (max-width: 1280px) {
     .ps-main-layout {
         grid-template-columns: 46% 1fr;
     }
 }
 
-/* Tablet Devices */
 @media (max-width: 960px) {
     .ps-main-layout {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        padding: 12px;
+        gap: 16px;
+        height: auto;
         overflow-y: auto;
     }
     .ps-left-column {
+        width: 100%;
+        height: auto;
+        min-height: 380px;
+    }
+    .ps-right-column {
+        width: 100%;
         height: auto;
     }
     .ps-map-card {
-        min-height: 440px;
+        min-height: 380px;
     }
     .ps-preview-card {
-        height: 380px;
+        height: 360px;
+    }
+    .ps-cal-grid-split {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        height: auto;
     }
 }
 
-/* Mobile Devices */
+/* Mobile Floating Overlay Modal for Stage Spatial Map */
+.ps-mobile-map-overlay-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    animation: fadeIn 0.15s ease-out;
+}
+
+.ps-mobile-map-modal-card {
+    width: 100%;
+    max-width: 540px;
+    max-height: 90vh;
+    background-color: #0b1329;
+    border-radius: 16px;
+    border: 1px solid #1e293b;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideUp 0.2s ease-out;
+}
+
+.ps-mobile-map-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background-color: #0f172a;
+    border-bottom: 1px solid #1e293b;
+}
+
+.ps-mobile-map-modal-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #38bdf8;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.ps-mobile-map-modal-close {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+.ps-mobile-map-modal-close:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.ps-mobile-map-modal-body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    max-height: calc(90vh - 60px);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Mobile Segmented Tab Bar */
+.ps-mobile-tab-bar-container {
+    display: none;
+    padding: 12px 14px 0 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ps-mobile-tab-bar {
+    display: flex;
+    width: 100%;
+    background: var(--vci-surface-2, #131d2e);
+    border: 1px solid var(--vci-border-light, rgba(255, 255, 255, 0.12));
+    border-radius: 12px;
+    padding: 4px;
+    gap: 4px;
+    box-sizing: border-box;
+}
+
+.ps-mobile-tab-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--vci-text-muted, #94a3b8);
+    background: transparent;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.ps-mobile-tab-btn.active {
+    background: var(--vci-primary, #0284c7) !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 10px var(--vci-primary-glow, rgba(14, 165, 233, 0.35));
+}
+
+.ps-mobile-filters-card {
+    display: none;
+    margin-top: 12px;
+    width: 100%;
+}
+
 @media (max-width: 768px) {
-    /* Show mobile selector */
-    .ps-mobile-selector {
+    .ps-mobile-tab-bar-container {
         display: block;
-        flex-shrink: 0;
     }
 
-    .ps-mobile-selector-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        padding: 10px 14px;
-        background: #0c1421;
-        border: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        color: #e2e8f0;
-        font-size: 13px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.15s ease;
+    .ps-mobile-filters-card {
+        display: block;
     }
 
-    .ps-mobile-selector-toggle:hover,
-    .ps-mobile-selector-toggle.open {
-        background: #101d30;
-    }
-
-    .ps-mobile-selector-toggle-left {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .ps-mobile-chevron {
-        transition: transform 0.2s ease;
-        color: #64748b;
-    }
-
-    .ps-mobile-chevron.rotated {
-        transform: rotate(180deg);
-    }
-
-    .ps-mobile-selector-panel {
-        background: #0b1527;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-        max-height: 75vh !important;
-        overflow-y: auto !important;
-        animation: ps-slide-down 0.2s ease-out;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    }
-
-    @keyframes ps-slide-down {
-        from {
-            opacity: 0;
-            max-height: 0;
-        }
-        to {
-            opacity: 1;
-            max-height: 75vh;
-        }
-    }
-
-    .ps-mobile-filters-section {
-        padding: 10px 12px 6px 12px;
-    }
-
-    .ps-mobile-filters-section .ps-filters-card {
-        padding: 10px 12px;
-        border-radius: 8px;
-    }
-
-    .ps-mobile-filters-section .ps-card-title {
-        font-size: 10px;
-    }
-
-    .ps-mobile-filters-section .ps-server-chips-container {
-        max-height: 56px;
-        gap: 4px;
-    }
-
-    .ps-mobile-filters-section .ps-server-chip {
-        padding: 4px 8px;
-        font-size: 11px;
-        border-radius: 6px;
-    }
-
-    .ps-mobile-map-section {
-        padding: 6px 12px 12px 12px;
-    }
-
-    .ps-mobile-map-section .ps-map-card {
-        min-height: 300px !important;
-        height: auto !important;
-        padding: 12px;
-        border-radius: 8px;
+    .ps-unified-header {
         display: flex !important;
-        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        height: 54px !important;
+        padding: 0 14px !important;
     }
 
-    .ps-mobile-map-section .ps-map-scroll-wrapper {
-        min-height: 240px !important;
-        height: 240px !important;
-        flex: none !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        width: 100% !important;
-    }
-
-    .ps-mobile-map-section .ps-map-grid {
-        min-height: 240px !important;
-        height: 240px !important;
-        min-width: 960px !important;
-        position: relative !important;
-    }
-
-    /* Hide desktop left column and desktop-only filters */
-    .ps-left-column {
-        display: none !important;
-    }
-
-    .ps-desktop-only {
-        display: none !important;
-    }
-
-    /* Main layout adjustments */
-    .ps-main-layout {
-        grid-template-columns: 1fr;
-        padding: 8px;
-        gap: 8px;
-        overflow-y: auto;
-    }
-
-    .ps-right-column {
-        gap: 8px;
-    }
-
-    .ps-header-bar {
-        padding: 0 12px;
-        height: 48px;
-    }
-
-    .ps-header-title {
-        font-size: 15px;
-    }
-
-    .ps-preview-card {
-        height: auto !important;
-        min-height: 240px !important;
+    .ps-header-brand {
         display: flex !important;
-        flex-direction: column !important;
-        overflow: hidden !important;
-        box-sizing: border-box !important;
-    }
-
-    .ps-preview-header {
-        padding: 8px 10px !important;
-        flex-wrap: wrap !important;
-        gap: 6px !important;
-        flex-shrink: 0 !important;
-    }
-
-    .ps-preview-header-left {
+        align-items: center !important;
         gap: 8px !important;
     }
 
-    .ps-camera-title {
-        font-size: 12.5px !important;
+    .ps-header-title {
+        font-size: 17px !important;
+        font-weight: 800 !important;
+        margin: 0 !important;
     }
 
-    .ps-live-indicator {
-        font-size: 10px !important;
+    .ps-main-layout {
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 12px 14px !important;
+        gap: 12px !important;
+        height: auto !important;
+        overflow-y: auto !important;
     }
 
-    .ps-preview-nav {
-        font-size: 11px !important;
+    .ps-left-column,
+    .ps-right-column {
+        width: 100% !important;
+        height: auto !important;
     }
 
-    .ps-preview-body {
-        min-height: 180px !important;
-        max-height: 320px !important;
-        flex: 1 !important;
+    .ps-left-column.ps-mobile-hide,
+    .ps-right-column.ps-mobile-hide {
+        display: none !important;
     }
 
-    .ps-preview-footer {
-        padding: 8px 10px !important;
-        flex-wrap: nowrap !important;
-        align-items: center !important;
+    .ps-left-column.ps-mobile-show,
+    .ps-right-column.ps-mobile-show {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .ps-preview-card,
+    .ps-top-preview-card {
+        height: 480px !important;
+        min-height: 380px !important;
+    }
+
+    /* Mobile Server Chips List (Full width stacked items as in screenshot 1) */
+    .ps-mobile-filters-card .ps-server-chips-container {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+
+    .ps-mobile-filters-card .ps-server-chip {
+        width: 100% !important;
         justify-content: space-between !important;
-        gap: 6px !important;
-        flex-shrink: 0 !important;
+        padding: 12px 16px !important;
+        border-radius: 12px !important;
+        font-size: 13px !important;
+        background-color: var(--vci-surface-2, rgba(255, 255, 255, 0.05)) !important;
+        border: 1px solid var(--vci-border-light, rgba(255, 255, 255, 0.08)) !important;
         box-sizing: border-box !important;
     }
 
-    .ps-stream-badge {
-        font-size: 9.5px !important;
-        padding: 3px 6px !important;
-        letter-spacing: -0.2px !important;
-        white-space: nowrap !important;
+    .ps-mobile-filters-card .ps-server-chip.active {
+        background-color: var(--vci-primary, #0284c7) !important;
+        border-color: var(--vci-primary, #0284c7) !important;
+        color: #ffffff !important;
+        box-shadow: 0 4px 14px var(--vci-primary-glow, rgba(14, 165, 233, 0.35)) !important;
     }
 
-    .ps-action-group {
-        display: flex !important;
-        align-items: center !important;
-        gap: 4px !important;
-        flex-shrink: 0 !important;
+    .ps-mobile-filters-card .ps-server-chip.active .ps-chip-dot {
+        background-color: #ffffff !important;
+        box-shadow: 0 0 6px #ffffff !important;
     }
 
-    .ps-action-btn {
-        width: 30px !important;
-        height: 30px !important;
-        padding: 4px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
+    .ps-mobile-filters-card .ps-server-chip.active .ps-chip-badge {
+        background-color: rgba(255, 255, 255, 0.25) !important;
+        color: #ffffff !important;
     }
 }
 
-/* Very Small Mobile */
+    .ps-preview-card,
+    .ps-top-preview-card {
+        height: 520px !important;
+        min-height: 440px !important;
+    }
+
+    /* ── Mobile Dual Calibration Grid Rules ─────────────────────────── */
+    .ps-cal-main-area {
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 8px !important;
+        gap: 12px !important;
+        height: auto !important;
+        overflow-y: auto !important;
+    }
+
+    /* 1. Video Screens Container on Top */
+    .ps-cal-stream-container {
+        order: 1 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
+    .ps-cal-grid-split {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        height: auto !important;
+    }
+
+    .ps-cal-stream-card {
+        width: 100% !important;
+        height: 280px !important;
+        min-height: 280px !important;
+    }
+
+    .ps-cal-stream-body {
+        height: 236px !important;
+        min-height: 236px !important;
+    }
+
+    /* 2. Calibration Controls Toolbar on Bottom */
+    .ps-cal-toolbar-pro {
+        order: 2 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 6px !important;
+        padding: 8px !important;
+        height: auto !important;
+        background-color: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 10px !important;
+    }
+
+    .ps-toolbar-group {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        gap: 4px !important;
+        background: #f8fafc !important;
+        padding: 4px !important;
+        border-radius: 8px !important;
+    }
+
+    /* Compact Mobile Buttons */
+    .ps-tb-btn {
+        padding: 4px 8px !important;
+        font-size: 11px !important;
+        height: 28px !important;
+        border-radius: 6px !important;
+        gap: 3px !important;
+    }
+
+    .ps-tb-btn svg {
+        width: 12px !important;
+        height: 12px !important;
+    }
+}
+
 @media (max-width: 480px) {
     .ps-main-layout {
-        padding: 6px;
-        gap: 6px;
+        padding: 4px !important;
+        gap: 8px !important;
     }
 
     .ps-preview-header {
@@ -1011,10 +1572,6 @@
 
     .ps-camera-title {
         font-size: 11.5px !important;
-    }
-
-    .ps-preview-body {
-        min-height: 170px !important;
     }
 
     .ps-stream-badge {
@@ -1027,5 +1584,3 @@
         height: 28px !important;
     }
 }
-
-

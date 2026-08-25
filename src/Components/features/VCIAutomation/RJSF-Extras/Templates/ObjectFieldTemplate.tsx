@@ -61,16 +61,79 @@ function renderProperties(properties: ObjectFieldTemplatePropertyType[]) {
     ));
 }
 
+/**
+ * Render properties with required labels marked with a red asterisk.
+ */
+function renderRequiredProperties(properties: ObjectFieldTemplatePropertyType[]) {
+    return properties.map((property) => (
+        <div key={property.name} className="vci-required-field">
+            {property.content}
+        </div>
+    ));
+}
+
+/**
+ * Auto-split: separates required fields (top) from optional fields (accordion).
+ * Used when no ui:groups are defined in the uiSchema.
+ */
+function AutoSplitLayout({
+    visibleProperties,
+    hiddenProperties,
+    requiredFieldNames,
+    optionalDataControl,
+}: {
+    visibleProperties: ObjectFieldTemplatePropertyType[];
+    hiddenProperties: ObjectFieldTemplatePropertyType[];
+    requiredFieldNames: Set<string>;
+    optionalDataControl?: React.ReactNode;
+}) {
+    const requiredProps = visibleProperties.filter((p) => requiredFieldNames.has(p.name));
+    const optionalProps = visibleProperties.filter((p) => !requiredFieldNames.has(p.name));
+
+    return (
+        <>
+            {renderProperties(hiddenProperties)}
+
+            {/* Required fields always visible at top */}
+            {requiredProps.length > 0 && (
+                <div className="vci-required-section">
+                    {renderRequiredProperties(requiredProps)}
+                </div>
+            )}
+
+            {/* Optional fields in a collapsed accordion */}
+            {optionalProps.length > 0 && (
+                <Accordion className="mb-3 vci-optional-accordion">
+                    <Accordion.Item eventKey="optional">
+                        <Accordion.Header>
+                            <span className="vci-optional-accordion-title">
+                                ⚙️ Advanced / Optional Settings
+                            </span>
+                        </Accordion.Header>
+                        <Accordion.Body>
+                            {renderProperties(optionalProps)}
+                        </Accordion.Body>
+                    </Accordion.Item>
+                </Accordion>
+            )}
+
+            {optionalDataControl}
+        </>
+    );
+}
+
 export function ObjectFieldTemplate<
     T = unknown,
     S extends StrictRJSFSchema = RJSFSchema,
     F extends FormContextType = FormContextType,
 >(props: ObjectFieldTemplateProps<T, S, F>) {
     /**
-     * This template groups properties based (only) on the "ui:groups" property in the uiSchema.
+     * This template groups properties based on the "ui:groups" property in the uiSchema.
      * Each group is rendered as an Accordion section.
-     * Properties that are not included in any group are rendered at the end,
-     * outside of the Accordion.
+     * 
+     * If no ui:groups are defined, it auto-splits properties based on the
+     * schema's "required" array: required fields on top, optional fields in a
+     * collapsed accordion.
      */
     const {
         className,
@@ -79,11 +142,40 @@ export function ObjectFieldTemplate<
         properties,
         title,
         uiSchema,
+        schema,
     } = props;
 
     const visibleProperties = properties.filter((property) => !property.hidden);
     const hiddenProperties = properties.filter((property) => property.hidden);
     const uiGroups = getUiGroups(uiSchema);
+
+    // If no ui:groups defined, use auto-split by required/optional
+    if (uiGroups.length === 0) {
+        const requiredFieldNames = new Set<string>(
+            Array.isArray(schema.required) ? (schema.required as string[]) : []
+        );
+
+        // Only auto-split if there are both required AND optional fields
+        const hasRequired = visibleProperties.some((p) => requiredFieldNames.has(p.name));
+        const hasOptional = visibleProperties.some((p) => !requiredFieldNames.has(p.name));
+
+        if (hasRequired && hasOptional) {
+            return (
+                <fieldset className={className}>
+                    {title && <legend>{title}</legend>}
+                    {description}
+                    <AutoSplitLayout
+                        visibleProperties={visibleProperties}
+                        hiddenProperties={hiddenProperties}
+                        requiredFieldNames={requiredFieldNames}
+                        optionalDataControl={optionalDataControl}
+                    />
+                </fieldset>
+            );
+        }
+    }
+
+    // Original ui:groups-based layout
     const groupedPropertyNames = new Set<string>();
 
     const groupedSections = uiGroups.map((group, index) => {

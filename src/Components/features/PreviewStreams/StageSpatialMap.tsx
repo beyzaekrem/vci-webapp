@@ -8,7 +8,7 @@ import {
     type CameraEntry,
     type SlotName,
 } from "./systemLayoutData";
-import { LayoutGrid, Map as MapIcon } from "lucide-react";
+import { LayoutGrid, Map as MapIcon, Box } from "lucide-react";
 
 const SLOT_Y: Record<SlotName, number> = {
     ceiling: 0.10,
@@ -37,6 +37,7 @@ export function StageSpatialMap({
     highlightedServer,
     initialViewMode = "grid",
 }: StageSpatialMapProps) {
+    const [mapDimension, setMapDimension] = useState<"2d" | "3d">("2d");
     const [viewMode, setViewMode] = useState<"map" | "grid">(initialViewMode);
 
     const pillarKeys = useMemo(() => getPillarKeys(), []);
@@ -67,37 +68,78 @@ export function StageSpatialMap({
 
     return (
         <div className="ps-card ps-map-card">
-            {/* Card Header with View Mode Switcher */}
+            {/* Card Header with Dimension & View Mode Switcher */}
             <div className="ps-map-header">
                 <div>
                     <h3 className="ps-card-title">Stage Spatial Map</h3>
-                    <p className="ps-card-subtitle">Interactive Camera Layout</p>
+                    <p className="ps-card-subtitle">
+                        {mapDimension === "2d" ? "Interactive Camera Layout" : "3D Spatial Visualization"}
+                    </p>
                 </div>
 
-                <div className="ps-view-toggle-group">
-                    <button
-                        type="button"
-                        className={`ps-view-toggle-btn ${viewMode === "grid" ? "active" : ""}`}
-                        onClick={() => setViewMode("grid")}
-                        title="Touch Grid View (Grouped by Pillar)"
-                    >
-                        <LayoutGrid size={14} />
-                        <span>Grid</span>
-                    </button>
-                    <button
-                        type="button"
-                        className={`ps-view-toggle-btn ${viewMode === "map" ? "active" : ""}`}
-                        onClick={() => setViewMode("map")}
-                        title="2D Spatial Map View"
-                    >
-                        <MapIcon size={14} />
-                        <span>Map</span>
-                    </button>
+                <div className="ps-header-controls-group">
+                    {/* 2D / 3D Dimension Switcher */}
+                    <div className="ps-dimension-toggle-group">
+                        <button
+                            type="button"
+                            className={`ps-dimension-btn ${mapDimension === "2d" ? "active" : ""}`}
+                            onClick={() => setMapDimension("2d")}
+                            title="2D Spatial Map View"
+                        >
+                            <span>2D</span>
+                        </button>
+                        <button
+                            type="button"
+                            className={`ps-dimension-btn ${mapDimension === "3d" ? "active" : ""}`}
+                            onClick={() => setMapDimension("3d")}
+                            title="3D Spatial Map View (Planned)"
+                        >
+                            <Box size={13} />
+                            <span>3D</span>
+                        </button>
+                    </div>
+
+                    {/* 2D Mode Options: Grid / Map View */}
+                    {mapDimension === "2d" && (
+                        <div className="ps-view-toggle-group">
+                            <button
+                                type="button"
+                                className={`ps-view-toggle-btn ${viewMode === "grid" ? "active" : ""}`}
+                                onClick={() => setViewMode("grid")}
+                                title="Touch Grid View (Grouped by Pillar)"
+                            >
+                                <LayoutGrid size={14} />
+                                <span>Grid</span>
+                            </button>
+                            <button
+                                type="button"
+                                className={`ps-view-toggle-btn ${viewMode === "map" ? "active" : ""}`}
+                                onClick={() => setViewMode("map")}
+                                title="2D Spatial Map View"
+                            >
+                                <MapIcon size={14} />
+                                <span>Map</span>
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
 
-            {/* View Mode 1: Touchable Pillar Grid */}
-            {viewMode === "grid" ? (
+            {/* Render 3D Placeholder or 2D Views */}
+            {mapDimension === "3d" ? (
+                <div className="ps-3d-map-placeholder">
+                    <div className="ps-3d-placeholder-content">
+                        <div className="ps-3d-icon-badge">
+                            <Box size={36} />
+                        </div>
+                        <h4 className="ps-3d-placeholder-title">3D Spatial Map</h4>
+                        <p className="ps-3d-placeholder-desc">
+                            Interactive 3D spatial stage layout will be available here.
+                        </p>
+                        <span className="ps-3d-placeholder-tag">Planned Feature</span>
+                    </div>
+                </div>
+            ) : viewMode === "grid" ? (
                 <div className="ps-pillar-grid-container">
                     {pillarKeys.map((pKey) => {
                         const pNum = getPillarNumber(pKey);

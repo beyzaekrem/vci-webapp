@@ -21,10 +21,8 @@ export function ScriptOutputPage() {
 
     return (
         <div className="ps-content-wrapper">
-            {/* Header Bar */}
             <header className="ps-header-bar">
                 <h1 className="ps-header-title">Script Execution Output</h1>
-                <ServerStatusButton />
             </header>
 
             {/* Main Area */}

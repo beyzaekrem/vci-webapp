@@ -38,11 +38,18 @@ export function getCategories(keyBindings: KeyBindingInfo[]): string[] {
 /** Human-friendly description for a key identifier. */
 export function getKeyDescription(key?: string): string {
   if(key === undefined) return "undefined";
-  //if the key is F1-F12, return it as is
+  // If the key is F1-F12, return it as is
   if(key.startsWith("F") && key.length > 1 && !isNaN(parseInt(key.substring(1)))) {
     return key;
   }
-  return key === key.toUpperCase() ? `Shift + ${key.toLocaleLowerCase()}` : key;
+  // Symbols (+, -, =, etc.), numbers, or single non-uppercase characters
+  if (key.length === 1 && !/[A-Z]/.test(key)) {
+    return key;
+  }
+  if(key === key.toUpperCase() && /[A-Z]/.test(key)) {
+    return `Shift + ${key.toLocaleLowerCase()}`;
+  }
+  return key;
 }
 
 

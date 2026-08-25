@@ -16,10 +16,12 @@ export function ServerOverview() {
     return (
         <div className="server-overview-container">
             <div className="server-overview-header">
-                <h3 className="server-overview-title">Capture Servers Overview</h3>
-                <p className="server-overview-subtitle">
-                    {serverCount} {serverCount === 1 ? "server" : "servers"} configured. Click <NavLink to="/config" style={{ color: "#0078d7", fontWeight: 600 }}>here</NavLink> to edit addresses.
-                </p>
+                <div className="server-overview-header-text">
+                    <h3 className="server-overview-title">Capture Servers Overview</h3>
+                    <p className="server-overview-subtitle">
+                        {serverCount} {serverCount === 1 ? "server" : "servers"} configured • Active
+                    </p>
+                </div>
             </div>
 
             <Accordion defaultActiveKey="0" className="vci-server-overview-accordion">
@@ -29,6 +31,12 @@ export function ServerOverview() {
                     );
                 })}
             </Accordion>
+
+            <div className="vci-add-server-container">
+                <NavLink to="/config" className="vci-add-server-btn">
+                    + Add Capture Server
+                </NavLink>
+            </div>
         </div>
     );
 }
@@ -66,14 +74,14 @@ function ServerOverviewItem({ serverIndex }: { serverIndex: number }) {
         <Accordion.Item eventKey={serverIndex + ""} key={serverIndex}>
             <Accordion.Header>
                 <span style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap", width: "100%" }}>
-                    <span style={{ fontFamily: "SF Mono, Monaco, monospace", fontWeight: 700, color: "#0f172a" }}>{domain}</span>
+                    <span style={{ fontFamily: "SF Mono, Monaco, monospace", fontWeight: 700, color: "var(--vci-text-main)" }}>{domain}</span>
                     {server && <ServerStatusInfo serverIndex={serverIndex} />}
-                    <span style={{ fontSize: "0.85rem", color: "#64748b", fontWeight: 500 }}>({count} {count === 1 ? "camera" : "cameras"})</span>
+                    <span style={{ fontSize: "0.85rem", color: "var(--vci-text-muted)", fontWeight: 500 }}>({count} {count === 1 ? "camera" : "cameras"})</span>
                 </span>
             </Accordion.Header>
             <Accordion.Body>
                 {count === 0 ? (
-                    <div style={{ fontSize: "0.85rem", color: "#94a3b8", textAlign: "center", padding: "8px 0" }}>
+                    <div style={{ fontSize: "0.85rem", color: "var(--vci-text-dim)", textAlign: "center", padding: "8px 0" }}>
                         No active cameras detected on this node.
                     </div>
                 ) : (

@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect } from "react";
-import { AlertTriangle, RefreshCw } from "lucide-react";
+import { useRef, useState, useEffect, useCallback } from "react";
+import { AlertTriangle, RefreshCw, Plus, Minus, RotateCcw, Target, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Maximize2, Sunrise, Sunset, Zap } from "lucide-react";
 import { getServers } from "../../network/capture-server";
 import { usePerformanceData, DisplayPerformanceData, getCurrentTime } from "./usePerformanceData";
 
@@ -11,23 +11,39 @@ export interface StreamProps {
     onStreamID?: (id: string) => void;
     constantStreamID: string | null;
     autoStart?: boolean;
+    enableInteractiveControls?: boolean;
+    onResetView?: () => void;
 }
 
+const PAN_STEP = 0.05; // 0.05 normalized movement for D-Pad clicks (0.05 * 200 = 10px shift)
+
 export function StreamWebsocket({
-    serverIndex, cameraIndex, width, height, onStreamID, constantStreamID, autoStart = true
+    serverIndex,
+    cameraIndex,
+    width,
+    height,
+    onStreamID,
+    constantStreamID,
+    autoStart = true,
+    enableInteractiveControls = true,
+    onResetView,
 }: StreamProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const idOfRunningStream = useRef<string | null>(null);
     const [isConnecting, setIsConnecting] = useState(true);
     const [hasError, setHasError] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [showControls, setShowControls] = useState(false);
 
     const { performanceData, measure } = usePerformanceData();
     const lastFrameTimeRef = useRef<number>(Date.now());
     const hasReceivedFirstFrameRef = useRef<boolean>(false);
 
+    // Mouse drag-to-pan state
+    const [isDragging, setIsDragging] = useState(false);
+    const dragStartRef = useRef<{ x: number; y: number } | null>(null);
+
     useEffect(() => {
-        // 1. Immediately wipe canvas to prevent showing stale frames from previous cameras
         if (canvasRef.current) {
             const ctx = canvasRef.current.getContext("2d");
             if (ctx) {
@@ -35,25 +51,21 @@ export function StreamWebsocket({
             }
         }
 
-        // 2. Reset states for the new camera selection
         setIsConnecting(true);
         setHasError(false);
         setErrorMessage(null);
         lastFrameTimeRef.current = Date.now();
         hasReceivedFirstFrameRef.current = false;
 
-        if (!constantStreamID) {
-            return;
-        }
+        if (!constantStreamID) return;
 
         idOfRunningStream.current = constantStreamID;
         let stopped = false;
 
         const startTime = Date.now();
-        const initialGracePeriodMs = 12000; // 12s grace period for socket connect + mode switch + first frame
-        const frameTimeoutMs = 6000; // 6s timeout between subsequent frames
+        const initialGracePeriodMs = 12000;
+        const frameTimeoutMs = 6000;
 
-        // 3. Timeout check: flag as offline only if grace period / frame interval is exceeded
         const timeoutTimer = setInterval(() => {
             if (stopped) return;
             const now = Date.now();
@@ -184,6 +196,7 @@ export function StreamWebsocket({
     const previousClientSize = useRef<{ width: number; height: number } | null>(null);
     const threshold = 0.5;
     const clientSizeWasSetForStreamId = useRef<string | null>(null);
+
     useEffect(() => {
         if (!constantStreamID || width <= 0 || height <= 0) return;
         const clientSizeHasNotChanged = previousClientSize.current &&
@@ -196,10 +209,85 @@ export function StreamWebsocket({
         try {
             getServers().getServer(serverIndex)?.setClientSize(constantStreamID, { width, height });
         } catch {
-            // Ignore if server is offline
+            // Ignore if offline
         }
         previousClientSize.current = { width, height };
     }, [serverIndex, cameraIndex, width, height, constantStreamID]);
+
+    // ------------------------------------------------------------------
+    // Interactive Zoom, Pan, Exposure & Trigger Handlers
+    // ------------------------------------------------------------------
+    const handleZoomIn = useCallback(() => {
+        if (!constantStreamID) return;
+        getServers().getServer(serverIndex)?.zoom_in(constantStreamID, 0.1);
+    }, [serverIndex, constantStreamID]);
+
+    const handleZoomOut = useCallback(() => {
+        if (!constantStreamID) return;
+        getServers().getServer(serverIndex)?.zoom_out(constantStreamID, 0.1);
+    }, [serverIndex, constantStreamID]);
+
+    const handleResetView = useCallback(() => {
+        if (!constantStreamID) return;
+        const server = getServers().getServer(serverIndex);
+        server?.setZoomFactor(constantStreamID, 1);
+        server?.resetZoomCenter(constantStreamID);
+        server?.setStreamParameters(constantStreamID, {
+            zoom_factor: 1,
+            reset_zoom_center: true,
+            fix_full_size: true,
+        });
+        if (onResetView) {
+            onResetView();
+        }
+    }, [serverIndex, constantStreamID, onResetView]);
+
+    const handleExposureUp = useCallback(() => {
+        getServers().getServer(serverIndex)?.getCamera(cameraIndex)?.setParameterIncremental("exposure", 5000);
+    }, [serverIndex, cameraIndex]);
+
+    const handleExposureDown = useCallback(() => {
+        getServers().getServer(serverIndex)?.getCamera(cameraIndex)?.setParameterIncremental("exposure", -5000);
+    }, [serverIndex, cameraIndex]);
+
+    const handleToggleTrigger = useCallback(() => {
+        getServers().getServer(serverIndex)?.getCamera(cameraIndex)?.toggleTriggerSource();
+    }, [serverIndex, cameraIndex]);
+
+    const handlePan = useCallback((dx: number, dy: number) => {
+        if (!constantStreamID) return;
+        getServers().getServer(serverIndex)?.moveZoomCenterRel(constantStreamID, { x: dx, y: dy });
+    }, [serverIndex, constantStreamID]);
+
+    // Mouse wheel zoom
+    const handleWheel = (e: React.WheelEvent) => {
+        if (!enableInteractiveControls || !constantStreamID) return;
+        if (e.deltaY < 0) {
+            handleZoomIn();
+        } else if (e.deltaY > 0) {
+            handleZoomOut();
+        }
+    };
+
+    // Mouse drag-to-pan
+    const handleMouseDown = (e: React.MouseEvent) => {
+        if (!enableInteractiveControls || !constantStreamID) return;
+        setIsDragging(true);
+        dragStartRef.current = { x: e.clientX, y: e.clientY };
+    };
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!isDragging || !dragStartRef.current || !constantStreamID) return;
+        const dx = (e.clientX - dragStartRef.current.x) * 3;
+        const dy = (e.clientY - dragStartRef.current.y) * 3;
+        dragStartRef.current = { x: e.clientX, y: e.clientY };
+        handlePan(-dx, -dy);
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+        dragStartRef.current = null;
+    };
 
     const handleRetry = () => {
         setIsConnecting(true);
@@ -210,19 +298,144 @@ export function StreamWebsocket({
     };
 
     return (
-        <div style={{ position: "relative", width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#0b1329" }}>
+        <div
+            style={{
+                position: "relative",
+                width: width ? `${width}px` : "100%",
+                height: height ? `${height}px` : "100%",
+                maxWidth: "100%",
+                maxHeight: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#0b1329",
+                borderRadius: "8px",
+                overflow: "hidden",
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+            }}
+            onWheel={handleWheel}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+        >
             <DisplayPerformanceData performanceData={performanceData} />
+
+            {/* HTML5 Canvas Rendering Target */}
             <canvas
                 ref={canvasRef}
+                width={width}
+                height={height}
                 style={{
-                    display: (hasError || isConnecting) ? "none" : "block",
-                    maxWidth: "100%",
-                    maxHeight: "100%",
+                    width: "100%",
+                    height: "100%",
                     objectFit: "contain",
+                    display: (hasError || isConnecting) ? "none" : "block",
+                    cursor: isDragging ? "grabbing" : enableInteractiveControls ? "grab" : "default",
                 }}
             >
                 Your browser does not support HTML5 canvas.
             </canvas>
+
+            {/* Floating On-Screen D-Pad & Control Overlay */}
+            {enableInteractiveControls && !hasError && !isConnecting && (
+                <div className="ps-stream-controls-overlay">
+                    <div className="ps-zoom-quick-row">
+                        <button
+                            type="button"
+                            className="ps-zoom-btn"
+                            onClick={handleZoomIn}
+                            title="Zoom In (+)"
+                        >
+                            <Plus size={13} />
+                        </button>
+                        <button
+                            type="button"
+                            className="ps-zoom-btn"
+                            onClick={handleZoomOut}
+                            title="Zoom Out (-)"
+                        >
+                            <Minus size={13} />
+                        </button>
+                    </div>
+
+                    <div className="ps-zoom-quick-row">
+                        <button
+                            type="button"
+                            className="ps-zoom-btn"
+                            onClick={handleExposureUp}
+                            title="Exposure Up (+5000) [w]"
+                        >
+                            <Sunrise size={12} />
+                        </button>
+                        <button
+                            type="button"
+                            className="ps-zoom-btn"
+                            onClick={handleExposureDown}
+                            title="Exposure Down (-5000) [s]"
+                        >
+                            <Sunset size={12} />
+                        </button>
+                        <button
+                            type="button"
+                            className="ps-zoom-btn"
+                            onClick={handleToggleTrigger}
+                            title="Toggle Trigger Source [t]"
+                        >
+                            <Zap size={12} />
+                        </button>
+                    </div>
+
+                    <div className="ps-dpad-grid">
+                        <div />
+                        <button
+                            type="button"
+                            className="ps-dpad-btn"
+                            onClick={() => handlePan(0, -PAN_STEP)}
+                            title="Pan Up (Fine)"
+                        >
+                            <ChevronUp size={14} />
+                        </button>
+                        <div />
+
+                        <button
+                            type="button"
+                            className="ps-dpad-btn"
+                            onClick={() => handlePan(-PAN_STEP, 0)}
+                            title="Pan Left (Fine)"
+                        >
+                            <ChevronLeft size={14} />
+                        </button>
+                        <button
+                            type="button"
+                            className="ps-dpad-btn"
+                            onClick={handleResetView}
+                            title="Center & Reset View"
+                        >
+                            <RotateCcw size={12} />
+                        </button>
+                        <button
+                            type="button"
+                            className="ps-dpad-btn"
+                            onClick={() => handlePan(PAN_STEP, 0)}
+                            title="Pan Right (Fine)"
+                        >
+                            <ChevronRight size={14} />
+                        </button>
+
+                        <div />
+                        <button
+                            type="button"
+                            className="ps-dpad-btn"
+                            onClick={() => handlePan(0, PAN_STEP)}
+                            title="Pan Down (Fine)"
+                        >
+                            <ChevronDown size={14} />
+                        </button>
+                        <div />
+                    </div>
+                </div>
+            )}
 
             {/* Connecting / Loading Spinner Overlay */}
             {isConnecting && !hasError && (

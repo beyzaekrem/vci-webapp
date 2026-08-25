@@ -11,13 +11,27 @@ import {
 } from "./systemLayoutData";
 import { useClientID } from "../../../Utility/Storage";
 import { getServers, useCameraIndices } from "../../../network/capture-server";
-import { ServerStatusButton } from "../../shared/ServerStatusModal";
-import { ChevronDown, Map } from "lucide-react";
+import { ServerStatusButton, HelpButton } from "../../shared/ServerStatusModal";
+import { useIntegerZoomKeyBindingsWebsocket } from "../../Videostream";
+import { useSidebar } from "../../shared/Sidebar/Sidebar";
+import {
+    ChevronDown,
+    Map,
+    Menu,
+    X,
+} from "lucide-react";
 import "./previewStreams.css";
 
 export function PreviewStreamsPage() {
+    const { openSidebar } = useSidebar();
+    const clientID = useClientID();
     const cameraIndices = useCameraIndices();
 
+    const [mobileMapExpanded, setMobileMapExpanded] = useState(false);
+
+    // ------------------------------------------------------------------
+    // Live View Logic (Spatial Map & Single Preview)
+    // ------------------------------------------------------------------
     const resolvedMap = useMemo(() => buildShorthandMap(), [cameraIndices]);
 
     const allResolvedCameras = useMemo(() => {
@@ -28,9 +42,6 @@ export function PreviewStreamsPage() {
 
     const [selectedCamera, setSelectedCamera] = useState<CameraEntry | null>(null);
     const [selectedServer, setSelectedServer] = useState<number | null>(null);
-    const [mobileMapOpen, setMobileMapOpen] = useState(false);
-
-    const clientID = useClientID();
 
     const resolvedSelected = useMemo<ResolvedCamera | null>(() => {
         if (!selectedCamera) return null;
@@ -39,7 +50,7 @@ export function PreviewStreamsPage() {
         return { ...selectedCamera, ...match };
     }, [selectedCamera, resolvedMap]);
 
-    const streamID = useMemo(() => {
+    const liveStreamID = useMemo(() => {
         if (!resolvedSelected) return "";
         return `previewStream_${resolvedSelected.shorthand}_${clientID}`;
     }, [resolvedSelected, clientID]);
@@ -56,15 +67,6 @@ export function PreviewStreamsPage() {
             setSelectedCamera(first);
         }
     }, [allResolvedCameras, selectedCamera]);
-
-    // On mobile, auto-close the map panel when a camera is selected
-    const handleMobileCameraSelect = useCallback(
-        (camera: CameraEntry) => {
-            setSelectedCamera(camera);
-            setMobileMapOpen(false);
-        },
-        [],
-    );
 
     const handleNavigate = useCallback(
         (direction: -1 | 1) => {
@@ -92,84 +94,95 @@ export function PreviewStreamsPage() {
         [allResolvedCameras, resolvedSelected],
     );
 
+    // Zoom keybindings for Live View stream
+    useIntegerZoomKeyBindingsWebsocket(
+        liveStreamID,
+        resolvedSelected?.serverIndex ?? 0
+    );
+
+    const [activeTab, setActiveTab] = useState<"map" | "stream">("map");
+
     return (
         <div className="ps-content-wrapper">
             {/* Header Bar */}
-            <header className="ps-header-bar">
-                <h1 className="ps-header-title">Preview Streams</h1>
-                <ServerStatusButton />
-            </header>
-
-            {/* Mobile Collapsible Camera Selection Panel */}
-            <div className="ps-mobile-selector">
-                <button
-                    type="button"
-                    className={`ps-mobile-selector-toggle ${mobileMapOpen ? "open" : ""}`}
-                    onClick={() => setMobileMapOpen((prev) => !prev)}
-                >
-                    <div className="ps-mobile-selector-toggle-left">
-                        <Map size={16} />
-                        <span>
-                            {selectedCamera
-                                ? `Camera: ${selectedCamera.shorthand}`
-                                : "Select Camera"}
-                        </span>
-                    </div>
-                    <ChevronDown
-                        size={18}
-                        className={`ps-mobile-chevron ${mobileMapOpen ? "rotated" : ""}`}
-                    />
-                </button>
-
-                {mobileMapOpen && (
-                    <div className="ps-mobile-selector-panel">
-                        {/* Server Filters inside mobile panel */}
-                        <div className="ps-mobile-filters-section">
-                            <ServerFilters
-                                selectedServer={selectedServer}
-                                onSelectServer={setSelectedServer}
-                                resolvedMap={resolvedMap}
-                            />
-                        </div>
-                        {/* Spatial Map */}
-                        <div className="ps-mobile-map-section">
-                            <StageSpatialMap
-                                selectedCamera={selectedCamera}
-                                onSelectCamera={handleMobileCameraSelect}
-                                resolvedMap={resolvedMap}
-                                highlightedServer={selectedServer}
-                                initialViewMode="grid"
-                            />
-                        </div>
-                    </div>
-                )}
-            </div>
-
-            {/* Main Layout Grid (Desktop: 2-col / Mobile: single-col) */}
-            <main className="ps-main-layout">
-                {/* Left Column: Stage Spatial Map (Desktop only) */}
-                <div className="ps-left-column">
-                    <StageSpatialMap
-                        selectedCamera={selectedCamera}
-                        onSelectCamera={setSelectedCamera}
-                        resolvedMap={resolvedMap}
-                        highlightedServer={selectedServer}
-                        initialViewMode="map"
-                    />
+            <header className="ps-header-bar ps-unified-header">
+                <div className="ps-header-brand">
+                    <button
+                        type="button"
+                        className="vci-header-hamburger-btn"
+                        onClick={openSidebar}
+                        title="Open Navigation Menu"
+                    >
+                        <Menu size={18} />
+                    </button>
+                    <h1 className="ps-header-title">Preview</h1>
                 </div>
 
-                {/* Right Column: Camera Preview & Server Filters */}
-                <div className="ps-right-column">
+                <div className="ps-header-right" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <HelpButton />
+                    <ServerStatusButton />
+                </div>
+            </header>
+
+            {/* Mobile / Responsive Segmented Tab Control */}
+            <div className="ps-mobile-tab-bar-container">
+                <div className="ps-mobile-tab-bar">
+                    <button
+                        type="button"
+                        className={`ps-mobile-tab-btn ${activeTab === "map" ? "active" : ""}`}
+                        onClick={() => setActiveTab("map")}
+                    >
+                        2D Map
+                    </button>
+                    <button
+                        type="button"
+                        className={`ps-mobile-tab-btn ${activeTab === "stream" ? "active" : ""}`}
+                        onClick={() => setActiveTab("stream")}
+                    >
+                        Live Stream
+                    </button>
+                </div>
+            </div>
+
+            {/* Main Content Area */}
+            <main className="ps-main-layout">
+                {/* 2D Spatial Map View (Desktop Left Column or Mobile Map Tab) */}
+                <div className={`ps-left-column ${activeTab === "map" ? "ps-mobile-show" : "ps-mobile-hide"}`}>
+                    <StageSpatialMap
+                        selectedCamera={selectedCamera}
+                        onSelectCamera={(cam) => {
+                            setSelectedCamera(cam);
+                            // Auto switch to stream view on mobile when a camera is clicked
+                            if (window.innerWidth <= 768) {
+                                setActiveTab("stream");
+                            }
+                        }}
+                        resolvedMap={resolvedMap}
+                        highlightedServer={selectedServer}
+                        initialViewMode="grid"
+                    />
+
+                    {/* Server & Region Filters shown directly underneath Spatial Map on mobile */}
+                    <div className="ps-mobile-filters-card">
+                        <ServerFilters
+                            selectedServer={selectedServer}
+                            onSelectServer={setSelectedServer}
+                            resolvedMap={resolvedMap}
+                        />
+                    </div>
+                </div>
+
+                {/* Right Column: Stacked Camera Preview & Desktop Filters */}
+                <div className={`ps-right-column ${activeTab === "stream" ? "ps-mobile-show" : "ps-mobile-hide"}`}>
                     <div className="ps-top-preview-card">
                         <CameraPreview
                             selectedCamera={resolvedSelected}
-                            cameraEntry={selectedCamera}
-                            allResolvedCameras={allResolvedCameras}
-                            streamID={streamID}
+                            streamID={liveStreamID}
                             onNavigate={handleNavigate}
+                            allResolvedCameras={allResolvedCameras}
                         />
                     </div>
-                    {/* Server Filters (Desktop only) */}
+
                     <div className="ps-bottom-filters-card ps-desktop-only">
                         <ServerFilters
                             selectedServer={selectedServer}
@@ -182,4 +195,3 @@ export function PreviewStreamsPage() {
         </div>
     );
 }
-

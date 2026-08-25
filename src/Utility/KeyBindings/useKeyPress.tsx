@@ -9,7 +9,6 @@ import { useKeyBindingContext } from "./context";
 import { KeyBindingInfo, KeyPressArgs, normalizeCategory } from "./types";
 import { isGlobalShortcutAllowed } from "./utils";
 
-
 /** Args for registering a key press with optional UI metadata. */
 export type KeyPressRegistrationArgs = KeyPressArgs & {
   eventDescription?: string;
@@ -33,19 +32,23 @@ export function useKeyPress(pArgs: KeyPressRegistrationArgs): void {
     onKeyEventRef.current();
   }, []);
 
+  const primaryKeyStr = useMemo(() => {
+    return Array.isArray(pArgs.key) ? pArgs.key[0] : pArgs.key;
+  }, [pArgs.key]);
+
   const bindingInfo = useMemo<KeyBindingInfo>(
     (): KeyBindingInfo => ({
       description: pArgs.description,
       category: normalizeCategory(pArgs.category),
       icon: pArgs.icon,
-      eventDescription: pArgs.eventDescription ?? pArgs.key,
+      eventDescription: pArgs.eventDescription ?? primaryKeyStr,
       action,
     }),
     [
       pArgs.description,
       pArgs.category,
       pArgs.icon,
-      pArgs.key,
+      primaryKeyStr,
       pArgs.eventDescription,
       action,
       depsKey,
@@ -61,7 +64,12 @@ export function useKeyPress(pArgs: KeyPressRegistrationArgs): void {
 
   /** Handle the window keydown event for this binding. */
   function keyEv(e: KeyboardEvent): void {
-    if((isGlobalShortcutAllowed() && e.key == pArgs.key) || e.code == pArgs.key) {
+    const targetKeys = Array.isArray(pArgs.key) ? pArgs.key : [pArgs.key];
+    const isAllowed = isGlobalShortcutAllowed();
+    const match = targetKeys.some(
+      (k) => (isAllowed && e.key === k) || e.code === k
+    );
+    if (match) {
       onKeyEventRef.current();
     }
   }

@@ -5,7 +5,6 @@
  */
 
 export { Dashboard } from "./Dashboard";
-export { Calibrate } from "./Calibrate";
 export { CombinedPage } from "./CombinedPage";
 export { ConfigPage } from "./Config";
 export { StartPage } from "./Start";

@@ -1,1 +1,2 @@
-export { ServerStatusModal, ServerStatusButton } from "./ServerStatusModal";
+export { ServerStatusModal, ServerStatusButton, HelpButton } from "./ServerStatusModal";
+

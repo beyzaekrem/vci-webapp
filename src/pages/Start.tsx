@@ -1,8 +1,11 @@
 import { useEffect, useRef } from "react";
 import { ServerOverview } from "../Components/shared/ServerOverview.tsx";
-import { ServerStatusButton } from "../Components/shared/ServerStatusModal";
+import { ServerStatusButton, HelpButton } from "../Components/shared/ServerStatusModal";
+import { useSidebar } from "../Components/shared/Sidebar/Sidebar";
+import { Menu } from "lucide-react";
 
 export function StartPage() {
+  const { openSidebar } = useSidebar();
   const mainRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -15,8 +18,21 @@ export function StartPage() {
     <div className="ps-content-wrapper">
       {/* Header Bar */}
       <header className="ps-header-bar">
-        <h1 className="ps-header-title">Server Status</h1>
-        <ServerStatusButton />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <button
+            type="button"
+            className="vci-header-hamburger-btn"
+            onClick={openSidebar}
+            title="Open Navigation Menu"
+          >
+            <Menu size={18} />
+          </button>
+          <h1 className="ps-header-title">Server Status</h1>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <HelpButton />
+          <ServerStatusButton />
+        </div>
       </header>
 
       {/* Main Content Card Container - Centered in Viewport */}
@@ -24,12 +40,13 @@ export function StartPage() {
         <div className="start-card-container" style={{
           width: "100%",
           maxWidth: "850px",
-          backgroundColor: "#ffffff",
+          backgroundColor: "var(--vci-card-bg)",
           borderRadius: "12px",
-          border: "1px solid #e2e8f0",
+          border: "1px solid var(--vci-card-border)",
           padding: "28px 32px",
-          boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
-          textAlign: "center"
+          boxShadow: "var(--vci-card-shadow)",
+          textAlign: "center",
+          transition: "background-color 0.25s ease, border-color 0.25s ease"
         }}>
           <ServerOverview />
         </div>

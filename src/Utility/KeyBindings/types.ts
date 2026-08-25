@@ -4,6 +4,9 @@
  * @packageDocumentation
  */
 
+/** Category identifier type. */
+export type KeyBindingCategory = string;
+
 /** Callback signature for key actions. */
 export type KeyCallback = () => void;
 
@@ -16,7 +19,7 @@ export interface ActionMetadata {
 
 /** Base args for defining a key binding. */
 export interface KeyBindingArgs extends ActionMetadata {
-  key: string;
+  key: string | string[];
   dependencies?: any[];
 }
 
@@ -29,7 +32,6 @@ export interface KeyBinding extends KeyBindingArgs {
 export interface KeyPressArgs extends KeyBindingArgs {
   onKeyEvent: KeyCallback;
 }
-
 
 /** UI-facing info for an action to show in menus and buttons. */
 export interface KeyBindingInfo extends ActionMetadata {

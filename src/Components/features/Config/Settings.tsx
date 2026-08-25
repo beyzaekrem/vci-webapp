@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
 import { reloadControlServer, useControlServerConfig } from "../../../network/control-server";
 import { reloadCaptureServers, useServerAddresses } from "../../../network/capture-server";
 import { reloadVCI, useVCIConfig } from "../../../network/vci-automation";
-import { Server, Monitor, Zap, CheckCircle2 } from "lucide-react";
+import { Server, Monitor, Sliders, CheckCircle2, PlayCircle, Radio } from "lucide-react";
 
 export const SIMULATED_PRESET = {
     name: "Simulated Mode (Local)",
@@ -36,46 +35,57 @@ export const REAL_RIG_PRESET = {
 };
 
 const cardStyle: React.CSSProperties = {
-    backgroundColor: "#ffffff",
+    backgroundColor: "var(--vci-card-bg)",
     borderRadius: "12px",
-    border: "1px solid #cbd5e1",
+    border: "1px solid var(--vci-card-border)",
     padding: "24px",
-    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
+    boxShadow: "var(--vci-card-shadow)",
     display: "flex",
     flexDirection: "column",
     gap: "16px",
     height: "100%",
+    width: "100%",
+    maxWidth: "100%",
+    boxSizing: "border-box",
+    overflow: "hidden",
+    transition: "background-color 0.25s ease, border-color 0.25s ease",
 };
 
 const titleStyle: React.CSSProperties = {
     fontSize: "16px",
     fontWeight: 700,
-    color: "#0f172a",
+    color: "var(--vci-text-main)",
     margin: "0 0 4px 0",
     paddingBottom: "12px",
-    borderBottom: "1px solid #f1f5f9"
+    borderBottom: "1px solid var(--vci-border)",
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    transition: "color 0.2s ease, border-color 0.25s ease",
 };
 
 const labelStyle: React.CSSProperties = {
     fontSize: "11px",
     fontWeight: 700,
-    color: "#64748b",
+    color: "var(--vci-text-muted)",
     textTransform: "uppercase",
     letterSpacing: "0.05em",
     marginBottom: "6px",
-    display: "block"
+    display: "block",
+    transition: "color 0.2s ease",
 };
 
 const inputStyle: React.CSSProperties = {
     width: "100%",
     padding: "8px 12px",
     borderRadius: "8px",
-    border: "1px solid #cbd5e1",
+    backgroundColor: "var(--vci-input-bg)",
+    border: "1px solid var(--vci-input-border)",
     fontSize: "14px",
-    color: "#1e293b",
+    color: "var(--vci-text-main)",
     outline: "none",
     boxSizing: "border-box",
-    transition: "border-color 0.15s ease"
+    transition: "all 0.15s ease"
 };
 
 const monoInputStyle: React.CSSProperties = {
@@ -88,24 +98,56 @@ const monoInputStyle: React.CSSProperties = {
  * Main settings component for configuring control server, capture server addresses, and favourite parameters.
  */
 export default function Settings() {
+    const [activeMobileTab, setActiveMobileTab] = useState<"control" | "automation" | "capture">("control");
+
     return (
-        <div style={{
+        <div className="cfg-container" style={{
             display: "flex",
             flexDirection: "column",
-            gap: "24px",
+            gap: "20px",
             maxWidth: "1200px",
             margin: "0 auto"
         }}>
             <EnvironmentPresetsHeader />
-            <div className="cfg-cards-grid" style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-                gap: "24px",
-                alignItems: "stretch",
-            }}>
-                <ControlServerAddressSection />
-                <VCIAutomationSection />
-                <ServerAddressesSection />
+
+            {/* Mobile Segmented Tab Bar for Control / Automation / Capture */}
+            <div className="cfg-mobile-tab-bar-container">
+                <div className="cfg-mobile-tab-bar">
+                    <button
+                        type="button"
+                        className={`cfg-mobile-tab-btn ${activeMobileTab === "control" ? "active" : ""}`}
+                        onClick={() => setActiveMobileTab("control")}
+                    >
+                        Control
+                    </button>
+                    <button
+                        type="button"
+                        className={`cfg-mobile-tab-btn ${activeMobileTab === "automation" ? "active" : ""}`}
+                        onClick={() => setActiveMobileTab("automation")}
+                    >
+                        Automation
+                    </button>
+                    <button
+                        type="button"
+                        className={`cfg-mobile-tab-btn ${activeMobileTab === "capture" ? "active" : ""}`}
+                        onClick={() => setActiveMobileTab("capture")}
+                    >
+                        Capture
+                    </button>
+                </div>
+            </div>
+
+            {/* Desktop 3-Column Grid / Mobile Single Card View */}
+            <div className="cfg-cards-grid">
+                <div className={`cfg-card-wrapper ${activeMobileTab === "control" ? "cfg-mobile-active" : "cfg-mobile-inactive"}`}>
+                    <ControlServerAddressSection />
+                </div>
+                <div className={`cfg-card-wrapper ${activeMobileTab === "automation" ? "cfg-mobile-active" : "cfg-mobile-inactive"}`}>
+                    <VCIAutomationSection />
+                </div>
+                <div className={`cfg-card-wrapper ${activeMobileTab === "capture" ? "cfg-mobile-active" : "cfg-mobile-inactive"}`}>
+                    <ServerAddressesSection />
+                </div>
             </div>
         </div>
     );
@@ -134,71 +176,32 @@ function EnvironmentPresetsHeader() {
     };
 
     return (
-        <div className="cfg-presets-card" style={{
-            backgroundColor: "#ffffff",
-            borderRadius: "12px",
-            border: "1px solid #cbd5e1",
-            borderLeft: "5px solid #00223d",
-            padding: "20px 24px",
-            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: "16px",
-        }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <Zap size={18} style={{ color: "#0284c7" }} />
-                    <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", margin: 0 }}>
-                        Quick Environment Presets
-                    </h3>
-                </div>
-                <span style={{ fontSize: "13px", color: "#64748b" }}>
-                    One-click switch between Simulated Mode (Local) and Real Production Rig (10.3.10.x).
-                </span>
+        <div className="cfg-presets-card">
+            <div className="cfg-presets-header-text">
+                <h3 className="cfg-presets-title">Quick Environment Presets</h3>
+                <span className="cfg-presets-subtitle">One-click switch between environments.</span>
             </div>
 
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
-                <Button
-                    variant={isSimulatedActive ? "primary" : "outline-primary"}
-                    size="sm"
+            <div className="cfg-presets-buttons">
+                <button
+                    type="button"
+                    className={`cfg-preset-btn ${isSimulatedActive ? "active" : ""}`}
                     onClick={() => applyPreset(SIMULATED_PRESET)}
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        fontWeight: 600,
-                        padding: "8px 14px",
-                        backgroundColor: isSimulatedActive ? "#00223d" : "transparent",
-                        borderColor: "#00223d",
-                        color: isSimulatedActive ? "#ffffff" : "#00223d",
-                    }}
                 >
                     <Monitor size={15} />
-                    <span>Simulated Mode (Local 127.0.0.1)</span>
+                    <span>Simulated (Local)</span>
                     {isSimulatedActive && <CheckCircle2 size={14} style={{ marginLeft: "2px" }} />}
-                </Button>
+                </button>
 
-                <Button
-                    variant={isRealRigActive ? "primary" : "outline-primary"}
-                    size="sm"
+                <button
+                    type="button"
+                    className={`cfg-preset-btn ${isRealRigActive ? "active" : ""}`}
                     onClick={() => applyPreset(REAL_RIG_PRESET)}
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        fontWeight: 600,
-                        padding: "8px 14px",
-                        backgroundColor: isRealRigActive ? "#00223d" : "transparent",
-                        borderColor: "#00223d",
-                        color: isRealRigActive ? "#ffffff" : "#00223d",
-                    }}
                 >
                     <Server size={15} />
-                    <span>Real Production Rig (10.3.10.x)</span>
+                    <span>Real Rig (10.3.10.x)</span>
                     {isRealRigActive && <CheckCircle2 size={14} style={{ marginLeft: "2px" }} />}
-                </Button>
+                </button>
             </div>
         </div>
     );
@@ -225,10 +228,13 @@ function ControlServerAddressSection() {
 
     return (
         <div style={cardStyle}>
-            <h3 style={titleStyle}>Control Server</h3>
+            <h3 style={titleStyle}>
+                <Server size={16} style={{ color: "var(--vci-primary)" }} />
+                <span>Control Server Configuration</span>
+            </h3>
 
             <div>
-                <label style={labelStyle}>Address</label>
+                <label style={labelStyle}>ADDRESS</label>
                 <textarea
                     value={addressInput}
                     onChange={e => setAddressInput(e.target.value)}
@@ -236,13 +242,17 @@ function ControlServerAddressSection() {
                     rows={4}
                     style={{ ...monoInputStyle, height: "92px", resize: "none" }}
                 />
-                <Button variant="primary" size="sm" onClick={handleSave} style={{ width: "100%", marginTop: 8, backgroundColor: "#0284c7", borderColor: "#0284c7" }}>
+                <button
+                    type="button"
+                    onClick={handleSave}
+                    className="cfg-save-btn"
+                >
                     Save Address
-                </Button>
+                </button>
             </div>
 
             <div>
-                <label style={labelStyle}>Port</label>
+                <label style={labelStyle}>PORT</label>
                 <input
                     type="text"
                     value={controlServerConfig.port || ""}
@@ -256,7 +266,7 @@ function ControlServerAddressSection() {
             </div>
 
             <div>
-                <label style={labelStyle}>Route</label>
+                <label style={labelStyle}>ROUTE</label>
                 <input
                     type="text"
                     value={controlServerConfig.route || ""}
@@ -269,8 +279,8 @@ function ControlServerAddressSection() {
                 />
             </div>
 
-            <div style={{ marginTop: "auto", paddingTop: 12, borderTop: "1px solid #f1f5f9", fontSize: 12, color: '#64748b' }}>
-                Current Active: <b style={{ color: "#0f172a" }}>{controlServerConfig.address}</b>
+            <div style={{ marginTop: "auto", paddingTop: 12, borderTop: "1px solid var(--vci-border)", fontSize: 12, color: 'var(--vci-text-muted)' }}>
+                Current Active: <strong style={{ color: "#22c55e", fontWeight: 700 }}>{controlServerConfig.address}</strong>
             </div>
         </div>
     );
@@ -300,29 +310,30 @@ function ServerAddressesSection() {
 
     return (
         <div style={cardStyle}>
-            <h3 style={titleStyle}>Capture Servers</h3>
+            <h3 style={titleStyle}>
+                <Radio size={16} style={{ color: "var(--vci-primary)" }} />
+                <span>Capture Servers Configuration</span>
+            </h3>
 
             <div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px" }}>
-                    <label style={{ ...labelStyle, marginBottom: 0 }}>Server Addresses</label>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px", flexWrap: "wrap", gap: "6px" }}>
+                    <label style={{ ...labelStyle, marginBottom: 0 }}>SERVER ADDRESSES</label>
                     <div style={{ display: "flex", gap: "4px" }}>
-                        <Button
-                            variant="link"
-                            size="sm"
-                            style={{ fontSize: "11px", padding: "0 4px", color: "#0284c7", textDecoration: "none", fontWeight: 600 }}
+                        <button
+                            type="button"
+                            style={{ background: "none", border: "none", fontSize: "11px", padding: "0 4px", color: "var(--vci-primary)", cursor: "pointer", fontWeight: 600 }}
                             onClick={() => setServerAddressesInput(SIMULATED_PRESET.captureServers.join("\n"))}
                         >
                             + Local IPs
-                        </Button>
-                        <span style={{ color: "#cbd5e1", fontSize: "11px" }}>|</span>
-                        <Button
-                            variant="link"
-                            size="sm"
-                            style={{ fontSize: "11px", padding: "0 4px", color: "#0284c7", textDecoration: "none", fontWeight: 600 }}
+                        </button>
+                        <span style={{ color: "var(--vci-border-light)", fontSize: "11px" }}>|</span>
+                        <button
+                            type="button"
+                            style={{ background: "none", border: "none", fontSize: "11px", padding: "0 4px", color: "var(--vci-primary)", cursor: "pointer", fontWeight: 600 }}
                             onClick={() => setServerAddressesInput(REAL_RIG_PRESET.captureServers.join("\n"))}
                         >
                             + Rig IPs
-                        </Button>
+                        </button>
                     </div>
                 </div>
                 <textarea
@@ -332,13 +343,17 @@ function ServerAddressesSection() {
                     rows={4}
                     style={{ ...monoInputStyle, height: "92px", resize: "none" }}
                 />
-                <Button variant="primary" size="sm" onClick={handleSaveServers} style={{ width: "100%", marginTop: 8, backgroundColor: "#0284c7", borderColor: "#0284c7" }}>
+                <button
+                    type="button"
+                    onClick={handleSaveServers}
+                    className="cfg-save-btn"
+                >
                     Save Server Addresses
-                </Button>
+                </button>
             </div>
 
             <div>
-                <label style={labelStyle}>Port</label>
+                <label style={labelStyle}>PORT</label>
                 <input
                     type="text"
                     value={captureServerConfig.port || ""}
@@ -352,7 +367,7 @@ function ServerAddressesSection() {
             </div>
 
             <div>
-                <label style={labelStyle}>Route</label>
+                <label style={labelStyle}>ROUTE</label>
                 <input
                     type="text"
                     value={captureServerConfig.route || ""}
@@ -365,8 +380,8 @@ function ServerAddressesSection() {
                 />
             </div>
 
-            <div style={{ marginTop: "auto", paddingTop: 12, borderTop: "1px solid #f1f5f9", fontSize: 12, color: '#64748b' }}>
-                Current Active: <strong style={{ color: "#0f172a" }}>
+            <div style={{ marginTop: "auto", paddingTop: 12, borderTop: "1px solid var(--vci-border)", fontSize: 12, color: 'var(--vci-text-muted)', wordBreak: "break-word" }}>
+                Current Active: <strong style={{ color: "#22c55e", fontWeight: 700 }}>
                     {serverAddresses.length === 0
                         ? "None"
                         : serverAddresses.length <= 2
@@ -396,10 +411,13 @@ function VCIAutomationSection() {
 
     return (
         <div style={cardStyle}>
-            <h3 style={titleStyle}>VCI Automation</h3>
+            <h3 style={titleStyle}>
+                <PlayCircle size={16} style={{ color: "var(--vci-primary)" }} />
+                <span>VCI Automation Configuration</span>
+            </h3>
 
             <div>
-                <label style={labelStyle}>Address</label>
+                <label style={labelStyle}>ADDRESS</label>
                 <textarea
                     value={addressInput}
                     onChange={e => setAddressInput(e.target.value)}
@@ -407,13 +425,17 @@ function VCIAutomationSection() {
                     rows={4}
                     style={{ ...monoInputStyle, height: "92px", resize: "none" }}
                 />
-                <Button variant="primary" size="sm" onClick={handleSave} style={{ width: "100%", marginTop: 8, backgroundColor: "#0284c7", borderColor: "#0284c7" }}>
+                <button
+                    type="button"
+                    onClick={handleSave}
+                    className="cfg-save-btn"
+                >
                     Save Address
-                </Button>
+                </button>
             </div>
 
             <div>
-                <label style={labelStyle}>Port</label>
+                <label style={labelStyle}>PORT</label>
                 <input
                     type="text"
                     value={vciConfig.port || ""}
@@ -427,7 +449,7 @@ function VCIAutomationSection() {
             </div>
 
             <div>
-                <label style={labelStyle}>Route</label>
+                <label style={labelStyle}>ROUTE</label>
                 <input
                     type="text"
                     value={vciConfig.route || ""}
@@ -440,8 +462,8 @@ function VCIAutomationSection() {
                 />
             </div>
 
-            <div style={{ marginTop: "auto", paddingTop: 12, borderTop: "1px solid #f1f5f9", fontSize: 12, color: '#64748b' }}>
-                Current Active: <b style={{ color: "#0f172a" }}>{vciConfig.address}</b>
+            <div style={{ marginTop: "auto", paddingTop: 12, borderTop: "1px solid var(--vci-border)", fontSize: 12, color: 'var(--vci-text-muted)' }}>
+                Current Active: <strong style={{ color: "#22c55e", fontWeight: 700 }}>{vciConfig.address}</strong>
             </div>
         </div>
     );

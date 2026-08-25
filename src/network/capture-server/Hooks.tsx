@@ -1,19 +1,15 @@
 /**
- * This module defines custom React hooks for managing and retrieving data from capture server connections.
+ * Custom React hooks for managing and retrieving data from capture server connections.
  * Utilizes the singleton instance of CaptureServers
- * to access camera system data and connection status. 
- * The hooks in this module do not need the CaptureServer class, only CaptureServerConnection (unlike CameraHooks.tsx)
+ * to access camera system data and connection status.
  * @packageDocumentation
  */
 
 import { useEffect, useState } from "react";
-import {
-  CameraSystemData,
-  Param,
-  Params,
-} from "./CameraSystemData.tsx";
-import { CaptureServerConnection } from "./CaptureServerConnection.tsx";
+import { CameraSystemData, Param, Params } from "./CameraSystemData";
+import { CaptureServerConnection } from "./CaptureServerConnection";
 import { getServers } from "./CaptureServersSingleton";
+import { Message } from "../interceptor";
 
 /**
  * Hook to get the number of cameras for a given server.
@@ -22,106 +18,77 @@ import { getServers } from "./CaptureServersSingleton";
  */
 export function useCameraCount(serverIndex: number): number {
   const count = useCameraInfoProperty(serverIndex, (o) => o.camera_count, 0);
-
   return count;
+}
+
+/**
+ * Retrieve the serial number of a camera from a specific server and camera index.
+ * @param serverIndex The index of the server.
+ * @param camIndex The index of the camera within the server.
+ * @returns The serial number of the specified camera, or "unknown".
+ */
+export function useSerialNumber(serverIndex: number, camIndex: number): string {
+  const p = useCameraInfoProperty(
+    serverIndex,
+    (o) => o?.serial_numbers?.by_index?.[camIndex],
+    "unknown",
+  );
+  return p || "unknown";
 }
 
 /**
  * Retrieves a specific parameter from the camera information
  * of a given server and camera index.
- *
- * @param serverIndex - The index of the server from which to retrieve the camera information.
- * @param camIndex - The index of the camera within the server's camera parameters.
- * @param getParam - A function that extracts the desired parameter from the camera's parameters.
- * @returns The extracted parameter, or a default value ("unknown") if the parameter is not available.
  */
 export function useParameter(
   serverIndex: number,
   camIndex: number,
   getParam: (cam: Params) => any,
-): Param {
-  const p = useCameraInfoProperty(
+): any {
+  return useCameraInfoProperty(
     serverIndex,
-    (o) => getParam(o.camera_parameters[camIndex]),
+    (camInfo) => {
+      const cameraParams = camInfo.camera_parameters?.[camIndex];
+      return cameraParams ? getParam(cameraParams) : undefined;
+    },
     "unknown",
   );
-  return p;
 }
 
 /**
- * Retrieve the serial number of a camera from a specific server and camera index.
- *
- * @param serverIndex - The index of the server to query.
- * @param camIndex - The index of the camera within the server to retrieve the serial number for.
- * @returns The serial number of the specified camera, or "unknown" if unavailable.
+ * Retrieves the parameter info object from the camera parameters
+ * of a given server and camera index.
  */
-export function useSerialNumber(serverIndex: number, camIndex: number): string {
-  //const p = useWebSocketProperty(serverIndex, o => o.camera_parameters[camIndex].device_sn.value, "unknown")
-  const p = useCameraInfoProperty(
+export function useParameterParam(
+  serverIndex: number,
+  camIndex: number,
+  getParam: (cam: Params) => Param,
+): Param | undefined {
+  return useCameraInfoProperty(
     serverIndex,
-    (o) => o.serial_numbers.by_index[camIndex],
-    "unknown",
+    (camInfo) => {
+      const cameraParams = camInfo.camera_parameters?.[camIndex];
+      return cameraParams ? getParam(cameraParams) : undefined;
+    },
+    undefined,
   );
-  return p;
 }
 
 /**
- * A custom hook that retrieves a specific field from the camera system data
- * for all servers using WebSocket connections.
- *
- * @template T - The type of the field to be retrieved.
- * @param getField - A function that extracts the desired field from the 
- *                   camera system data for a given server index.
- * @returns An array of values of type `T`, where each value corresponds to 
- *          the extracted field for a server.
+ * Hook to get a property from the camera info of a server.
  */
-function useWebsocketFieldForAllServers<T>(
-  getField: (c: CameraSystemData, serverIndex: number) => T,
-): T[] {
-  const vals = getServers().map((server, serverIndex) => {
-
-    const ws = useCameraInfoProperty(
-      serverIndex,
-      (c) => c,
-      {} as CameraSystemData,
-    );
-    return getField(ws, serverIndex);
-  });
-  return vals;
-}
-
-/**
- * Hook to get the indices of all cameras across all servers.
- * @returns An array of tuples, where each tuple contains the server index and camera index.
- */
-export function useCameraIndices(): number[][] {
-  const c = useWebsocketFieldForAllServers((cam) =>
-    cam && cam.serial_numbers
-      ? Object.keys(cam.serial_numbers.by_index).length
-      : 0,
-  );
-  const cameras = c.flatMap((camCount, serverIndex) =>
-    new Array(camCount).fill(0).map((_, i) => [serverIndex, i]),
-  );
-  return cameras;
-}
-
-/**
- * Hook to get a property from the camera info.
- * @param serverIndex The index of the server.
- * @param getProperty A function that takes the camera info and returns the desired property.
- * @param defaultValue The default value to return if the property is not found.
- * @returns The value of the property.
- * @template T The type of the property.
- */
-
 export function useCameraInfoProperty<T>(
   serverIndex: number,
   getProperty: (c: CameraSystemData) => T,
-  defaultValue: T
+  defaultValue: T,
 ): T {
-  const server = getServers().getServer(serverIndex);
-  const ws = server?.socket;
+  let ws: CaptureServerConnection | undefined = undefined;
+  try {
+    const server = getServers().getServer(serverIndex);
+    ws = server ? server.socket : undefined;
+  } catch {
+    // Server singleton not ready
+  }
 
   const obj = useWebSocketAttribute({
     webSocketConnection: ws,
@@ -134,52 +101,97 @@ export function useCameraInfoProperty<T>(
 
 /**
  * Retrieves a specific attribute from the camera system data of a WebSocket connection.
- * @param webSocketConnection The capture server connection to read from.
- * @param defaultValue The fallback value before data arrives.
- * @param getProperty Selector function to read a property from CameraSystemData.
- * @returns The selected property value.
  */
-function useWebSocketAttribute({
-  webSocketConnection, defaultValue = -1, getProperty,
+function useWebSocketAttribute<T>({
+  webSocketConnection,
+  defaultValue,
+  getProperty,
 }: {
-  webSocketConnection?: CaptureServerConnection;
-  defaultValue?: any;
-  getProperty: (c: CameraSystemData) => any;
-}): any {
-  const [data, setData] = useState(defaultValue);
+  webSocketConnection: CaptureServerConnection | undefined;
+  defaultValue: T;
+  getProperty: (c: CameraSystemData) => T;
+}): T {
+  const [data, setData] = useState<T>(defaultValue);
+  const ws = webSocketConnection;
 
   useEffect(() => {
-    if (!webSocketConnection) return;
-    const ws = webSocketConnection;
-    ws.getSocketEvents().addEventListener("newMessageData", setNewData);
-
-    //call setNewData for getProperty with last message if this is called after a message is received
-    if(ws.getCurrentCamToolState() != undefined) {
-      setNewData();
-    }
-
-    return () => {
-      ws.getSocketEvents().removeEventListener("newMessageData", setNewData);
-    };
+    if (!ws) return;
 
     function setNewData() {
+      if (!ws) return;
       const state = ws.getCurrentCamToolState();
-
-      if(state == undefined) {
+      if (state === undefined) {
         return;
       }
 
       try {
-        var newValue = getProperty(state);
-        setData((oldValue: any) => {
-          return newValue;
-        });
-      } catch(e) {
-        console.warn(e);
+        const newValue = getProperty(state);
+        if (newValue !== undefined) {
+          setData(newValue);
+        }
+      } catch (e) {
+        // Ignore extraction error before full payload arrives
       }
     }
-  }, [getProperty, webSocketConnection]);
+
+    const listener = (msg: Message) => {
+      if (msg.PATH === "GET_ALL_INFO" || msg.PATH === "SWITCH_MODE") {
+        setNewData();
+      }
+    };
+
+    ws.addListener(listener);
+
+    if (ws.getCurrentCamToolState() !== undefined) {
+      setNewData();
+    }
+
+    return () => {
+      ws.removeListener(listener);
+    };
+  }, [getProperty, ws]);
 
   return data;
 }
 
+/**
+ * A custom hook that retrieves a specific field from the camera system data
+ * for all servers using WebSocket connections.
+ */
+function useWebsocketFieldForAllServers<T>(
+  getField: (c: CameraSystemData, serverIndex: number) => T,
+): T[] {
+  let serversCount = 0;
+  try {
+    serversCount = getServers().servers.length;
+  } catch {
+    // Singleton not ready
+  }
+
+  const vals: T[] = [];
+  for (let i = 0; i < serversCount; i++) {
+    const ws = useCameraInfoProperty(
+      i,
+      (c) => getField(c, i),
+      {} as T,
+    );
+    vals.push(ws);
+  }
+  return vals;
+}
+
+/**
+ * Hook to get the indices of all cameras across all servers.
+ * @returns An array of tuples [serverIndex, cameraIndex]
+ */
+export function useCameraIndices(): [number, number][] {
+  const c = useWebsocketFieldForAllServers((cam) =>
+    cam && cam.serial_numbers && cam.serial_numbers.by_index
+      ? Object.keys(cam.serial_numbers.by_index).length
+      : 0,
+  );
+  const cameras = c.flatMap((camCount, serverIndex) =>
+    new Array(camCount).fill(0).map((_, i): [number, number] => [serverIndex, i]),
+  );
+  return cameras;
+}

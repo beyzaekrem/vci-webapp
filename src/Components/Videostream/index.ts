@@ -3,6 +3,7 @@
  * @packageDocumentation
  */
 
-export * from "./StreamsPerServer"
-export * from "./WebsocketGrid"
-export * from "./IntegerZoom/IntegerZoomMenu"
+export * from "./StreamsPerServer";
+export * from "./WebsocketGrid";
+export * from "./WebsocketStream";
+export * from "./IntegerZoom/IntegerZoomMenu";

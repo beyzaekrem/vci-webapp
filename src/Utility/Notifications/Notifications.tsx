@@ -2,25 +2,24 @@ import { createContext, useContext, useState } from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
 import { ReactNode } from "react";
 
+const MAX_NOTIFICATIONS = 3;
 
 export function Notifications() {
   const { notifications, removeNotification } = useNotificationContext();
 
   return (
-    <ToastContainer style={{ position: "fixed", right: 30, bottom: 30 }}>
+    <ToastContainer style={{ position: "fixed", right: 30, bottom: 30, zIndex: 9999 }}>
       {notifications.map((el, ind) => {
         return (
           <Toast
+            key={el.id}
+            autohide
+            delay={8000}
             onClose={() => {
               removeNotification(ind);
             }}
           >
             <Toast.Header>
-              <img
-                src="holder.js/20x20?text=%20"
-                className="me-2 rounded"
-                alt=""
-              />
               <strong className="me-auto">{el.title}</strong>
               <small className="text-muted">{el.time}</small>
             </Toast.Header>
@@ -79,6 +78,10 @@ function useNotifications() {
     const nNo = [...notifications];
     var time = new Date().toLocaleTimeString();
     nNo.push({ title: title, body: body, time: time, id: count });
+    // Keep only the most recent notifications
+    while (nNo.length > MAX_NOTIFICATIONS) {
+      nNo.shift();
+    }
     setNotifications(nNo);
     setCount(count + 1);
   }

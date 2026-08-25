@@ -94,19 +94,21 @@ export class CaptureServer {
     }
 
     /**
-     * Zoom in on a specific livestream.
+     * Zoom in on a specific livestream with fine granularity.
      * @param stream_id The stream ID to zoom.
+     * @param step Delta zoom factor (default 0.1 for millimetric fine precision).
      */
-    zoom_in(stream_id: string): void {
-        this.setStreamParameters(stream_id, { zoom_factor_relative: 1 });
+    zoom_in(stream_id: string, step = 0.1): void {
+        this.setStreamParameters(stream_id, { zoom_factor_relative: step });
     }
 
     /**
-     * Zoom out on a specific livestream.
+     * Zoom out on a specific livestream with fine granularity.
      * @param stream_id The stream ID to zoom.
+     * @param step Delta zoom factor (default 0.1 for millimetric fine precision).
      */
-    zoom_out(stream_id: string): void {
-        this.setStreamParameters(stream_id, { zoom_factor_relative: -1 });
+    zoom_out(stream_id: string, step = 0.1): void {
+        this.setStreamParameters(stream_id, { zoom_factor_relative: -step });
     }
 
     /**
@@ -365,6 +367,22 @@ export class Camera {
                 {
                     name: paramName,
                     value: value,
+                    camera_id: this.id,
+                },
+            ],
+        });
+    }
+
+    /**
+     * Toggle the trigger source for this camera (software / hardware).
+     * @returns A promise resolving to the server response.
+     */
+    toggleTriggerSource(): Promise<Message> {
+        return this.server.socket.send({
+            PATH: "TOGGLE_TRIGGER_SOURCE",
+            TYPE: 3, // StandardMessage
+            PAYLOAD: [
+                {
                     camera_id: this.id,
                 },
             ],

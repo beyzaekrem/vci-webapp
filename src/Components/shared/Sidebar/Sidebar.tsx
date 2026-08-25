@@ -5,7 +5,6 @@ import {
   Menu,
   Video,
   PlayCircle,
-  Sliders,
   Server,
   Settings,
   Home,
@@ -33,36 +32,40 @@ export function useSidebar() {
 
 export function SidebarProvider({ children }: { children: React.ReactNode }) {
   const [show, setShow] = useState(false);
+  const location = useLocation();
+  const pathname = location.pathname;
 
-  const openSidebar = () => setShow(true);
-  const closeSidebar = () => setShow(false);
-  const toggleSidebar = () => setShow((prev) => !prev);
+  const openSidebar = React.useCallback(() => {
+    setShow(true);
+  }, []);
 
-  const handleHelpClick = () => {
-    closeSidebar();
-    const event = new KeyboardEvent("keydown", { key: "h", bubbles: true });
-    window.dispatchEvent(event);
-  };
+  const closeSidebar = React.useCallback(() => {
+    setShow(false);
+  }, []);
+
+  const toggleSidebar = React.useCallback(() => {
+    setShow((prev) => !prev);
+  }, []);
+
+  // Auto-close sidebar whenever route/pathname changes
+  React.useEffect(() => {
+    setShow(false);
+  }, [pathname]);
 
   return (
     <SidebarContext.Provider
       value={{ show, openSidebar, closeSidebar, toggleSidebar }}
     >
       {children}
-      {/* Mobile Floating Hamburger – visible only on small screens via CSS */}
-      <button
-        className="vci-mobile-hamburger"
-        onClick={openSidebar}
-        title="Menu"
-        type="button"
-      >
-        <Menu size={22} />
-      </button>
+
+      {/* Offcanvas Drawer for Navigation */}
       <Offcanvas
         show={show}
         onHide={closeSidebar}
         className="vci-sidebar-offcanvas"
         placement="start"
+        restoreFocus={false}
+        enforceFocus={false}
       >
         <Offcanvas.Header closeButton className="vci-sidebar-header">
           <Offcanvas.Title className="vci-sidebar-title">
@@ -79,7 +82,8 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
               }
               onClick={closeSidebar}
             >
-              Preview
+              <Video size={18} />
+              <span>Preview</span>
             </NavLink>
 
             <NavLink
@@ -89,19 +93,8 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
               }
               onClick={closeSidebar}
             >
-              VCI Automation
-            </NavLink>
-
-
-
-            <NavLink
-              to="/calibrate"
-              className={({ isActive }) =>
-                `vci-sidebar-link ${isActive ? "active" : ""}`
-              }
-              onClick={closeSidebar}
-            >
-              Calibrate
+              <PlayCircle size={18} />
+              <span>VCI Automation</span>
             </NavLink>
 
             <NavLink
@@ -111,7 +104,8 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
               }
               onClick={closeSidebar}
             >
-              Server Status
+              <Server size={18} />
+              <span>Server Status</span>
             </NavLink>
 
             <NavLink
@@ -121,7 +115,8 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
               }
               onClick={closeSidebar}
             >
-              Settings
+              <Settings size={18} />
+              <span>Settings</span>
             </NavLink>
 
             <NavLink
@@ -132,18 +127,9 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
               onClick={closeSidebar}
               end
             >
-              Dashboard
+              <Home size={18} />
+              <span>System Dashboard</span>
             </NavLink>
-
-            <div className="vci-sidebar-divider" />
-
-            <button
-              type="button"
-              className="vci-sidebar-help-btn"
-              onClick={handleHelpClick}
-            >
-              Help &amp; Documentation
-            </button>
           </nav>
         </Offcanvas.Body>
       </Offcanvas>
@@ -151,16 +137,6 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-/**
- * Vertical Icon Rail (Closed Sidebar state) rendered on all pages
- * Top-to-bottom sequence matching user screenshot:
- * 1. Preview
- * 2. VCI Automation
- * 3. Calibrate
- * 4. Server Status
- * 5. Settings
- * 6. About
- */
 export function AppSidebar() {
   const { openSidebar } = useSidebar();
   const location = useLocation();
@@ -169,20 +145,13 @@ export function AppSidebar() {
   const isDashboardActive = pathname === "/";
   const isPreviewActive = pathname.startsWith("/preview");
   const isAutomationActive = pathname.startsWith("/vci-automation");
-
-  const isCalibrateActive = pathname.startsWith("/calibrate");
   const isServerActive = pathname.startsWith("/servers") || pathname.startsWith("/videostream");
   const isConfigActive = pathname.startsWith("/config");
-
-  const handleHelpClick = () => {
-    const event = new KeyboardEvent("keydown", { key: "h", bubbles: true });
-    window.dispatchEvent(event);
-  };
 
   return (
     <aside className="vci-app-sidebar">
       <div className="vci-app-sidebar-top">
-        {/* Hamburger Menu Toggle Button */}
+        {/* Hamburger Drawer Button */}
         <button
           className="vci-sidebar-icon-btn"
           onClick={openSidebar}
@@ -192,11 +161,11 @@ export function AppSidebar() {
           <Menu size={20} />
         </button>
 
-        {/* 1. Preview Streams */}
+        {/* 1. Preview & Spatial Map */}
         <NavLink
           to="/preview"
           className={`vci-sidebar-icon-btn ${isPreviewActive ? "active" : ""}`}
-          title="Preview"
+          title="Preview & Spatial Map"
         >
           {isPreviewActive && <span className="active-indicator" />}
           <Video size={19} />
@@ -212,19 +181,7 @@ export function AppSidebar() {
           <PlayCircle size={19} />
         </NavLink>
 
-
-
-        {/* 4. Calibrate */}
-        <NavLink
-          to="/calibrate"
-          className={`vci-sidebar-icon-btn ${isCalibrateActive ? "active" : ""}`}
-          title="Calibrate"
-        >
-          {isCalibrateActive && <span className="active-indicator" />}
-          <Sliders size={19} />
-        </NavLink>
-
-        {/* 5. Server Status */}
+        {/* 3. Server Status */}
         <NavLink
           to="/servers"
           className={`vci-sidebar-icon-btn ${isServerActive ? "active" : ""}`}
@@ -234,7 +191,7 @@ export function AppSidebar() {
           <Server size={19} />
         </NavLink>
 
-        {/* 6. Settings */}
+        {/* 4. Settings */}
         <NavLink
           to="/config"
           className={`vci-sidebar-icon-btn ${isConfigActive ? "active" : ""}`}
@@ -244,7 +201,7 @@ export function AppSidebar() {
           <Settings size={19} />
         </NavLink>
 
-        {/* 7. Dashboard */}
+        {/* 5. Dashboard */}
         <NavLink
           to="/"
           className={`vci-sidebar-icon-btn ${isDashboardActive ? "active" : ""}`}
@@ -255,21 +212,73 @@ export function AppSidebar() {
           <Home size={19} />
         </NavLink>
       </div>
-
-      <div className="vci-app-sidebar-bottom">
-        <button
-          className="vci-sidebar-icon-btn"
-          title="Help & Documentation (Press h)"
-          onClick={handleHelpClick}
-          type="button"
-        >
-          <HelpCircle size={19} />
-        </button>
-      </div>
     </aside>
   );
 }
 
+export function MobileSegmentedNavStrip() {
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  const isDashboardActive = pathname === "/";
+  const isPreviewActive = pathname.startsWith("/preview");
+  const isAutomationActive = pathname.startsWith("/vci-automation");
+  const isServerActive = pathname.startsWith("/servers") || pathname.startsWith("/videostream");
+  const isConfigActive = pathname.startsWith("/config");
+
+  return (
+    <nav className="vci-mobile-segmented-nav">
+      <div className="vci-mobile-nav-scroll-container">
+        <NavLink
+          to="/"
+          className={`vci-mobile-nav-pill ${isDashboardActive ? "active" : ""}`}
+          end
+        >
+          <Home size={14} />
+          <span>Dashboard</span>
+        </NavLink>
+
+        <NavLink
+          to="/preview"
+          className={`vci-mobile-nav-pill ${isPreviewActive ? "active" : ""}`}
+        >
+          <Video size={14} />
+          <span>Preview &amp; Spatial Map</span>
+        </NavLink>
+
+        <NavLink
+          to="/vci-automation"
+          className={`vci-mobile-nav-pill ${isAutomationActive ? "active" : ""}`}
+        >
+          <PlayCircle size={14} />
+          <span>Automation</span>
+        </NavLink>
+
+        <NavLink
+          to="/servers"
+          className={`vci-mobile-nav-pill ${isServerActive ? "active" : ""}`}
+        >
+          <Server size={14} />
+          <span>Servers</span>
+        </NavLink>
+
+        <NavLink
+          to="/config"
+          className={`vci-mobile-nav-pill ${isConfigActive ? "active" : ""}`}
+        >
+          <Settings size={14} />
+          <span>Settings</span>
+        </NavLink>
+      </div>
+    </nav>
+  );
+}
+
 export function Sidebar() {
-  return <AppSidebar />;
+  return (
+    <>
+      <MobileSegmentedNavStrip />
+      <AppSidebar />
+    </>
+  );
 }

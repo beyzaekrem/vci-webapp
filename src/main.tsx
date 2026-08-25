@@ -5,6 +5,7 @@ import "./scss/custom.scss";
 
 import { RouterProvider } from "react-router-dom";
 import { WithKeyBindingContext } from "./Utility/KeyBindings";
+import { ThemeProvider } from "./Utility/Theme/ThemeContext";
 
 import { router } from "./router.tsx";
 import { initControlServer } from "./network/control-server";
@@ -45,11 +46,13 @@ const root = ReactDOM.createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <div className="App">
-      <header className="App-header" />
-      <WithKeyBindingContext>
-        <RouterProvider router={router} />
-      </WithKeyBindingContext>
-    </div>
+    <ThemeProvider>
+      <div className="App">
+        <header className="App-header" />
+        <WithKeyBindingContext>
+          <RouterProvider router={router} />
+        </WithKeyBindingContext>
+      </div>
+    </ThemeProvider>
   </React.StrictMode>,
 );

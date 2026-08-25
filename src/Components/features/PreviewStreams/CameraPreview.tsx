@@ -15,6 +15,7 @@ interface CameraPreviewProps {
     cameraEntry?: CameraEntry | null;
     allResolvedCameras?: ResolvedCamera[];
     onNavigate?: (direction: -1 | 1) => void;
+    onResetView?: () => void;
     streamID: string;
 }
 
@@ -24,6 +25,7 @@ export function CameraPreview({
     cameraEntry,
     allResolvedCameras = [],
     onNavigate,
+    onResetView,
     streamID,
 }: CameraPreviewProps) {
     const bodyRef = useRef<HTMLDivElement>(null);
@@ -114,6 +116,7 @@ export function CameraPreview({
                         height={bodySize.height || 600}
                         constantStreamID={streamID}
                         autoStart={true}
+                        onResetView={onResetView}
                     />
                 ) : (
                     <div className="ps-preview-empty">

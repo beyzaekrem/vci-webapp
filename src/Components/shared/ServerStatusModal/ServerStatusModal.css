@@ -11,9 +11,10 @@
 }
 
 .server-status-modal-header {
-    background-color: #ffffff;
-    border-bottom: 1px solid #e2e8f0;
+    background-color: var(--vci-header-bg);
+    border-bottom: 1px solid var(--vci-header-border);
     padding: 16px 24px;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .server-status-modal-header .btn-close {
@@ -25,15 +26,17 @@
 }
 
 .server-status-modal-title {
-    color: #0f172a;
+    color: var(--vci-text-main);
     font-size: 1rem;
     font-weight: 700;
     letter-spacing: -0.01em;
+    transition: color 0.2s ease;
 }
 
 .server-status-modal-body {
     padding: 20px 24px;
-    background: #f8fafc;
+    background: var(--vci-surface-2);
+    transition: background-color 0.25s ease;
 }
 
 /* ── Section ── */
@@ -50,12 +53,13 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #64748b;
+    color: var(--vci-text-muted);
     margin-bottom: 8px;
     padding-bottom: 4px;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--vci-border);
     display: flex;
     align-items: center;
+    transition: color 0.2s ease, border-color 0.25s ease;
 }
 
 /* ── Row ── */
@@ -65,9 +69,9 @@
     justify-content: space-between;
     padding: 10px 14px;
     margin-bottom: 6px;
-    background: #fff;
+    background: var(--vci-card-bg);
     border-radius: 8px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--vci-card-border);
     transition: all 0.15s ease;
 }
 
@@ -117,10 +121,11 @@
     font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
     font-size: 0.85rem;
     font-weight: 500;
-    color: #1e293b;
+    color: var(--vci-text-body);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    transition: color 0.2s ease;
 }
 
 /* ── Badge ── */
@@ -147,10 +152,11 @@
 .server-status-footer-note {
     text-align: center;
     font-size: 0.7rem;
-    color: #94a3b8;
+    color: var(--vci-text-dim);
     margin-top: 12px;
     padding-top: 10px;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid var(--vci-border);
+    transition: border-color 0.25s ease;
 }
 
 /* ── Pulse animation ── */
@@ -169,18 +175,18 @@
     gap: 6px;
     font-size: 0.8rem;
     font-weight: 600;
-    border-color: #e2e8f0;
-    color: #475569;
-    background-color: #fff;
+    border-color: var(--vci-border-light);
+    color: var(--vci-text-muted);
+    background-color: var(--vci-surface);
     padding: 5px 14px;
     border-radius: 6px;
     transition: all 0.15s ease;
 }
 
 .server-status-trigger-btn:hover {
-    border-color: #94a3b8;
-    color: #0f172a;
-    background-color: #f1f5f9;
+    border-color: var(--vci-border-light);
+    color: var(--vci-text-main);
+    background-color: var(--vci-surface-hover);
 }
 
 .server-status-trigger-dot {

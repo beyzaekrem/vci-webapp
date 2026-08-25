@@ -3,6 +3,7 @@ import { ScriptArgumentsForm } from "./ScriptArgumentsForm";
 import { useLocallyStored } from "../../../Utility/Storage";
 import { fullscreenIcon } from "../../shared/Icons";
 import { ScriptOutput } from "./ScriptOutput";
+import { Play, Square } from "lucide-react";
 
 export function VCIAutomationScript({ script }: { script: ScriptInfo }) {
     const [runnerId] = useLocallyStored<string>(`vci-automation-runner-${script.id}`, `runner-${Math.random().toString(16).slice(2)}`);
@@ -34,23 +35,27 @@ export function VCIAutomationScript({ script }: { script: ScriptInfo }) {
                     }}
                 />
 
-                <button
-                    type="button"
-                    className="vci-btn-execute"
-                    onClick={handleExecuteClick}
-                >
-                    Execute Script
-                </button>
+                <div className="vci-script-actions" style={{ marginTop: "24px", display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <button
+                        type="button"
+                        className="vci-btn-execute"
+                        onClick={handleExecuteClick}
+                    >
+                        <Play size={15} fill="currentColor" />
+                        <span>Execute Script</span>
+                    </button>
 
-                <button
-                    type="button"
-                    className="vci-btn-stop"
-                    onClick={() => {
-                        getVCI().stop_script(runnerId);
-                    }}
-                >
-                    Stop Script Execution
-                </button>
+                    <button
+                        type="button"
+                        className="vci-btn-stop"
+                        onClick={() => {
+                            getVCI().stop_script(runnerId);
+                        }}
+                    >
+                        <Square size={14} fill="currentColor" />
+                        <span>Stop Script Execution</span>
+                    </button>
+                </div>
             </div>
 
             {/* Right Column: Execution Logs Terminal */}

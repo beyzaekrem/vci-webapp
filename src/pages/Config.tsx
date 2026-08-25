@@ -1,13 +1,29 @@
 import Settings from "../Components/features/Config/Settings.tsx";
-import { ServerStatusButton } from "../Components/shared/ServerStatusModal";
+import { ServerStatusButton, HelpButton } from "../Components/shared/ServerStatusModal";
+import { useSidebar } from "../Components/shared/Sidebar/Sidebar";
+import { Menu } from "lucide-react";
 
 export function ConfigPage() {
+  const { openSidebar } = useSidebar();
   return (
     <div className="ps-content-wrapper">
       {/* Header Bar */}
       <header className="ps-header-bar">
-        <h1 className="ps-header-title">Settings</h1>
-        <ServerStatusButton />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <button
+            type="button"
+            className="vci-header-hamburger-btn"
+            onClick={openSidebar}
+            title="Open Navigation Menu"
+          >
+            <Menu size={18} />
+          </button>
+          <h1 className="ps-header-title">Settings</h1>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <HelpButton />
+          <ServerStatusButton />
+        </div>
       </header>
 
       {/* Main Content Area */}

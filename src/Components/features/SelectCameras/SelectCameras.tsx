@@ -52,6 +52,74 @@ export function SelectCameras({
  * - storage: "url" or "local"
  * - selectionKey: the key name to use (default "cameras")
  */
+const customSelectStyles = {
+  control: (base: any, state: any) => ({
+    ...base,
+    minHeight: "28px",
+    height: "28px",
+    backgroundColor: "#ffffff",
+    borderColor: state.isFocused ? "#0284c7" : "#cbd5e1",
+    borderRadius: "6px",
+    fontSize: "12px",
+    fontWeight: 600,
+    color: "#334155",
+    boxShadow: "none",
+    padding: "0",
+    cursor: "pointer",
+    transition: "all 0.15s ease",
+    "&:hover": {
+      borderColor: "#0284c7",
+    },
+  }),
+  valueContainer: (base: any) => ({
+    ...base,
+    height: "28px",
+    padding: "0 6px",
+  }),
+  singleValue: (base: any) => ({
+    ...base,
+    color: "#1e293b",
+    fontSize: "12px",
+    fontWeight: 600,
+    margin: 0,
+  }),
+  input: (base: any) => ({
+    ...base,
+    margin: 0,
+    padding: 0,
+    fontSize: "12px",
+  }),
+  indicatorsContainer: (base: any) => ({
+    ...base,
+    height: "28px",
+  }),
+  dropdownIndicator: (base: any) => ({
+    ...base,
+    padding: "0 4px",
+    color: "#64748b",
+  }),
+  indicatorSeparator: () => ({
+    display: "none",
+  }),
+  menu: (base: any) => ({
+    ...base,
+    borderRadius: "8px",
+    boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)",
+    fontSize: "12px",
+    zIndex: 9999,
+    overflow: "hidden",
+  }),
+  option: (base: any, state: any) => ({
+    ...base,
+    fontSize: "12px",
+    fontWeight: state.isSelected ? 600 : 400,
+    backgroundColor: state.isSelected ? "#0284c7" : state.isFocused ? "#f1f5f9" : "white",
+    color: state.isSelected ? "white" : "#1e293b",
+    cursor: "pointer",
+    padding: "5px 8px",
+  }),
+};
+
 function SelectSingleCamera({
   storage = "url",
   selectionKey = "cameras",
@@ -60,7 +128,6 @@ function SelectSingleCamera({
   selectionKey?: string;
 }) {
   const [selections, setSelections] = useCameraSelections({ storage, selectionKey });
-  // Ensure there is always one selection.
   const selection = selections[0] || { server: 0, camera: 0 };
 
   const updateSelection = (newSel: CameraSelection) => {
@@ -68,7 +135,7 @@ function SelectSingleCamera({
   };
 
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: "4px", maxWidth: "100%" }}>
+    <div style={{ display: "inline-flex", alignItems: "center", gap: "3px", flexWrap: "nowrap" }}>
       <MoveCameraIndexButtonSingle increment={-1} selection={selection} setSelection={updateSelection} />
       <SelectCameraDropdownSingle selection={selection} setSelection={updateSelection} />
       <MoveCameraIndexButtonSingle increment={1} selection={selection} setSelection={updateSelection} />
@@ -108,7 +175,17 @@ function MoveCameraIndexButtonSingle({
     dependencies: [cameras, selection],
   });
 
-  return <ButtonWithKey keybinding={key} />;
+  return (
+    <button
+      type="button"
+      className="ps-tb-btn"
+      onClick={move}
+      title={`${increment > 0 ? "Next Camera" : "Previous Camera"} [${key}]`}
+      style={{ height: "28px", minWidth: "26px", padding: "0 6px" }}
+    >
+      {increment > 0 ? ">" : "<"}
+    </button>
+  );
 }
 
 function SelectServerDropdownSingle({
@@ -126,8 +203,9 @@ function SelectServerDropdownSingle({
   const currentValue = options.find((option) => option.value === selection.server);
   const allCameras = useCameraIndices();
   return (
-    <div style={{ zIndex: 200, minWidth: "120px", flex: "1 1 auto" }}>
+    <div style={{ zIndex: 200, width: "155px" }}>
       <Select
+        styles={customSelectStyles}
         options={options}
         value={currentValue}
         onChange={(v) => {
@@ -162,8 +240,9 @@ function SelectCameraIndexSingle({
   });
   const currentValue = options.find((option) => option.value === selection.camera);
   return (
-    <div style={{ zIndex: 200, minWidth: "110px", flex: "1 1 auto" }}>
+    <div style={{ zIndex: 200, width: "145px" }}>
       <Select
+        styles={customSelectStyles}
         options={options}
         value={currentValue}
         onChange={(v) => {
@@ -183,7 +262,7 @@ function SelectCameraDropdownSingle({
   setSelection: (sel: CameraSelection) => void;
 }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: "4px", maxWidth: "100%" }}>
+    <div style={{ display: "inline-flex", alignItems: "center", gap: "3px", flexWrap: "nowrap" }}>
       <SelectServerDropdownSingle selection={selection} setSelection={setSelection} />
       <SelectCameraIndexSingle selection={selection} setSelection={setSelection} />
     </div>

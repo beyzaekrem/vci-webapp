@@ -9,23 +9,64 @@
 .server-overview-header {
     margin-bottom: 20px;
     padding-bottom: 14px;
-    border-bottom: 1px solid #e2e8f0;
-    text-align: center !important;
+    border-bottom: 1px solid var(--vci-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left !important;
+    gap: 12px;
+    flex-wrap: wrap;
+    transition: border-color 0.25s ease;
+}
+
+.server-overview-header-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+.vci-add-server-container {
+    margin-top: 16px;
+    width: 100%;
+}
+
+.vci-add-server-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid var(--vci-primary, #0284c7);
+    border-radius: 10px;
+    background-color: transparent;
+    color: var(--vci-primary, #0284c7) !important;
+    font-size: 13.5px;
+    font-weight: 700;
+    text-decoration: none !important;
+    transition: all 0.15s ease;
+    box-sizing: border-box;
+}
+
+.vci-add-server-btn:hover {
+    background-color: var(--vci-primary-subtle, rgba(2, 132, 199, 0.1));
 }
 
 .server-overview-title {
     font-size: 16px;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--vci-text-main);
     margin: 0;
-    text-align: center !important;
+    text-align: left !important;
+    transition: color 0.2s ease;
 }
 
 .server-overview-subtitle {
     font-size: 13px;
-    color: #64748b;
-    margin: 6px 0 0 0;
-    text-align: center !important;
+    color: var(--vci-text-muted);
+    margin: 4px 0 0 0;
+    text-align: left !important;
+    transition: color 0.2s ease;
 }
 
 /* Custom Accordion Styling */
@@ -34,31 +75,40 @@
 }
 
 .vci-server-overview-accordion .accordion-item {
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--vci-border);
     border-radius: 10px !important;
     overflow: hidden;
     margin-bottom: 12px;
     box-shadow: none;
+    transition: border-color 0.25s ease;
 }
 
 .vci-server-overview-accordion .accordion-button {
-    background-color: #ffffff !important;
-    color: #0f172a !important;
+    background-color: var(--vci-card-bg) !important;
+    color: var(--vci-text-main) !important;
     font-weight: 600;
     font-size: 0.95rem;
     padding: 14px 20px;
     box-shadow: none !important;
+    transition: background-color 0.25s ease, color 0.2s ease;
+}
+
+/* Ensure all child elements inherit the theme-aware color */
+.vci-server-overview-accordion .accordion-button span,
+.vci-server-overview-accordion .accordion-button * {
+    color: inherit;
 }
 
 .vci-server-overview-accordion .accordion-button:not(.collapsed) {
-    background-color: #f8fafc !important;
-    color: #0f172a !important;
-    border-bottom: 1px solid #e2e8f0;
+    background-color: var(--vci-surface-2) !important;
+    color: var(--vci-text-main) !important;
+    border-bottom: 1px solid var(--vci-border);
 }
 
 .vci-server-overview-accordion .accordion-body {
-    background-color: #ffffff;
+    background-color: var(--vci-card-bg);
     padding: 18px 24px;
+    transition: background-color 0.25s ease;
 }
 
 /* Symmetric Grid Layout for Cameras */
@@ -73,39 +123,63 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px 14px;
-    background-color: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background-color: var(--vci-surface-2);
+    border: 1px solid var(--vci-border);
     border-radius: 8px;
     font-size: 0.85rem;
-    color: #334155;
+    color: var(--vci-text-body);
 }
 
+/* Mobile Responsive Optimization - No Scrolling Required */
 @media (max-width: 768px) {
+    .start-main-container {
+        padding: 12px 10px !important;
+        align-items: stretch !important;
+        justify-content: flex-start !important;
+        height: auto !important;
+        overflow-y: auto !important;
+    }
+
+    .start-card-container {
+        padding: 16px 14px !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        border-radius: 10px !important;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04) !important;
+    }
+
     .server-overview-header {
-        margin-bottom: 10px !important;
-        padding-bottom: 8px !important;
+        margin-bottom: 12px !important;
+        padding-bottom: 10px !important;
     }
+
     .server-overview-title {
-        font-size: 14px !important;
+        font-size: 15px !important;
+        font-weight: 800 !important;
     }
+
     .server-overview-subtitle {
-        font-size: 11.5px !important;
-        margin-top: 3px !important;
+        font-size: 12px !important;
+        margin-top: 4px !important;
     }
+
     .vci-server-overview-accordion .accordion-button {
-        padding: 8px 10px !important;
-        font-size: 0.85rem !important;
+        padding: 10px 14px !important;
+        font-size: 0.88rem !important;
     }
+
     .vci-server-overview-accordion .accordion-body {
-        padding: 8px 6px !important;
+        padding: 10px 10px !important;
     }
+
     .vci-camera-badge-grid {
-        grid-template-columns: 1fr !important;
-        gap: 6px !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
     }
+
     .vci-camera-badge-card {
-        padding: 6px 10px !important;
-        font-size: 0.8rem !important;
+        padding: 8px 12px !important;
+        font-size: 0.82rem !important;
     }
 }
-

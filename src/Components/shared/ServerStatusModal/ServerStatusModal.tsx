@@ -178,3 +178,26 @@ export function ServerStatusButton({ className, style }: { className?: string; s
         </>
     );
 }
+
+/**
+ * Self-contained Help & Shortcut button styled matching connection status pill.
+ */
+export function HelpButton({ className, style }: { className?: string; style?: React.CSSProperties }) {
+    const handleHelpClick = () => {
+        const event = new KeyboardEvent("keydown", { key: "h", bubbles: true });
+        window.dispatchEvent(event);
+    };
+
+    return (
+        <Button
+            variant="outline-secondary"
+            size="sm"
+            onClick={handleHelpClick}
+            className={`server-status-trigger-btn help-trigger-btn ${className || ""}`}
+            style={style}
+            title="Open Help & Shortcuts (Press h)"
+        >
+            Help &amp; Shortcuts (h)
+        </Button>
+    );
+}
