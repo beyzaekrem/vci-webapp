@@ -172,27 +172,61 @@
 .server-status-trigger-btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    border-color: var(--vci-border-light);
-    color: var(--vci-text-muted);
-    background-color: var(--vci-surface);
-    padding: 5px 14px;
-    border-radius: 6px;
-    transition: all 0.15s ease;
+    gap: 7px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    color: #e2e8f0;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 41, 59, 0.75) 100%);
+    backdrop-filter: blur(8px);
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    white-space: nowrap;
+    cursor: pointer;
 }
 
 .server-status-trigger-btn:hover {
-    border-color: var(--vci-border-light);
-    color: var(--vci-text-main);
-    background-color: var(--vci-surface-hover);
+    border-color: rgba(56, 189, 248, 0.6);
+    color: #ffffff;
+    background: linear-gradient(135deg, rgba(2, 132, 199, 0.35) 0%, rgba(14, 165, 233, 0.2) 100%);
+    box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
+    transform: translateY(-1px);
 }
 
 .server-status-trigger-dot {
-    width: 7px;
-    height: 7px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background-color: #22c55e;
-    box-shadow: 0 0 5px rgba(34, 197, 94, 0.45);
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.7);
+    flex-shrink: 0;
+}
+
+.server-btn-text-short,
+.help-btn-text-short {
+    display: none !important;
+}
+
+.server-btn-text-full,
+.help-btn-text-full {
+    display: inline !important;
+}
+
+@media (max-width: 640px) {
+    .server-btn-text-full,
+    .help-btn-text-full {
+        display: none !important;
+    }
+
+    .server-btn-text-short,
+    .help-btn-text-short {
+        display: inline !important;
+    }
+
+    .server-status-trigger-btn {
+        padding: 5px 10px !important;
+        font-size: 11.5px !important;
+    }
 }

@@ -172,7 +172,8 @@ export function ServerStatusButton({ className, style }: { className?: string; s
                 style={style}
             >
                 <span className="server-status-trigger-dot" />
-                Connection Status
+                <span className="server-btn-text-full">Connection Status</span>
+                <span className="server-btn-text-short">Status</span>
             </Button>
             <ServerStatusModal show={show} onHide={() => setShow(false)} />
         </>
@@ -197,7 +198,8 @@ export function HelpButton({ className, style }: { className?: string; style?: R
             style={style}
             title="Open Help & Shortcuts (Press h)"
         >
-            Help &amp; Shortcuts (h)
+            <span className="help-btn-text-full">Help &amp; Shortcuts (h)</span>
+            <span className="help-btn-text-short">Help (h)</span>
         </Button>
     );
 }
